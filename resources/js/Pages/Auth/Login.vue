@@ -7,7 +7,7 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 
-import { mdiAccount } from '@mdi/js'
+import { mdiAccount } from "@mdi/js";
 
 defineProps({
   canResetPassword: Boolean,
@@ -34,54 +34,6 @@ const submit = () => {
     <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
       {{ status }}
     </div>
-
-    <v-container>
-      <v-row justify="space-between" class="text-center">
-        <v-col>
-
-          <v-btn color="primary"> <v-icon :icon="mdiAccount"></v-icon></v-btn>
-          <v-btn icon="mdi-heart" color="primary"></v-btn>
-        </v-col>
-
-        <v-col>
-          <v-btn icon="mdi-star" color="secondary"></v-btn>
-        </v-col>
-
-        <v-col>
-          <v-btn icon="mdi-cached" color="info"></v-btn>
-        </v-col>
-
-        <v-col>
-          <v-btn icon="mdi-thumb-up" color="success"></v-btn>
-        </v-col>
-      </v-row>
-
-      <v-row justify="space-between" class="text-center">
-        <v-col>
-          <v-btn icon color="primary">
-            <v-icon>mdi-heart</v-icon>
-          </v-btn>
-        </v-col>
-
-        <v-col>
-          <v-btn icon color="secondary">
-            <v-icon>mdi-star</v-icon>
-          </v-btn>
-        </v-col>
-
-        <v-col>
-          <v-btn icon color="info">
-            <v-icon>mdi-cached</v-icon>
-          </v-btn>
-        </v-col>
-
-        <v-col>
-          <v-btn icon color="success">
-            <v-icon>mdi-thumb-up</v-icon>
-          </v-btn>
-        </v-col>
-      </v-row>
-    </v-container>
 
     <form @submit.prevent="submit">
       <div>

@@ -5,8 +5,8 @@
         "build": "vite build"
     },
     "devDependencies": {
+        "@iconify-json/mdi": "^1.1.47",
         "@inertiajs/vue3": "^1.0.0",
-        "@mdi/font": "^7.1.96",
         "@mdi/js": "^7.1.96",
         "@tailwindcss/forms": "^0.5.3",
         "@vitejs/plugin-vue": "^4.0.0",

@@ -1,10 +1,11 @@
 // Vuetify
-// Ensure you are using css-loader
-import "@mdi/font/css/materialdesignicons.css";
 import "vuetify/styles";
 import { createVuetify } from "vuetify";
 // import * as components from "vuetify/components";
 // import * as directives from "vuetify/directives";
+
+// icon library - https://pictogrammers.com/library/mdi/
+import { aliases, mdi } from "vuetify/iconsets/mdi-svg";
 
 const vuetify = createVuetify({
     // components,
@@ -32,8 +33,13 @@ const vuetify = createVuetify({
             },
         },
     },
-    // https://vuetifyjs.com/en/features/icon-fonts/
-    icons: {}
+    icons: {
+        defaultSet: "mdi",
+        aliases,
+        sets: {
+            mdi,
+        },
+    },
 });
 
 export default vuetify;
