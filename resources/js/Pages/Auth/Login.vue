@@ -3,8 +3,9 @@ import Checkbox from "@/Components/Checkbox.vue";
 import GuestLayout from "@/Layouts/GuestLayout.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
+import PrimaryButton from "@/Components/Form/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
+import TextField from "@/Components/Form/TextField.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 
 import { mdiAccount } from "@mdi/js";
@@ -36,45 +37,36 @@ const submit = () => {
     </div>
 
     <form @submit.prevent="submit">
-      <div>
-        <InputLabel for="email" value="Email" />
+      <div class="text-h6 mb-6">Login</div>
+      <TextField
+        class="mb-3"
+        id="email"
+        type="email"
+        label="Email"
+        v-model="form.email"
+        required
+        :error-messages="form.errors.email"
+      />
+      <TextField
+        class="mb-3"
+        id="password"
+        type="password"
+        label="Password"
+        v-model="form.password"
+        required
+        autocomplete="current-password"
+        :error-messages="form.errors.password"
+      />
 
-        <TextInput
-          id="email"
-          type="email"
-          class="mt-1 block w-full"
-          v-model="form.email"
-          required
-          autofocus
-          autocomplete="username"
-        />
-
-        <InputError class="mt-2" :message="form.errors.email" />
-      </div>
-
-      <div class="mt-4">
-        <InputLabel for="password" value="Password" />
-
-        <TextInput
-          id="password"
-          type="password"
-          class="mt-1 block w-full"
-          v-model="form.password"
-          required
-          autocomplete="current-password"
-        />
-
-        <InputError class="mt-2" :message="form.errors.password" />
-      </div>
-
+      <!--
       <div class="block mt-4">
         <label class="flex items-center">
           <Checkbox name="remember" v-model:checked="form.remember" />
           <span class="ml-2 text-sm text-gray-600">Remember me</span>
         </label>
-      </div>
+      </div> -->
 
-      <div class="flex items-center justify-end mt-4">
+      <div class="d-flex align-center justify-end mt-4">
         <Link
           v-if="canResetPassword"
           :href="route('password.request')"
