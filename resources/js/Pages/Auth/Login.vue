@@ -4,11 +4,11 @@ import GuestLayout from "@/Layouts/GuestLayout.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/Form/PrimaryButton.vue";
-import TextInput from "@/Components/TextInput.vue";
+// import TextInput from "@/Components/TextInput.vue";
 import TextField from "@/Components/Form/TextField.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 
-import { mdiAccount } from "@mdi/js";
+// import { mdiAccount } from "@mdi/js";
 
 defineProps({
   canResetPassword: Boolean,

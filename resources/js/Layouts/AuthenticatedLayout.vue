@@ -12,6 +12,7 @@ import { mdiChevronLeft } from "@mdi/js";
 import { mdiMapMarker } from "@mdi/js";
 import { mdiAlertCircleOutline } from "@mdi/js";
 
+
 const showingNavigationDropdown = ref(false);
 
 const baseURL = window.location.origin;
@@ -62,7 +63,7 @@ const rail = ref(true);
 
       <v-divider></v-divider>
 
-      <v-list density="compact" nav>
+      <v-list nav>
         <v-list-item
           v-for="item in sideNavigation"
           :key="item.name"
@@ -78,20 +79,16 @@ const rail = ref(true);
         style="max-width: 50px"
       ></v-img> -->
 
-      <!-- <v-avatar
-        color="grey-lighten-1"
-        :size="36"
-        class="d-flex align-center justify-center mx-auto mb-9"
-      >
-        <div>RI</div>
-      </v-avatar> -->
       <!-- <v-btn size="x-small" icon class="d-block text-center mx-auto mb-9">
         <v-icon :icon="mdiAccount" />
       </v-btn> -->
     </v-navigation-drawer>
     <!-- Page Content -->
+
     <v-main>
-      <slot />
+      <div>
+        <slot />
+      </div>
     </v-main>
   </v-app>
 </template>
