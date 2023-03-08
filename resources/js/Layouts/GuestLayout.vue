@@ -51,7 +51,6 @@ const bgUpdate = () => {
 onMounted(() => {
   setInterval(() => {
     bgUpdate();
-    console.log("interval");
   }, 10000);
 });
 </script>
