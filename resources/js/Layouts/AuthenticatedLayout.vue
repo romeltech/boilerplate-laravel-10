@@ -3,35 +3,35 @@ import { ref, onMounted, watch } from "vue";
 import { Link } from "@inertiajs/vue3";
 import { useDisplay } from "vuetify";
 
-import { mdiAccount } from "@mdi/js";
 import { mdiChevronLeft } from "@mdi/js";
-import { mdiMapMarker } from "@mdi/js";
-import { mdiAlertCircleOutline } from "@mdi/js";
+import { mdiHomeOutline } from "@mdi/js";
 import { mdiBellOutline } from "@mdi/js";
+import { mdiAccountGroup } from "@mdi/js";
+// import route from "vendor/tightenco/ziggy/src/js";
 
 const { mobile } = useDisplay();
 const appName = ref(import.meta.env.VITE_APP_NAME);
 const logo = ref(window.location.origin + "/assets/images/fav.png");
 const menu = ref(false);
-
 const drawer = ref(true);
 const rail = ref(false);
 const temporary = ref(false);
-
 const sideNavigation = ref([
   {
-    title: "Tickets",
-    icon: mdiAlertCircleOutline,
+    title: "Dashbaord",
+    icon: mdiHomeOutline,
+    path: "admin.dashboard",
   },
   {
-    title: "Location",
-    icon: mdiMapMarker,
-  },
-  {
-    title: "Account",
-    icon: mdiAccount,
+    title: "Users",
+    icon: mdiAccountGroup,
+    path: "admin.users",
   },
 ]);
+const openPage = (path) => {
+  route(path);
+  //   $route(path)
+};
 watch(mobile, async (newMobileValue, oldMobileValue) => {
   if (newMobileValue == true) {
     drawer.value = false;
@@ -55,7 +55,6 @@ onMounted(() => {
   }
 });
 </script>
-
 <template>
   <v-app id="inspire">
     <v-navigation-drawer
@@ -86,7 +85,9 @@ onMounted(() => {
           :prepend-icon="item.icon"
           :title="item.title"
           :value="item.title"
+          @click="() => openPage(item.path)"
         ></v-list-item>
+        <!-- :href="route(item.path)" -->
       </v-list>
     </v-navigation-drawer>
     <v-app-bar density="compact" color="white" elevation="0">
@@ -134,7 +135,12 @@ onMounted(() => {
             </div>
           </div>
           <div class="pa-3 mt-3">
-            <Link :href="route('logout')" method="post" as="v-btn"  class="text-decoration-none">
+            <Link
+              :href="route('logout')"
+              method="post"
+              as="v-btn"
+              class="text-decoration-none"
+            >
               <v-btn width="100%" color="primary"> Logout </v-btn>
             </Link>
           </div>
@@ -143,9 +149,7 @@ onMounted(() => {
     </v-app-bar>
     <!-- Page Content -->
     <v-main style="background-color: #fafafa">
-      <div>
-        <slot />
-      </div>
+      <slot />
     </v-main>
   </v-app>
 </template>

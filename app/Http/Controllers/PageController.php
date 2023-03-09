@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
 {
+    // https://techvblogs.com/blog/spa-authentication-laravel-9-sanctum-vue3-vite
+
     /**
      * Dashboard
      */
@@ -24,7 +26,7 @@ class PageController extends Controller
         }
     }
 
-    public function adminPages(Request $request, string $path)
+    public function adminMainPages(Request $request, string $path)
     {
         $path = ucfirst($path);
         return Inertia::render('Admin/'.$path, [

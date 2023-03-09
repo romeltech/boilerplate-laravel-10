@@ -44,10 +44,10 @@ Route::middleware('auth')->group(function () {
  */
 Route::middleware('auth')->prefix('admin')->group(function () {
 
-    // dashboard
-    Route::get('/{path}', [PageController::class, 'adminPages'])->name('admin.pages');
+    // main pages
+    Route::get('/{path}', [PageController::class, 'adminMainPages'])->name('admin.dashboard');
 
-    // users
+    // sub pages
     Route::get('/users',function () {
         return Inertia::render('Admin/Users');
     })->name('admin.users');
