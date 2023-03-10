@@ -1,5 +1,4 @@
 <script setup>
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import PageHeader from "@/Components/Common/PageHeader.vue";
 import SimpleTable from "@/Components/Common/SimpleTable.vue";
 import { ref } from "vue";
@@ -35,7 +34,6 @@ const cards = ref([
 </script>
 
 <template>
-  <!-- <AuthenticatedLayout> -->
   <v-container>
     <PageHeader title="Dashboard" />
     <v-row class="mb-3">
@@ -58,5 +56,4 @@ const cards = ref([
       </div>
     </v-row>
   </v-container>
-  <!-- </AuthenticatedLayout> -->
 </template>

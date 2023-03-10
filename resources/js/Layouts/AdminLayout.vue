@@ -34,6 +34,20 @@ const sideNavigation = ref([
     // path: "admin.users",
     path: "Users",
   },
+  {
+    title: "Test",
+    icon: mdiAccountGroup,
+    // path: "/admin/users",
+    // path: "admin.users",
+    path: "Test",
+  },
+  {
+    title: "Large",
+    icon: mdiAccountGroup,
+    // path: "/admin/users",
+    // path: "admin.users",
+    path: "Large",
+  },
 ]);
 const openPage = (path) => {
   router.push({ name: path }).catch((e) => {
