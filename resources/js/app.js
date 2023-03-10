@@ -7,12 +7,16 @@ import { createInertiaApp } from "@inertiajs/vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
 
+import { createPinia } from 'pinia'
+const pinia = createPinia()
+
 import vuetify from "./Plugins/vuetify";
 // import utilsPlugin from "./Plugins/utilsPlugin";
 
 const appName =
     window.document.getElementsByTagName("title")[0]?.innerText || "Laravel";
 
+// https://stackoverflow.com/questions/72864434/default-persistent-layout-in-laravel-inertia-vite
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) =>
@@ -23,6 +27,7 @@ createInertiaApp({
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, props) })
             .use(plugin)
+            .use(pinia)
             .use(vuetify)
             // .use(utilsPlugin)
             .use(ZiggyVue, Ziggy)

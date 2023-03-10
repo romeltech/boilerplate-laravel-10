@@ -3,6 +3,18 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import PageHeader from "@/Components/Common/PageHeader.vue";
 import SimpleTable from "@/Components/Common/SimpleTable.vue";
 import { ref } from "vue";
+
+import { useAuthStore } from "@/stores/auth";
+const authStore = useAuthStore();
+if (!authStore.user.hasOwnProperty("id")) {
+  authStore.setToken("melmelmel");
+  authStore.setUser({
+    id: 1,
+    username: "melmelmel",
+    email: "melmelmel@gmail.com",
+  });
+}
+
 const cards = ref([
   {
     id: 1,

@@ -20,18 +20,20 @@ const sideNavigation = ref([
   {
     title: "Dashbaord",
     icon: mdiHomeOutline,
-    path: "admin.dashboard",
+    path: "/admin/dashboard",
+    // path: "admin.dashboard",
   },
   {
     title: "Users",
     icon: mdiAccountGroup,
-    path: "admin.users",
+    path: "/admin/users",
+    // path: "admin.users",
   },
 ]);
-const openPage = (path) => {
-  route(path);
-  //   $route(path)
-};
+// const openPage = (path) => {
+//   console.log($page.props);
+//   // route(path);
+// };
 watch(mobile, async (newMobileValue, oldMobileValue) => {
   if (newMobileValue == true) {
     drawer.value = false;
@@ -79,15 +81,26 @@ onMounted(() => {
       </v-list-item>
       <v-divider></v-divider>
       <v-list nav>
-        <v-list-item
+        <Link
           v-for="item in sideNavigation"
-          :key="item.name"
-          :prepend-icon="item.icon"
-          :title="item.title"
-          :value="item.title"
-          @click="() => openPage(item.path)"
-        ></v-list-item>
-        <!-- :href="route(item.path)" -->
+          :key="item.title"
+          :href="item.path"
+          class="text-white text-decoration-none"
+        >
+          <v-list-item
+            :prepend-icon="item.icon"
+            :title="item.title"
+            :value="item.title"
+          ></v-list-item>
+          <!-- <v-list-item
+            v-for="item in sideNavigation"
+            :key="item.title"
+            :prepend-icon="item.icon"
+            :title="item.title"
+            :value="item.title"
+          ></v-list-item> -->
+        </Link>
+        <!-- @click="() => openPage(item.path)" -->
       </v-list>
     </v-navigation-drawer>
     <v-app-bar density="compact" color="white" elevation="0">
