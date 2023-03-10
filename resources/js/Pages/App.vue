@@ -28,16 +28,18 @@ const cards = ref([
       <PageHeader title="Dashboard" />
       <v-row class="mb-3">
         <div class="v-col-12 v-col-md-4 pb-0" v-for="item in cards" :key="item.id">
-          <v-card
-            v-ripple
-            color="secondary"
-            height="80"
-            width="100%"
-            class="d-flex align-center justify-center rounded-lg"
-            style="cursor: pointer"
-          >
-            <div class="text-h6 text-capitalize">{{ item.title }}</div>
-          </v-card>
+          <router-link to="/admin/users">
+            <v-card
+              v-ripple
+              color="secondary"
+              height="80"
+              width="100%"
+              class="d-flex align-center justify-center rounded-lg"
+              style="cursor: pointer"
+            >
+              <div class="text-h6 text-capitalize">{{ item.title }}</div>
+            </v-card>
+          </router-link>
         </div>
       </v-row>
       <v-row>

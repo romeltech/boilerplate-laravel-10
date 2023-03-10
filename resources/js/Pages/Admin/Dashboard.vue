@@ -35,28 +35,28 @@ const cards = ref([
 </script>
 
 <template>
-  <AuthenticatedLayout>
-    <v-container>
-      <PageHeader title="Dashboard" />
-      <v-row class="mb-3">
-        <div class="v-col-12 v-col-md-4 pb-0" v-for="item in cards" :key="item.id">
-          <v-card
-            v-ripple
-            color="secondary"
-            height="80"
-            width="100%"
-            class="d-flex align-center justify-center rounded-lg"
-            style="cursor: pointer"
-          >
-            <div class="text-h6 text-capitalize">{{ item.title }}</div>
-          </v-card>
-        </div>
-      </v-row>
-      <v-row>
-        <div class="v-col-12">
-          <SimpleTable />
-        </div>
-      </v-row>
-    </v-container>
-  </AuthenticatedLayout>
+  <!-- <AuthenticatedLayout> -->
+  <v-container>
+    <PageHeader title="Dashboard" />
+    <v-row class="mb-3">
+      <div class="v-col-12 v-col-md-4 pb-0" v-for="item in cards" :key="item.id">
+        <v-card
+          v-ripple
+          color="secondary"
+          height="80"
+          width="100%"
+          class="d-flex align-center justify-center rounded-lg"
+          style="cursor: pointer"
+        >
+          <div class="text-h6 text-capitalize">{{ item.title }}</div>
+        </v-card>
+      </div>
+    </v-row>
+    <v-row>
+      <div class="v-col-12">
+        <SimpleTable />
+      </div>
+    </v-row>
+  </v-container>
+  <!-- </AuthenticatedLayout> -->
 </template>

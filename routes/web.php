@@ -45,16 +45,24 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->prefix('admin')->group(function () {
 
     // main pages
-    // Route::get('/{path}', [PageController::class, 'adminMainPages'])->name('admin.dashboard');
+    // Route::get('/',function () {
+    //     return Inertia::render('Admin');
+    // })->name('admin');
 
-    Route::get('/dashboard',function () {
-        return Inertia::render('Admin/Dashboard');
-    })->name('admin.dashboard');
+    Route::get('/{slug?}', [PageController::class, 'adminMainPages'])->name('admin.main.pages');
 
-    // sub pages
-    Route::get('/users',function () {
-        return Inertia::render('Admin/Users');
-    })->name('admin.users');
+    // Route::get('/',function () {
+    //     return Inertia::render('Admin');
+    // })->name('admin');
+
+    // Route::get('/dashboard',function () {
+    //     return Inertia::render('Admin');
+    // })->name('admin.dashboard');
+
+    // // sub pages
+    // Route::get('/users',function () {
+    //     return Inertia::render('Admin');
+    // })->name('admin.users');
 });
 
 require __DIR__.'/auth.php';

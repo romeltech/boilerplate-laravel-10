@@ -26,12 +26,8 @@ class PageController extends Controller
         }
     }
 
-    public function adminMainPages(Request $request, string $path)
+    public function adminMainPages()
     {
-        $path = ucfirst($path);
-        return Inertia::render('Admin/'.$path, [
-            'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
-            'status' => session('status'),
-        ]);
+        return Inertia::render('Admin');
     }
 }
