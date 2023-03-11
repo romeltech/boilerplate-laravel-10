@@ -16,7 +16,6 @@ export const useAuthStore = defineStore("auth", {
     actions: {
         setUser(user) {
             this.user = user;
-            console.log("setUser called");
         },
         setToken(token) {
             this.token = token;

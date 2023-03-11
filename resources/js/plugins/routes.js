@@ -14,6 +14,9 @@ export const routes = [
         path: "/login",
         component: () => import("../auth/Login.vue"),
         name: "Login",
+        meta: {
+            title: "Login",
+        }
     },
 
     /**
@@ -24,6 +27,9 @@ export const routes = [
         component: Dashboard,
         // component: () => import("../components/admin/Dashboard.vue"),
         name: "Dashboard",
+        meta: {
+            title: "Dashboard",
+        }
     },
     // {
     //     path: "/admin/users",
