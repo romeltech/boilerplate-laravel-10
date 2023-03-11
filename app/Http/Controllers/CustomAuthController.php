@@ -24,7 +24,7 @@ class CustomAuthController extends Controller
             $user = Auth::user();
             // $isLoggedIn = Auth::loginUsingId($user->id);
             if($user->role === 'admin'){
-                return redirect('admin/dashboard');
+                return redirect('admin');
             }elseif($user->role === 'normal'){
                 return redirect('dashboard');
             }else{

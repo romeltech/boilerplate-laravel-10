@@ -14,16 +14,20 @@ use App\Http\Controllers\CustomAuthController;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+
 
 // Auth::routes();
 Auth::routes([
     'register' => false
 ]); 
+// Route::get('/', function () { return view('home'); });
+Route::get('/', [App\Http\Controllers\HomeController::class, 'home'])->name('root');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'home'])->name('home');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/admin/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/admin', [App\Http\Controllers\HomeController::class, 'admin'])->name('admin');
+Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'normal'])->name('normal');
 
+/**
+ * Custom authentication
+ */
 Route::post('login', [CustomAuthController::class, 'login'])->name('custom.login');

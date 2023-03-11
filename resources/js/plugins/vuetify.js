@@ -18,7 +18,7 @@ const vuetify = createVuetify({
                 colors: {
                     primary: "#000000",
                     secondary: "#C6A92D",
-                    // textcolor: "#5a5b5c",
+                    bg: "#f8fafc",
                     // textgrey: "#818181",
                     // white: "#FFFFFF",
                     // screenBg: "#f8fafc",

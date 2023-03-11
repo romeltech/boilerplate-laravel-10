@@ -22,6 +22,8 @@
     <div id="app">
         <v-app>
             <main-component :auth="{{ json_encode(auth()->user()) }}"></main-component>
+            {{-- @auth
+            @endauth --}}
         </v-app>
     </div>
 </body>

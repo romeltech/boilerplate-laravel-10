@@ -85,7 +85,6 @@ const login = async () => {
     };
     try {
         const res = await axios.post("/login", data);
-        console.log("res", res);
         if (res) {
             router.push("/admin");
             loadingLogin.value = false;
