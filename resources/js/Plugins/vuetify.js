@@ -11,9 +11,9 @@ const vuetify = createVuetify({
     // components,
     // directives,
     theme: {
-        defaultTheme: "gag",
+        defaultTheme: "mel",
         themes: {
-            gag: {
+            mel: {
                 dark: false,
                 colors: {
                     primary: "#000000",

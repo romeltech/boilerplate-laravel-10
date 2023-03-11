@@ -3,7 +3,12 @@
 // import Large from "../Pages/Admin/Large.vue";
 export const routes = [
     {
-        path: "/admin/dashboard",
+        path: "/",
+        component: () => import("../Pages/Admin/Dashboard.vue"),
+        name: "Root",
+    },
+    {
+        path: "/admin",
         component: () => import("../Pages/Admin/Dashboard.vue"),
         name: "Dashboard",
     },
