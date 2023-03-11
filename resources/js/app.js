@@ -6,17 +6,33 @@
 
 import './bootstrap';
 import { createApp } from 'vue';
+const app = createApp({});
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
  * registering components with the application instance so they are ready
  * to use in your application's views. An example is included for you.
- */
+*/
 
-const app = createApp({});
+import { createRouter, createWebHistory } from "vue-router";
+import { routes } from "./plugins/routes";
+const router = createRouter({
+    // history: createWebHistory(process.env.BASE_URL),
+    history: createWebHistory(import.meta.env.APP_URL),
+    routes,
+});
+app.use(router);
 
-import ExampleComponent from './components/ExampleComponent.vue';
-app.component('example-component', ExampleComponent);
+import { createPinia } from "pinia";
+const pinia = createPinia();
+app.use(pinia);
+
+
+import vuetify from "./plugins/vuetify";
+app.use(vuetify);
+
+import MainComponent from './MainComponent.vue';
+app.component('MainComponent', MainComponent);
 
 /**
  * The following block of code may be used to automatically register your
