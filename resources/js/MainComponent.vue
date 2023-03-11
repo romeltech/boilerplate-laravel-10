@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, watch } from "vue";
+import { watch } from "vue";
 import AdminLayout from "@/layouts/AdminLayout.vue";
 import { useAuthStore } from "@/stores/auth";
 const authStore = useAuthStore();
