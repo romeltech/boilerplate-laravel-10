@@ -32,7 +32,12 @@ Route::get('/', function () {
 
 Route::get('/', [PageController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
+/**
+ * Account routes
+ */
 Route::middleware('auth')->group(function () {
+    // account
+    Route::get('/account', function () { return Inertia::render('Account/Account'); })->name('account');
     // profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

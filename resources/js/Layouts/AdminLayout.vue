@@ -2,16 +2,18 @@
 import { ref, onMounted, watch } from "vue";
 import { router, Link } from "@inertiajs/vue3";
 import { useDisplay } from "vuetify";
-import { mdiChevronLeft } from "@mdi/js";
-import { mdiChevronRight } from "@mdi/js";
-import { mdiHomeOutline } from "@mdi/js";
-import { mdiBellOutline } from "@mdi/js";
-import { mdiAccountGroup } from "@mdi/js";
-import { mdiAccount } from "@mdi/js";
-import { mdiCog } from "@mdi/js";
-import { mdiPlaylistEdit } from "@mdi/js";
-import { mdiDomain } from "@mdi/js";
-import { mdiOfficeBuilding } from "@mdi/js";
+import {
+  mdiChevronLeft,
+  mdiChevronRight,
+  mdiHomeOutline,
+  mdiBellOutline,
+  mdiAccountGroup,
+  mdiAccount,
+  mdiCog,
+  mdiPlaylistEdit,
+  mdiDomain,
+  mdiOfficeBuilding,
+} from "@mdi/js";
 
 import { useAuthStore } from "@/stores/auth";
 import { useNavRailStore } from "@/stores/navRail";
@@ -162,18 +164,28 @@ onMounted(() => {
             ></v-list-item>
           </div>
         </v-list>
-        <v-btn
+        <v-divider></v-divider>
+        <v-list nav>
+          <v-list-item
+            :prepend-icon="
+              navRailStore.railState == false ? mdiChevronLeft : mdiChevronRight
+            "
+            title="Collapse"
+            @click="navRailStore.toggleDrawer"
+          ></v-list-item>
+        </v-list>
+        <!-- <v-btn
           v-if="mobile == false"
           icon
           color="transparent"
           @click="navRailStore.toggleDrawer"
-          class="mt-auto ml-auto mr-1 mb-3"
+          class="mr-1 mb-3"
         >
           <v-icon
             color="white"
             :icon="navRailStore.railState == false ? mdiChevronLeft : mdiChevronRight"
           ></v-icon>
-        </v-btn>
+        </v-btn> -->
       </div>
     </v-navigation-drawer>
     <v-app-bar density="compact" color="white" elevation="0">
@@ -216,8 +228,8 @@ onMounted(() => {
               <div>{{ printInitials(authStore.user.username) }}</div>
             </v-avatar>
             <div>
-              <div class="text-body-1">{{ authStore.user }}</div>
-              <div class="text-caption">{{ authStore.email }}</div>
+              <div class="text-body-1">{{ authStore.user.username }}</div>
+              <div class="text-caption">{{ authStore.user.email }}</div>
             </div>
           </div>
           <v-divider></v-divider>

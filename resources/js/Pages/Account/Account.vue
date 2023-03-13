@@ -7,7 +7,7 @@ import AdminLayout from "@/Layouts/AdminLayout.vue";
 <template>
   <AdminLayout>
     <v-container>
-      <PageHeader title="Dashboard" />
+      <PageHeader title="Account" />
       <v-row>
         <div class="v-col-12">
           <SimpleTable />

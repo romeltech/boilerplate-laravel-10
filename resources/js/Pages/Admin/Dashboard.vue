@@ -13,13 +13,13 @@ const cards = ref([
   },
   {
     id: 2,
-    title: "Settings",
-    path: "/admin/settings",
+    title: "Companies",
+    path: "/admin/companies",
   },
   {
     id: 3,
-    title: "Logs",
-    path: "/admin/logs",
+    title: "Departments",
+    path: "/admin/departments",
   },
 ]);
 
