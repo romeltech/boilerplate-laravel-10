@@ -6,7 +6,8 @@ import vuetify from "vite-plugin-vuetify";
 export default defineConfig({
     plugins: [
         laravel({
-            input: ["resources/sass/main.scss", "resources/js/app.js"],
+            // input: ["resources/sass/main.scss", "resources/js/app.js"],
+            input: ["resources/js/app.js"],
             refresh: true,
         }),
         vue({

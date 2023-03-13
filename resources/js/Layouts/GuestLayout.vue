@@ -55,35 +55,37 @@ onMounted(() => {
 });
 </script>
 <template>
-  <div
-    class="h-screen d-flex flex-column justify-center align-center"
-    style="background-color: #000000"
-  >
-    <div v-for="slide in bgItems">
-      <div
-        v-show="slide.id == bgCurrent"
-        class="gag-guest-bg"
-        :style="`background-image: url('${slide.src}')`"
-      ></div>
-    </div>
-    <div class="gag-guest-bg-fill"></div>
+  <v-app>
     <div
-      class="mx-auto px-3 text-center"
-      style="z-index: 1; max-width: 400px; width: 100%"
+      class="h-screen d-flex flex-column justify-center align-center"
+      style="background-color: #000000"
     >
-      <Link href="/">
-        <WhiteLogo width="100%" />
-      </Link>
-      <div class="text-subtitle-1 text-white">{{ appName }}</div>
+      <div v-for="slide in bgItems">
+        <div
+          v-show="slide.id == bgCurrent"
+          class="gag-guest-bg"
+          :style="`background-image: url('${slide.src}')`"
+        ></div>
+      </div>
+      <div class="gag-guest-bg-fill"></div>
+      <div
+        class="mx-auto px-3 text-center"
+        style="z-index: 1; max-width: 400px; width: 100%"
+      >
+        <Link href="/">
+          <WhiteLogo width="100%" />
+        </Link>
+        <div class="text-subtitle-1 text-white">{{ appName }}</div>
+      </div>
+      <v-card
+        class="mt-8 px-6 pt-6 pb-6 rounded-lg elevation-3"
+        width="90%"
+        max-width="450"
+      >
+        <slot />
+      </v-card>
     </div>
-    <v-card
-      class="mt-8 px-6 pt-6 pb-6 rounded-lg elevation-3"
-      width="90%"
-      max-width="450"
-    >
-      <slot />
-    </v-card>
-  </div>
+  </v-app>
 </template>
 <style scoped>
 .gag-guest-bg {
