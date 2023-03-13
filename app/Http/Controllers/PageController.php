@@ -18,16 +18,16 @@ class PageController extends Controller
     {
         $role = Auth::user()->role;
         if($role === 'admin'){
-            return redirect('/admin/dashboard');
+            // return Inertia::render('Admin/Dashboard');
+            return redirect('/admin');
         }elseif($role == 'normal'){
-            return redirect('/u/dashboard');
-        }else{
-            return redirect('/u/dashboard');
+            return redirect('/u');
         }
     }
 
-    public function adminMainPages()
+    public function adminMainPages($page = null)
     {
-        return Inertia::render('Admin');
+        $page = ucfirst($page);
+        return Inertia::render('Admin/'.$page);
     }
 }

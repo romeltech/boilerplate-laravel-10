@@ -1,0 +1,19 @@
+import { defineStore } from "pinia";
+
+// You can name the return value of `defineStore()` anything you want,
+// but it's best to use the name of the store and surround it with `use`
+// and `Store` (e.g. `useUserStore`, `useCartStore`, `useProductStore`)
+// the first argument is a unique id of the store across your application
+export const useNavRailStore = defineStore("navRail", {
+    state: () => ({
+        rail: true,
+    }),
+    getters: {
+        railState: (state) => state.rail,
+    },
+    actions: {
+        async toggleDrawer() {
+            this.rail = !this.rail;
+        },
+    },
+});

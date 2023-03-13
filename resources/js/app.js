@@ -7,25 +7,30 @@ import { createInertiaApp } from "@inertiajs/vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
 
-import { createRouter, createWebHistory } from "vue-router";
-import { routes } from "./Plugins/routes";
-const router = createRouter({
-    // history: createWebHistory(process.env.BASE_URL),
-    history: createWebHistory(import.meta.env.APP_URL),
-    routes,
-});
 
+/**
+ * Pinia
+ */
 import { createPinia } from "pinia";
 const pinia = createPinia();
 
+
+/**
+ * Pinia
+ */
 import vuetify from "./Plugins/vuetify";
+
+
+/**
+ * Utility plugin
+ */
 // import utilsPlugin from "./Plugins/utilsPlugin";
+
 
 const appName =
     window.document.getElementsByTagName("title")[0]?.innerText || "Laravel";
 
 // https://stackoverflow.com/questions/72864434/default-persistent-layout-in-laravel-inertia-vite
-
 // inertia route
 // https://stackoverflow.com/questions/66106482/route-with-multiple-parameter-inertiajs
 createInertiaApp({
@@ -40,12 +45,11 @@ createInertiaApp({
             .use(plugin)
             .use(pinia)
             .use(vuetify)
-            .use(router)
             // .use(utilsPlugin)
             .use(ZiggyVue, Ziggy)
             .mount(el);
     },
     progress: {
-        color: "#000000",
+        color: "#C6A92D",
     },
 });

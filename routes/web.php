@@ -30,7 +30,7 @@ Route::get('/', function () {
     return Inertia::render('Auth/Login');
 });
 
-Route::get('/dashboard', [PageController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/', [PageController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     // profile
@@ -45,24 +45,20 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->prefix('admin')->group(function () {
 
     // main pages
-    // Route::get('/',function () {
-    //     return Inertia::render('Admin');
-    // })->name('admin');
+    // Route::get('/{page?}', [PageController::class, 'adminMainPages'])->name('admin.main.pages');
+    Route::get('/', function () { return Inertia::render('Admin/Dashboard'); })->name('admin.dashboard');
+    Route::get('/users', function () { return Inertia::render('Admin/Users/Users'); })->name('admin.users');
+    Route::get('/companies', function () { return Inertia::render('Admin/Companies'); })->name('admin.companies');
+    Route::get('/departments', function () { return Inertia::render('Admin/Departments'); })->name('admin.departments');
+    Route::get('/logs', function () { return Inertia::render('Admin/Logs'); })->name('admin.logs');
+});
 
-    Route::get('/{slug?}', [PageController::class, 'adminMainPages'])->name('admin.main.pages');
-
-    // Route::get('/',function () {
-    //     return Inertia::render('Admin');
-    // })->name('admin');
-
-    // Route::get('/dashboard',function () {
-    //     return Inertia::render('Admin');
-    // })->name('admin.dashboard');
-
-    // // sub pages
-    // Route::get('/users',function () {
-    //     return Inertia::render('Admin');
-    // })->name('admin.users');
+/**
+ * Employee routes
+ */
+Route::middleware('auth')->prefix('u')->group(function () {
+    Route::get('/', function () { return Inertia::render('Normal/Dashboard'); })->name('u.dashboard');
+    Route::get('/account', function () { return Inertia::render('Normal/Account'); })->name('u.account');
 });
 
 require __DIR__.'/auth.php';

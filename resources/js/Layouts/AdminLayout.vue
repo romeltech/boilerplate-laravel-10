@@ -1,18 +1,28 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
-import { Link } from "@inertiajs/vue3";
+import { router, Link } from "@inertiajs/vue3";
 import { useDisplay } from "vuetify";
-
 import { mdiChevronLeft } from "@mdi/js";
+import { mdiChevronRight } from "@mdi/js";
 import { mdiHomeOutline } from "@mdi/js";
 import { mdiBellOutline } from "@mdi/js";
 import { mdiAccountGroup } from "@mdi/js";
-// import route from "vendor/tightenco/ziggy/src/js";
+import { mdiAccount } from "@mdi/js";
+import { mdiCog } from "@mdi/js";
+import { mdiPlaylistEdit } from "@mdi/js";
+import { mdiDomain } from "@mdi/js";
+import { mdiOfficeBuilding } from "@mdi/js";
 
-import { useRouter, useRoute } from "vue-router";
-const router = useRouter();
+import { useAuthStore } from "@/stores/auth";
+import { useNavRailStore } from "@/stores/navRail";
 
+// utility functions
+import { printInitials } from "@/Composables/printInitials";
+
+const authStore = useAuthStore();
+const navRailStore = useNavRailStore();
 const { mobile } = useDisplay();
+
 const appName = ref(import.meta.env.VITE_APP_NAME);
 const logo = ref(window.location.origin + "/assets/images/fav.png");
 const menu = ref(false);
@@ -23,57 +33,63 @@ const sideNavigation = ref([
   {
     title: "Dashboard",
     icon: mdiHomeOutline,
-    // path: "/admin/dashboard",
-    // path: "admin.dashboard",
-    path: "Dashboard",
+    path: "/admin",
   },
   {
     title: "Users",
     icon: mdiAccountGroup,
-    // path: "/admin/users",
-    // path: "admin.users",
-    path: "Users",
+    path: "/admin/users",
   },
   {
-    title: "Test",
-    icon: mdiAccountGroup,
-    // path: "/admin/users",
-    // path: "admin.users",
-    path: "Test",
+    title: "Logs",
+    icon: mdiPlaylistEdit,
+    path: "/admin/logs",
   },
   {
-    title: "Large",
-    icon: mdiAccountGroup,
-    // path: "/admin/users",
-    // path: "admin.users",
-    path: "Large",
+    title: "Settings",
+    icon: mdiCog,
+    subs: [
+      {
+        title: "Companies",
+        icon: mdiDomain,
+        path: "/admin/companies",
+      },
+      {
+        title: "Departments",
+        icon: mdiOfficeBuilding,
+        path: "/admin/departments",
+      },
+    ],
   },
 ]);
 const openPage = (path) => {
-  router.push({ name: path }).catch((e) => {
-    console.log("error", e);
-  });
-  //   this.$router.push({ name: "user", params: { userId: "123" } });
-  //   console.log($inertia);
-  //   this.$inertia.put(route("rooms.update", { room: this.editingRoomUuid }), this.form);
-  //   console.log($page.props);
-  //   route(path);
+  router.visit(path, { method: "get" });
 };
+
 watch(mobile, async (newMobileValue, oldMobileValue) => {
   if (newMobileValue == true) {
     drawer.value = false;
-    rail.value = false;
     temporary.value = true;
   } else {
     drawer.value = true;
-    rail.value = true;
     temporary.value = false;
   }
 });
+
 onMounted(() => {
+  // set auth user into pinia
+  if (!authStore.user.hasOwnProperty("id")) {
+    authStore.setToken("melmelmel");
+    authStore.setUser({
+      id: 1,
+      username: "melmelmel",
+      email: "melmelmel@gmail.com",
+    });
+  }
+
+  // check orientation
   if (mobile.value == true) {
     drawer.value = false;
-    rail.value = false;
     temporary.value = true;
   } else {
     drawer.value = true;
@@ -85,50 +101,80 @@ onMounted(() => {
 <template>
   <v-app id="inspire">
     <v-navigation-drawer
-      :rail="rail"
+      :rail="temporary == true ? false : navRailStore.railState"
       v-model="drawer"
       :temporary="temporary"
-      :permanent="rail"
+      :permanent="!temporary"
       class="pt-4"
       color="primary"
-      @click="rail = false"
     >
-      <v-list-item :prepend-avatar="logo" :title="appName" nav class="mb-3">
-        <template v-slot:append>
-          <v-btn
-            v-if="mobile == false"
-            variant="text"
-            size="small"
-            :icon="mdiChevronLeft"
-            @click.stop="rail = !rail"
-          ></v-btn>
-        </template>
-      </v-list-item>
-      <v-divider></v-divider>
-      <v-list nav>
-        <!-- <Link
-          v-for="item in sideNavigation"
-          :key="item.title"
-          :href="item.path"
-          class="text-white text-decoration-none"
-        >
-          <v-list-item
-            :prepend-icon="item.icon"
-            :title="item.title"
-            :value="item.title"
-          ></v-list-item>
-        </Link> -->
-        <!-- -->
-
+      <div class="d-flex flex-column h-100">
         <v-list-item
-          v-for="item in sideNavigation"
-          :key="item.title"
-          :prepend-icon="item.icon"
-          :title="item.title"
-          :value="item.title"
-          @click="() => openPage(item.path)"
+          nav
+          :prepend-avatar="logo"
+          :title="appName"
+          class="mb-3"
         ></v-list-item>
-      </v-list>
+        <v-divider></v-divider>
+        <v-list nav>
+          <div v-for="item in sideNavigation" :key="item.title" :value="item.title">
+            <v-list-group v-if="item.subs" :value="item.title">
+              <template v-slot:activator="{ props }">
+                <v-list-item
+                  nav
+                  v-bind="props"
+                  :prepend-icon="item.icon"
+                  :title="item.title"
+                ></v-list-item>
+              </template>
+              <div class="bg-grey-darken-3" style="border-radius: 4px">
+                <v-list-item
+                  density="compact"
+                  style="padding-left: 12px !important"
+                  v-for="(sub, i) in item.subs"
+                  :key="i"
+                  :title="sub.title"
+                  @click="() => openPage(sub.path)"
+                  :value="sub.title"
+                >
+                  <template v-slot:title>
+                    <div style="font-size: 12px">{{ sub.title }}</div>
+                  </template>
+                  <template v-slot:prepend>
+                    <v-icon size="16" :icon="sub.icon"></v-icon>
+                  </template>
+                </v-list-item>
+              </div>
+            </v-list-group>
+            <!-- <Link v-else :href="item.path">
+              <v-list-item
+                :prepend-icon="item.icon"
+                :title="item.title"
+                :value="item.title"
+              ></v-list-item>
+            </Link> -->
+            <v-list-item
+              v-else
+              :prepend-icon="item.icon"
+              :title="item.title"
+              :value="item.title"
+              @click="() => openPage(item.path)"
+            ></v-list-item>
+          </div>
+        </v-list>
+        <v-btn
+          v-if="mobile == false"
+          icon
+          color="transparent"
+          @click="navRailStore.toggleDrawer"
+          class="mt-auto ml-auto mr-1 mb-3"
+        >
+          <v-icon
+            color="white"
+            :icon="navRailStore.railState == false ? mdiChevronLeft : mdiChevronRight"
+          ></v-icon>
+        </v-btn>
+      </div>
     </v-navigation-drawer>
     <v-app-bar density="compact" color="white" elevation="0">
       <template v-slot:prepend>
@@ -156,7 +202,7 @@ onMounted(() => {
             v-bind="props"
             style="cursor: pointer"
           >
-            <div>RI</div>
+            <div>{{ printInitials(authStore.user.username) }}</div>
           </v-avatar>
         </template>
         <v-card min-width="300" class="rounded-lg mt-1">
@@ -167,14 +213,23 @@ onMounted(() => {
               class="d-flex align-center justify-center mr-3"
               style="cursor: pointer"
             >
-              <div>RI</div>
+              <div>{{ printInitials(authStore.user.username) }}</div>
             </v-avatar>
             <div>
-              <div class="text-body-1">Romel Indemne</div>
-              <div class="text-caption">romel.i@gagroup.net</div>
+              <div class="text-body-1">{{ authStore.user }}</div>
+              <div class="text-caption">{{ authStore.email }}</div>
             </div>
           </div>
-          <div class="pa-3 mt-3">
+          <v-divider></v-divider>
+          <v-list nav density="compact" class="d-flex flex-column">
+            <v-list-item
+              :prepend-icon="mdiAccount"
+              title="Account Settings"
+              @click="() => openPage('account')"
+            ></v-list-item>
+          </v-list>
+          <v-divider></v-divider>
+          <div class="pa-3">
             <Link
               :href="route('logout')"
               method="post"

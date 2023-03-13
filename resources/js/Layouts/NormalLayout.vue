@@ -1,120 +1,113 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
-import { Link } from "@inertiajs/vue3";
+import { router, Link } from "@inertiajs/vue3";
 import { useDisplay } from "vuetify";
-
 import { mdiChevronLeft } from "@mdi/js";
+import { mdiChevronRight } from "@mdi/js";
 import { mdiHomeOutline } from "@mdi/js";
 import { mdiBellOutline } from "@mdi/js";
 import { mdiAccountGroup } from "@mdi/js";
-// import route from "vendor/tightenco/ziggy/src/js";
+import { useAuthStore } from "@/stores/auth";
+import { useNavRailStore } from "@/stores/navRail";
 
-import { useRouter, useRoute } from "vue-router";
-const router = useRouter();
-
+const authStore = useAuthStore();
+const navRailStore = useNavRailStore();
 const { mobile } = useDisplay();
+
 const appName = ref(import.meta.env.VITE_APP_NAME);
 const logo = ref(window.location.origin + "/assets/images/fav.png");
 const menu = ref(false);
 const drawer = ref(true);
-const rail = ref(false);
 const temporary = ref(false);
 const sideNavigation = ref([
   {
     title: "Dashboard",
     icon: mdiHomeOutline,
-    // path: "/admin/dashboard",
-    // path: "admin.dashboard",
-    path: "Dashboard",
+    path: "/u",
   },
   {
-    title: "Users",
+    title: "Accounts",
     icon: mdiAccountGroup,
-    // path: "/admin/users",
-    // path: "admin.users",
-    path: "Users",
+    path: "/u/account",
   },
 ]);
-const openPage = (path) => {
-  router.push({ name: path }).catch((e) => {
-    console.log("error", e);
-  });
-  //   this.$router.push({ name: "user", params: { userId: "123" } });
-  //   console.log($inertia);
-  //   this.$inertia.put(route("rooms.update", { room: this.editingRoomUuid }), this.form);
-  //   console.log($page.props);
-  //   route(path);
-};
+
 watch(mobile, async (newMobileValue, oldMobileValue) => {
   if (newMobileValue == true) {
     drawer.value = false;
-    rail.value = false;
     temporary.value = true;
   } else {
     drawer.value = true;
-    rail.value = true;
     temporary.value = false;
   }
 });
+
 onMounted(() => {
+  // set auth user into pinia
+  if (!authStore.user.hasOwnProperty("id")) {
+    authStore.setToken("melmelmel");
+    authStore.setUser({
+      id: 1,
+      username: "melmelmel",
+      email: "melmelmel@gmail.com",
+    });
+  }
+
+  // check orientation
   if (mobile.value == true) {
     drawer.value = false;
-    rail.value = false;
     temporary.value = true;
   } else {
     drawer.value = true;
-    rail.value = true;
     temporary.value = false;
   }
 });
+
+const openPage = (path) => {
+  router.visit(path, { method: "get" });
+};
 </script>
 <template>
   <v-app id="inspire">
     <v-navigation-drawer
-      :rail="rail"
+      :rail="temporary == true ? false : navRailStore.railState"
       v-model="drawer"
       :temporary="temporary"
-      :permanent="rail"
+      :permanent="!temporary"
       class="pt-4"
       color="primary"
-      @click="rail = false"
     >
-      <v-list-item :prepend-avatar="logo" :title="appName" nav class="mb-3">
-        <template v-slot:append>
-          <v-btn
-            v-if="mobile == false"
-            variant="text"
-            size="small"
-            :icon="mdiChevronLeft"
-            @click.stop="rail = !rail"
-          ></v-btn>
-        </template>
-      </v-list-item>
-      <v-divider></v-divider>
-      <v-list nav>
-        <!-- <Link
-          v-for="item in sideNavigation"
-          :key="item.title"
-          :href="item.path"
-          class="text-white text-decoration-none"
-        >
+      <div class="d-flex flex-column h-100">
+        <v-list-item
+          :prepend-avatar="logo"
+          :title="appName"
+          nav
+          class="mb-3"
+        ></v-list-item>
+        <v-divider></v-divider>
+        <v-list nav class="d-flex flex-column">
           <v-list-item
+            v-for="item in sideNavigation"
+            :key="item.title"
             :prepend-icon="item.icon"
             :title="item.title"
             :value="item.title"
+            @click="() => openPage(item.path)"
           ></v-list-item>
-        </Link> -->
-        <!-- -->
-
-        <v-list-item
-          v-for="item in sideNavigation"
-          :key="item.title"
-          :prepend-icon="item.icon"
-          :title="item.title"
-          :value="item.title"
-          @click="() => openPage(item.path)"
-        ></v-list-item>
-      </v-list>
+        </v-list>
+        <v-btn
+          v-if="mobile == false"
+          icon
+          color="transparent"
+          @click="navRailStore.toggleDrawer"
+          class="mt-auto ml-auto mr-1 mb-3"
+        >
+          <v-icon
+            color="white"
+            :icon="navRailStore.railState == false ? mdiChevronLeft : mdiChevronRight"
+          ></v-icon>
+        </v-btn>
+      </div>
     </v-navigation-drawer>
     <v-app-bar density="compact" color="white" elevation="0">
       <template v-slot:prepend>

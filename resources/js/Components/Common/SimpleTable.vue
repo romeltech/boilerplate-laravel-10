@@ -32,7 +32,7 @@ const deleteModel = (item) => {
 
 <template>
   <v-card>
-    <v-card-title class="text-primary">Tickets</v-card-title>
+    <v-card-title class="text-primary">Crud Table</v-card-title>
     <v-table>
       <thead>
         <tr>
