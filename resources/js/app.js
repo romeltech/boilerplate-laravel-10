@@ -16,7 +16,7 @@ const pinia = createPinia();
 
 
 /**
- * Pinia
+ * Vuetify
  */
 import vuetify from "./Plugins/vuetify";
 
