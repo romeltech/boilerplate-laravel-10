@@ -4,6 +4,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 
 /*
@@ -52,7 +53,17 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     // main pages
     // Route::get('/{page?}', [PageController::class, 'adminMainPages'])->name('admin.main.pages');
     Route::get('/', function () { return Inertia::render('Admin/Dashboard'); })->name('admin.dashboard');
+
+    /**
+     * Users
+     */
     Route::get('/users', function () { return Inertia::render('Admin/Users/Users'); })->name('admin.users');
+    Route::get('/users/{id}', function () { return Inertia::render('Admin/Users/EditUser'); })->name('admin.edit.users');
+
+    Route::get('/user/all', [UserController::class, 'getUsers'])->name('admin.get.all.users');
+    Route::get('/user/single/{id}', [UserController::class, 'getSingleUsers'])->name('admin.get.all.users');
+
+
     Route::get('/companies', function () { return Inertia::render('Admin/Companies'); })->name('admin.companies');
     Route::get('/departments', function () { return Inertia::render('Admin/Departments'); })->name('admin.departments');
     Route::get('/logs', function () { return Inertia::render('Admin/Logs'); })->name('admin.logs');
