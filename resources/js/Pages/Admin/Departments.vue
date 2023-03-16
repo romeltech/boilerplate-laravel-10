@@ -1,18 +1,15 @@
 <script setup>
 import PageHeader from "@/Components/Common/PageHeader.vue";
 import SimpleTable from "@/Components/Common/SimpleTable.vue";
-import AdminLayout from "@/Layouts/AdminLayout.vue";
 </script>
 
 <template>
-  <AdminLayout>
-    <v-container>
-      <PageHeader title="Dashboard" />
-      <v-row>
-        <div class="v-col-12">
-          <SimpleTable />
-        </div>
-      </v-row>
-    </v-container>
-  </AdminLayout>
+  <v-container>
+    <PageHeader title="Dashboard" />
+    <v-row>
+      <div class="v-col-12">
+        <SimpleTable />
+      </div>
+    </v-row>
+  </v-container>
 </template>

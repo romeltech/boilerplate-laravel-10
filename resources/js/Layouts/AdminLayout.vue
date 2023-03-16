@@ -16,20 +16,18 @@ import {
 } from "@mdi/js";
 
 import { useAuthStore } from "@/stores/auth";
-import { useNavRailStore } from "@/stores/navRail";
 
 // utility functions
 import { printInitials } from "@/Composables/printInitials";
 
 const authStore = useAuthStore();
-const navRailStore = useNavRailStore();
 const { mobile } = useDisplay();
 
 const appName = ref(import.meta.env.VITE_APP_NAME);
 const logo = ref(window.location.origin + "/assets/images/fav.png");
 const menu = ref(false);
+const rail = ref(true);
 const drawer = ref(true);
-const rail = ref(false);
 const temporary = ref(false);
 const sideNavigation = ref([
   {
@@ -95,7 +93,6 @@ onMounted(() => {
     temporary.value = true;
   } else {
     drawer.value = true;
-    rail.value = true;
     temporary.value = false;
   }
 });
@@ -103,7 +100,7 @@ onMounted(() => {
 <template>
   <v-app id="inspire">
     <v-navigation-drawer
-      :rail="temporary == true ? false : navRailStore.railState"
+      :rail="temporary == true ? false : rail"
       v-model="drawer"
       :temporary="temporary"
       :permanent="!temporary"
@@ -129,15 +126,15 @@ onMounted(() => {
                   :title="item.title"
                 ></v-list-item>
               </template>
-              <div class="bg-grey-darken-3" style="border-radius: 4px">
+              <div class="bg-grey-darken-4" style="border-radius: 4px">
                 <v-list-item
                   density="compact"
                   style="padding-left: 12px !important"
                   v-for="(sub, i) in item.subs"
                   :key="i"
                   :title="sub.title"
-                  @click="() => openPage(sub.path)"
                   :value="sub.title"
+                  @click="() => openPage(sub.path)"
                 >
                   <template v-slot:title>
                     <div style="font-size: 12px">{{ sub.title }}</div>
@@ -167,23 +164,21 @@ onMounted(() => {
         <v-divider></v-divider>
         <v-list nav>
           <v-list-item
-            :prepend-icon="
-              navRailStore.railState == false ? mdiChevronLeft : mdiChevronRight
-            "
+            :prepend-icon="rail == false ? mdiChevronLeft : mdiChevronRight"
             title="Collapse"
-            @click="navRailStore.toggleDrawer"
+            @click="rail = !rail"
           ></v-list-item>
         </v-list>
         <!-- <v-btn
           v-if="mobile == false"
           icon
           color="transparent"
-          @click="navRailStore.toggleDrawer"
+          @click="navStore.toggleDrawer"
           class="mr-1 mb-3"
         >
           <v-icon
             color="white"
-            :icon="navRailStore.railState == false ? mdiChevronLeft : mdiChevronRight"
+            :icon="navStore.railState == false ? mdiChevronLeft : mdiChevronRight"
           ></v-icon>
         </v-btn> -->
       </div>
@@ -237,7 +232,7 @@ onMounted(() => {
             <v-list-item
               :prepend-icon="mdiAccount"
               title="Account Settings"
-              @click="() => openPage('account')"
+              @click="() => openPage('Account')"
             ></v-list-item>
           </v-list>
           <v-divider></v-divider>
