@@ -1,6 +1,6 @@
 <script setup>
-import { ref, onMounted, watch } from "vue";
-import { router, Link } from "@inertiajs/vue3";
+import { ref, onMounted, watch, computed } from "vue";
+import { router, Link, usePage } from "@inertiajs/vue3";
 import { useDisplay } from "vuetify";
 import {
   mdiChevronLeft,
@@ -19,6 +19,8 @@ import { useAuthStore } from "@/stores/auth";
 
 // utility functions
 import { printInitials } from "@/Composables/printInitials";
+
+const authUserInertia = computed(() => usePage().props.auth.user);
 
 const authStore = useAuthStore();
 const { mobile } = useDisplay();
@@ -79,12 +81,8 @@ watch(mobile, async (newMobileValue, oldMobileValue) => {
 onMounted(() => {
   // set auth user into pinia
   if (!authStore.user.hasOwnProperty("id")) {
-    authStore.setToken("melmelmel");
-    authStore.setUser({
-      id: 1,
-      username: "melmelmel",
-      email: "melmelmel@gmail.com",
-    });
+    authStore.setUser(authUserInertia);
+    authStore.setToken("mel");
   }
 
   // check orientation

@@ -10,6 +10,15 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 class UserController extends Controller
 {
+    public function saveUser(Request $request)
+    {
+        dd($request);
+        $user = User::where('id', $id)->update([
+
+        ]);
+        return response()->json($user, 200);
+    }
+
     public function getSingleUsers($id)
     {
         $user = User::where('id', $id)->first();

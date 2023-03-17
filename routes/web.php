@@ -62,7 +62,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 
     Route::get('/user/all', [UserController::class, 'getUsers'])->name('admin.get.all.users');
     Route::get('/user/single/{id}', [UserController::class, 'getSingleUsers'])->name('admin.get.all.users');
-
+    Route::get('/user/save', [UserController::class, 'saveUser'])->name('admin.save.user');
 
     Route::get('/companies', function () { return Inertia::render('Admin/Companies'); })->name('admin.companies');
     Route::get('/departments', function () { return Inertia::render('Admin/Departments'); })->name('admin.departments');
@@ -76,5 +76,9 @@ Route::middleware('auth')->prefix('u')->group(function () {
     Route::get('/', function () { return Inertia::render('Normal/Dashboard'); })->name('u.dashboard');
     Route::get('/account', function () { return Inertia::render('Normal/Account'); })->name('u.account');
 });
+
+// Route::get('/test', function() {
+//     return Auth::user();
+// });
 
 require __DIR__.'/auth.php';

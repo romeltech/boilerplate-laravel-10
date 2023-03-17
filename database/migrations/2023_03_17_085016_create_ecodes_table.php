@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('profiles', function (Blueprint $table) {
+        Schema::create('ecodes', function (Blueprint $table) {
             $table->id();
-            $table->string('full_name')->nullable();
-            $table->date('dob')->nullable();
-            $table->string('city')->nullable();
-            $table->string('nationality')->nullable();
+            $table->string('ecode')->nullable();
             $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('profiles');
+        Schema::dropIfExists('ecodes');
     }
 };

@@ -49,6 +49,10 @@ createInertiaApp({
             page.default.layout ??= AdminLayout;
         }
 
+        if (name.startsWith('Normal/')) {
+            page.default.layout ??= NormalLayout;
+        }
+
         return page;
     },
     setup({ el, App, props, plugin }) {

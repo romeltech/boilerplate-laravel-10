@@ -36,7 +36,7 @@ const deleteModel = (item) => {
 
 <template>
   <v-card>
-    <v-card-title class="text-primary text-capitalize">{{ modelData }}</v-card-title>
+    <v-card-title class="text-primary text-capitalize">{{ modelData ? modelData : 'Table'}}</v-card-title>
     <v-table>
       <thead>
         <tr>
