@@ -61,8 +61,9 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/users/{id}', function () { return Inertia::render('Admin/Users/EditUser'); })->name('admin.edit.users');
 
     Route::get('/user/all', [UserController::class, 'getUsers'])->name('admin.get.all.users');
-    Route::get('/user/single/{id}', [UserController::class, 'getSingleUsers'])->name('admin.get.all.users');
-    Route::get('/user/save', [UserController::class, 'saveUser'])->name('admin.save.user');
+    Route::get('/user/single/{id}', [UserController::class, 'getSingleUser'])->name('admin.get.all.users');
+    Route::get('/user/save', [UserController::class, 'saveUser'])->name('admin.save.user.account');
+    Route::get('/user/profile/save', [UserController::class, 'saveProfile'])->name('admin.save.user.profile');
 
     Route::get('/companies', function () { return Inertia::render('Admin/Companies'); })->name('admin.companies');
     Route::get('/departments', function () { return Inertia::render('Admin/Departments'); })->name('admin.departments');

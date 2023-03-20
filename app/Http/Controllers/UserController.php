@@ -10,18 +10,31 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 class UserController extends Controller
 {
+    public function saveProfile(Request $request)
+    {
+        $user = User::where('id', $id)->first();
+        $user->profile()->update([
+            'full_name' => $request['full_name'],
+            'dob' => $request['dob'],
+            'nationality' => $request['nationality'],
+        ]);
+
+        return response()->json([
+            'message' => 'Profile updated successfully',
+        ], 200);
+    }
+
     public function saveUser(Request $request)
     {
-        dd($request);
         $user = User::where('id', $id)->update([
 
         ]);
         return response()->json($user, 200);
     }
 
-    public function getSingleUsers($id)
+    public function getSingleUser($id)
     {
-        $user = User::where('id', $id)->first();
+        $user = User::where('id', $id)->with('profile')->first();
         return response()->json($user, 200);
     }
 
