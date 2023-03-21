@@ -15,7 +15,7 @@ import {
   mdiOfficeBuilding,
 } from "@mdi/js";
 
-import { useAuthStore } from "@/stores/auth";
+import { useAuthStore } from "@/Stores/useAuthStore";
 
 // utility functions
 import { printInitials } from "@/Composables/printInitials";
@@ -78,14 +78,7 @@ watch(mobile, async (newMobileValue, oldMobileValue) => {
 
 onMounted(() => {
   // set auth user into pinia
-  if (!authStore.user.hasOwnProperty("id")) {
-    authStore.setToken("melmelmel");
-    authStore.setUser({
-      id: 1,
-      username: "melmelmel",
-      email: "melmelmel@gmail.com",
-    });
-  }
+ 
 
   // check orientation
   if (mobile.value == true) {

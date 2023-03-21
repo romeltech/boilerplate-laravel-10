@@ -27,32 +27,30 @@ use App\Http\Controllers\ProfileController;
 //     ]);
 // });
 
-Route::get('/', function () {
-    return Inertia::render('Auth/Login');
-});
+ 
 
-Route::get('/', [PageController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/', [PageController::class, 'dashboard'])->name('dashboard');
 
 /**
  * Account routes
  */
-Route::group(function () {
+ 
     // account
     Route::get('/account', function () { return Inertia::render('Account/Account'); })->name('account');
     // profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+ 
 
 /**
  * Admin routes
  */
-Route::prefix('admin')->group(function () {
+Route::prefix('d')->group(function () {
 
     // main pages
     // Route::get('/{page?}', [PageController::class, 'adminMainPages'])->name('admin.main.pages');
-    Route::get('/', function () { return Inertia::render('Admin/Dashboard'); })->name('admin.dashboard');
+    Route::get('/dashboard', function () { return Inertia::render('Admin/Dashboard'); })->name('admin.dashboard');
 
     /**
      * Users
