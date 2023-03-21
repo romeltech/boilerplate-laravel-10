@@ -77,6 +77,7 @@ Route::middleware('auth')->prefix('u')->group(function () {
 
     Route::post('/user/profile/save', [UserController::class, 'saveProfile'])->name('user.save.profile');
     Route::post('/user/save', [UserController::class, 'saveUser'])->name('user.save.account');
+    Route::post('/user/change-password', [UserController::class, 'changePassword'])->name('user.change.password');
 });
 
 // Route::get('/test', function() {

@@ -4,6 +4,8 @@ import { onMounted, ref } from "vue";
 import AccountForm from "@/Pages/Account/AccountForm.vue";
 import ProfileForm from "@/Pages/Account/ProfileForm.vue";
 import Snackbar from "@/Components/Common/SnackBar.vue";
+import ChangePassword from "@/Pages/Account/ChangePassword.vue";
+
 const loadingPage = ref(true);
 const user = ref({
   loading: false,
@@ -54,9 +56,9 @@ const sbOptions = ref({
     <PageHeader title="Edit User" />
     <v-row class="mb-3" :disabled="loadingPage">
       <div class="v-col-12 v-col-md-8">
-        <div class="d-flex">
+        <div class="d-flex flex-wrap">
           <v-btn
-            :color="`${currentForm == 'account' ? 'primary' : 'grey-lighten-5'} `"
+            :color="`${currentForm == 'account' ? 'primary' : 'white'} `"
             size="large"
             class="mr-3"
             :loading="user.loading"
@@ -64,12 +66,15 @@ const sbOptions = ref({
             >Account</v-btn
           >
           <v-btn
-            :color="`${currentForm == 'profile' ? 'primary' : 'grey-lighten-5'} `"
+            :color="`${currentForm == 'profile' ? 'primary' : 'white'} `"
             size="large"
+            class="mr-3"
             :loading="user.loading"
             @click="() => openForm('profile')"
             >profile</v-btn
           >
+
+          <ChangePassword :user-id="1" />
         </div>
       </div>
 

@@ -7,10 +7,24 @@ use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\Profile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 class UserController extends Controller
 {
+    public function changePassword(Request $request)
+    {
+        $validated = $request->validate([
+            'password' => 'required|confirmed|min:9',
+        ]);
+        $user = User::where('id', $request['user_id'])->update([
+            'password' => Hash::make($request['password'])
+        ]);
+        return response()->json([
+            'message' => "Password updated successfully"
+        ], 200);
+    }
+
     public function saveProfile(Request $request)
     {
         $profile = Profile::updateOrCreate(
