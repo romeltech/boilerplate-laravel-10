@@ -3,7 +3,7 @@ import PageHeader from "@/Components/Common/PageHeader.vue";
 import { onMounted, ref } from "vue";
 import AccountForm from "@/Pages/Account/AccountForm.vue";
 import ProfileForm from "@/Pages/Account/ProfileForm.vue";
-
+import Snackbar from "@/Components/Common/SnackBar.vue";
 const loadingPage = ref(true);
 const user = ref({
   loading: false,
@@ -17,13 +17,21 @@ const getSingleUser = async () => {
     .then((response) => {
       user.value.data = response.data;
       loadingPage.value = false;
-      console.log("getSingleUser", response.data);
     })
     .catch((err) => {
       user.value.loading = false;
       loadingPage.value = false;
       console.log(err);
     });
+};
+const savedResponse = (resMsg) => {
+  getSingleUser().then(() => {
+    sbOptions.value = {
+      status: true,
+      type: "success",
+      text: resMsg,
+    };
+  });
 };
 onMounted(() => {
   getSingleUser();
@@ -33,6 +41,12 @@ const currentForm = ref("account");
 const openForm = async (comp) => {
   currentForm.value = comp;
 };
+
+const sbOptions = ref({
+  status: true,
+  type: "info",
+  text: null,
+});
 </script>
 
 <template>
@@ -60,9 +74,18 @@ const openForm = async (comp) => {
       </div>
 
       <div class="v-col-12 v-col-md-8">
-        <AccountForm v-show="currentForm == 'account'" :user="user.data" />
-        <ProfileForm v-show="currentForm == 'profile'" :profile="user.data.profile" />
+        <AccountForm
+          v-show="currentForm == 'account'"
+          :user="user.data"
+          @saved="savedResponse"
+        />
+        <ProfileForm
+          v-show="currentForm == 'profile'"
+          :profile="user.data.profile"
+          @saved="savedResponse"
+        />
       </div>
     </v-row>
+    <Snackbar :options="sbOptions" />
   </v-container>
 </template>

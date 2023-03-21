@@ -69,6 +69,8 @@ import * as yup from "yup";
 import { Form, Field } from "vee-validate";
 import nationalities from "@/Plugins/json/nationalities.json";
 
+const emit = defineEmits(["saved"]);
+
 const nationalityList = ref(nationalities);
 const props = defineProps(["profile"]);
 
@@ -76,7 +78,6 @@ watch(
   () => props.profile,
   (newVal) => {
     profileData.value.data = { ...profileData.value.data, ...newVal };
-    console.log("profileData.data.value", newVal);
   }
 );
 onMounted(() => {
@@ -100,18 +101,16 @@ let validation = yup.object({
 });
 
 const saveProfile = async () => {
-  let data = profileData.value.data;
   profileData.value.loading = true;
   await axios
-    .get("/admin/user/profile/save", data)
+    .post("/u/user/profile/save", profileData.value.data)
     .then((response) => {
-      console.log("saveProfile", response);
-      profileData.value.data = response.data.user;
       profileData.value.loading = false;
+      emit("saved", response.data.message);
     })
     .catch((err) => {
       profileData.value.loading = false;
-      console.log(err.response);
+      console.log(err.response.data);
     });
 };
 </script>

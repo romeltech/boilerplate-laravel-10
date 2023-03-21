@@ -3,22 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\Profile;
+use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 class UserController extends Controller
 {
     public function saveProfile(Request $request)
     {
-        $user = User::where('id', $id)->first();
-        $user->profile()->update([
-            'full_name' => $request['full_name'],
-            'dob' => $request['dob'],
-            'nationality' => $request['nationality'],
-        ]);
-
+        $profile = Profile::updateOrCreate(
+            [
+                'user_id' => $request['user_id']
+            ],
+            [
+                'user_id' => $request['user_id'],
+                'full_name' => $request['full_name'],
+                'dob' => $request['dob'],
+                'nationality' => $request['nationality'],
+            ]
+        );
         return response()->json([
             'message' => 'Profile updated successfully',
         ], 200);
@@ -26,10 +31,22 @@ class UserController extends Controller
 
     public function saveUser(Request $request)
     {
-        $user = User::where('id', $id)->update([
-
-        ]);
-        return response()->json($user, 200);
+        $user = User::updateOrCreate(
+            [
+                'id' => $request['id']
+            ],
+            [
+                'id' => $request['id'],
+                'status' => $request['status'],
+                'role' => $request['role'],
+                'username' => $request['username'],
+                'email' => $request['email'],
+                'phone_no' => $request['phone_no'],
+            ]
+        );
+        return response()->json([
+            'message' => "User updated successfully",
+        ], 200);
     }
 
     public function getSingleUser($id)

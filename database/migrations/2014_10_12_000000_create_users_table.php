@@ -19,7 +19,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('role')->default('normal'); // admmin, normal, manager
-            $table->string('status')->default('active'); // active, disabled, trashed
+            $table->string('status')->default('active'); // active, inactive, trashed
             $table->rememberToken();
             $table->timestamps();
         });

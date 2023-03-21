@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('full_name')->nullable();
             $table->date('dob')->nullable();
-            $table->string('city')->nullable();
             $table->string('nationality')->nullable();
             $table->foreignId('user_id')->constrained();
             $table->timestamps();
