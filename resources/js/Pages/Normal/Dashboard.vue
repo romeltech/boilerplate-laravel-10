@@ -2,7 +2,7 @@
 import PageHeader from "@/Components/Common/PageHeader.vue";
 import SimpleTable from "@/Components/Common/SimpleTable.vue";
 import { ref } from "vue";
-// import AdminLayout from "@/Layouts/AdminLayout.vue";
+import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { router } from "@inertiajs/vue3";
 
 const cards = ref([
@@ -13,13 +13,13 @@ const cards = ref([
   },
   {
     id: 2,
-    title: "Companies",
-    path: "/admin/companies",
+    title: "Settings",
+    path: "/admin/settings",
   },
   {
     id: 3,
-    title: "Departments",
-    path: "/admin/departments",
+    title: "Logs",
+    path: "/admin/logs",
   },
 ]);
 
@@ -29,7 +29,7 @@ const openPage = (path) => {
 </script>
 
 <template>
-  <!-- <AdminLayout> -->
+  <AdminLayout>
     <v-container>
       <PageHeader title="Dashboard" />
       <v-row class="mb-3">
@@ -48,9 +48,9 @@ const openPage = (path) => {
       </v-row>
       <v-row>
         <div class="v-col-12">
-          <SimpleTable />
+          <SimpleTable :data="cards" :header="['ID','TITLE', 'PATH']"/>
         </div>
       </v-row>
     </v-container>
-  <!-- </AdminLayout> -->
+  </AdminLayout>
 </template>

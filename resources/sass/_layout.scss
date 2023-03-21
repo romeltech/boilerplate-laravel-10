@@ -1,1 +1,5 @@
-#app .h-screen{ height: 85vh !important;}
+@media (min-width: 1920px) {
+    .v-application .v-container {
+        max-width: 1600px;
+    }
+}

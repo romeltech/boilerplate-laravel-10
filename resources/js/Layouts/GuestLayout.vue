@@ -55,35 +55,25 @@ onMounted(() => {
 });
 </script>
 <template>
-  <div
-    class="h-screen d-flex flex-column justify-center align-center"
-    style="background-color: #000000"
-  >
-    <div v-for="slide in bgItems">
-      <div
-        v-show="slide.id == bgCurrent"
-        class="gag-guest-bg"
-        :style="`background-image: url('${slide.src}')`"
-      ></div>
+  <v-app>
+    <div class="h-screen d-flex flex-column justify-center align-center" style="background-color: #000000">
+      <div v-for="slide in bgItems">
+        <div v-show="slide.id == bgCurrent" class="gag-guest-bg" :style="`background-image: url('${slide.src}')`"></div>
+      </div>
+      <div class="gag-guest-bg-fill"></div>
+      <div class="h-100 mt-16" style="z-index: 1; max-width: 400px; width: 100%">
+        <div class="mx-auto px-3 text-center" >
+          <Link href="/">
+          <WhiteLogo width="100%" />
+          </Link>
+          <div class="text-subtitle-1 text-white">{{ appName }}</div>
+        </div>
+        <v-card class="mt-8 px-6 pt-6 pb-6 rounded-lg elevation-3" width="90%" max-width="450">
+          <slot />
+        </v-card>
+      </div>
     </div>
-    <div class="gag-guest-bg-fill"></div>
-    <div
-      class="mx-auto px-3 text-center"
-      style="z-index: 1; max-width: 400px; width: 100%"
-    >
-      <Link href="/">
-        <WhiteLogo width="100%" />
-      </Link>
-      <div class="text-subtitle-1 text-white">{{ appName }}</div>
-    </div>
-    <v-card
-      class="mt-8 px-6 pt-6 pb-6 rounded-lg elevation-3"
-      width="90%"
-      max-width="450"
-    >
-      <slot />
-    </v-card>
-  </div>
+  </v-app>
 </template>
 <style scoped>
 .gag-guest-bg {
@@ -100,6 +90,7 @@ onMounted(() => {
   -webkit-animation: fadeIn 10s ease-in-out;
   animation: fadeIn 10s ease-in-out;
 }
+
 .gag-guest-bg-fill::before {
   content: "";
   background-color: rgba(0, 0, 0, 0.4);
@@ -109,37 +100,45 @@ onMounted(() => {
   top: 0;
   left: 0;
 }
+
 @-webkit-keyframes fadeIn {
   0% {
     display: none;
     opacity: 0.2;
   }
+
   5% {
     display: block;
     opacity: 1;
   }
+
   95% {
     display: block;
     opacity: 1;
   }
+
   100% {
     display: block;
     opacity: 0.2;
   }
 }
+
 @keyframes fadeIn {
   0% {
     display: none;
     opacity: 0.2;
   }
+
   5% {
     display: block;
     opacity: 1;
   }
+
   95% {
     display: block;
     opacity: 1;
   }
+
   100% {
     display: block;
     opacity: 0.2;

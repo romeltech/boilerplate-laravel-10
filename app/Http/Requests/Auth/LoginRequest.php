@@ -12,6 +12,22 @@ use Illuminate\Validation\ValidationException;
 class LoginRequest extends FormRequest
 {
     /**
+     * Allow username and email
+     * https://medium.com/geekculture/how-to-authenticate-or-login-with-email-or-username-using-laravel-breeze-inertiajs-961ee57fe9d9
+     */
+
+    protected $loginField;
+    protected $loginValue;
+
+    protected function prepareForValidation()
+    {
+      $this->loginField = filter_var($this->input('login'),
+        FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+      $this->loginValue = $this->input('login');
+      $this->merge([$this->loginField => $this->loginValue]);
+    }
+
+    /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
@@ -27,8 +43,12 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email'],
-            'password' => ['required', 'string'],
+            // 'email' => ['required', 'string', 'email'],
+            // 'username' => ['required', 'string'],
+            // 'password' => ['required', 'string'],
+            'email' => 'required_without:username|string|email|exists:users,email',
+            'username' => 'required_without:email|string|exists:users,username',
+            'password' => 'required|string',
         ];
     }
 
@@ -37,15 +57,17 @@ class LoginRequest extends FormRequest
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function authenticate(): void
+
+     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        // $this->loginField - dynamic login field
+        if (! Auth::attempt($this->only($this->loginField, 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
+                'login' => trans('auth.failed'),
             ]);
         }
 

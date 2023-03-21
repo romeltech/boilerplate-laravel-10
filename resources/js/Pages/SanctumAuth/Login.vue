@@ -6,8 +6,8 @@ import TextField from "@/Components/Form/TextField.vue";
 import { Head, Link, useForm, router } from "@inertiajs/vue3";
 import gagUserClient from '../Services/userClient';
 import { ref } from "vue";
-import { useAuth } from '@/Stores/auth';
-const { setAuth, setToken  } = useAuth();
+import { useAuthStore } from '@/Stores/useAuthStore';
+const { authUser, setToken  } = useAuthStore();
 
 const key = import.meta.env.VITE_APP_KEY;
 
@@ -30,7 +30,7 @@ const submit = () => {
     gagUserClient.get("/sanctum/csrf-cookie").then((res) => {
         gagUserClient.post("api/sanctumlogin", form).then((response) => {
             if (response.data.status) { 
-                setAuth(response.data.user);
+                authUser(response.data.user);
                 setToken(response.data.token.toString());
                 // localStorage.setItem("gag_users_token", response.data.token.toString());
                 // localStorage.setItem("gag_users_profile", JSON.stringify(response.data.user));

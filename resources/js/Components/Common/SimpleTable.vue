@@ -2,6 +2,10 @@
 import { mdiPencil } from "@mdi/js";
 import { mdiTrashCan } from "@mdi/js";
 const props = defineProps({
+  modelData: {
+    type: String,
+    default: "",
+  },
   data: {
     type: Array,
     default: [
@@ -37,7 +41,7 @@ const deleteModel = (item) => {
 
 <template>
   <v-card>
-    <v-card-title class="text-primary">Tickets</v-card-title>
+    <v-card-title class="text-primary text-capitalize">{{ modelData ? modelData : 'Table'}}</v-card-title>
     <v-table>
       <thead>
         <tr>
