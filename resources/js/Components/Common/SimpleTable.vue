@@ -21,7 +21,12 @@ const props = defineProps({
       },
     ],
   },
+  header: {
+    type: Array,
+    default:[],
+  }
 });
+ 
 const editModel = (item) => {
   console.log("edit", item);
 };
@@ -36,31 +41,14 @@ const deleteModel = (item) => {
     <v-table>
       <thead>
         <tr>
-          <th class="text-left text-capitalize">title</th>
-          <th class="text-left text-capitalize">user</th>
-          <th class="text-right text-capitalize">Actions</th>
+          <th class="text-left text-capitalize" v-for="item in header" :key="item">{{item}}</th> 
         </tr>
       </thead>
       <tbody>
         <tr v-for="item in data" :key="item.id">
-          <td>{{ item.title }}</td>
-          <td>{{ item.user.fullname }}</td>
-          <td>
-            <div class="d-flex align-center justify-end">
-              <v-icon
-                size="small"
-                @click="() => editModel(item.id)"
-                :icon="mdiPencil"
-                class="mx-1"
-              />
-              <v-icon
-                size="small"
-                @click="() => deleteModel(item.id)"
-                :icon="mdiTrashCan"
-                class="mx-1"
-              />
-            </div>
-          </td>
+          <td>{{ item.id }}</td>
+          <td>{{ item.title}}</td>
+          <td>{{ item.path }}</td>
         </tr>
       </tbody>
     </v-table>

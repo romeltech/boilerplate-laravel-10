@@ -23,25 +23,24 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-});
+}); 
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// profile
+Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-Route::middleware('auth')->group(function () {
-    // profile
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
 
 // admin routes
-Route::middleware('auth')->prefix('admin')->group(function () {
+Route::prefix('d')->group(function () {
     // locations
+    Route::get('/dashboard',function () {
+        return Inertia::render('Admin/Dashboard');
+    })->name('dashboard');
+
     Route::get('/locations',function () {
         return Inertia::render('Admin/Locations');
-    })->name('admin.locations');
+    })->name('locations');
 });
 
 require __DIR__.'/auth.php';

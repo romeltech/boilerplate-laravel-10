@@ -1,14 +1,9 @@
 <script setup>
-import Checkbox from "@/Components/Checkbox.vue";
 import GuestLayout from "@/Layouts/GuestLayout.vue";
-import InputError from "@/Components/InputError.vue";
-import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/Form/PrimaryButton.vue";
 // import TextInput from "@/Components/TextInput.vue";
 import TextField from "@/Components/Form/TextField.vue";
-import { Head, Link, useForm } from "@inertiajs/vue3";
-
-// import { mdiAccount } from "@mdi/js";
+import { Head, Link, useForm } from "@inertiajs/vue3"; 
 
 defineProps({
   canResetPassword: Boolean,
@@ -35,7 +30,7 @@ const submit = () => {
     <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
       {{ status }}
     </div>
-
+   
     <form @submit.prevent="submit">
       <div class="text-h6 mb-6">Login</div>
       <TextField

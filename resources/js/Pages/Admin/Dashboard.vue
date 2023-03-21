@@ -42,7 +42,7 @@ const cards = ref([
       </v-row>
       <v-row>
         <div class="v-col-12">
-          <SimpleTable />
+          <SimpleTable :data="cards" :header="['ID','TITLE', 'PATH']"/>
         </div>
       </v-row>
     </v-container>
