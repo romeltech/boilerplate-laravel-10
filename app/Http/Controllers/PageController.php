@@ -16,13 +16,12 @@ class PageController extends Controller
      */
     public function dashboard()
     {
-        $role = Auth::user()->role;
-        if($role === 'admin'){
-            // return Inertia::render('Admin/Dashboard');
+        //$role = Auth::user()->role;
+        //if($role === 'admin'){ 
             return redirect('/admin');
-        }elseif($role == 'normal'){
-            return redirect('/u');
-        }
+        //}elseif($role == 'normal'){
+       //     return redirect('/u');
+        //}
     }
 
     public function adminMainPages($page = null)

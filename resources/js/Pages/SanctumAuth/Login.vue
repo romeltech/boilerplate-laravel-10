@@ -22,6 +22,7 @@ const form = useForm({
     url: key,
     remember: false,
 });
+
 const hasError = ref(false);
 const loading = ref(false);;
 const message = ref('');
@@ -32,8 +33,8 @@ const submit = () => {
             if (response.data.status) { 
                 setUser(response.data.user);
                 setToken(response.data.token.toString());
-                // localStorage.setItem("gag_users_token", response.data.token.toString());
-                // localStorage.setItem("gag_users_profile", JSON.stringify(response.data.user));
+                localStorage.setItem("gag_user_token", response.data.token.toString());
+                localStorage.setItem("gag_user_auth", JSON.stringify(response.data.user));
                 loading.value = false;
                 router.visit('/d/dashboard', { method: "get" });
                 //window.location.href = "/d/dashboard";

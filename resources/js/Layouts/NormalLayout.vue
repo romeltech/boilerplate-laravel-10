@@ -8,11 +8,7 @@ import {
   mdiHomeOutline,
   mdiBellOutline,
   mdiAccountGroup,
-  mdiAccount,
-  mdiCog,
-  mdiPlaylistEdit,
-  mdiDomain,
-  mdiOfficeBuilding,
+  mdiAccount
 } from "@mdi/js";
 
 import { useAuthStore } from "@/Stores/useAuthStore";
@@ -33,34 +29,13 @@ const sideNavigation = ref([
   {
     title: "Dashboard",
     icon: mdiHomeOutline,
-    path: "/admin",
+    path: "/d/dashboard",
   },
   {
-    title: "Users",
+    title: "Designs",
     icon: mdiAccountGroup,
-    path: "/admin/users",
-  },
-  {
-    title: "Logs",
-    icon: mdiPlaylistEdit,
-    path: "/admin/logs",
-  },
-  {
-    title: "Settings",
-    icon: mdiCog,
-    subs: [
-      {
-        title: "Companies",
-        icon: mdiDomain,
-        path: "/admin/companies",
-      },
-      {
-        title: "Departments",
-        icon: mdiOfficeBuilding,
-        path: "/admin/departments",
-      },
-    ],
-  },
+    path: "/d/emailers",
+  }, 
 ]);
 const openPage = (path) => {
   router.visit(path, { method: "get" });
@@ -77,8 +52,7 @@ watch(mobile, async (newMobileValue, oldMobileValue) => {
 });
 
 onMounted(() => {
-  // set auth user into pinia
- 
+  // set auth user into pinia 
 
   // check orientation
   if (mobile.value == true) {

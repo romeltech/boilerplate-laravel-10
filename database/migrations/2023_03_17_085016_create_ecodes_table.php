@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('ecodes', function (Blueprint $table) {
             $table->id();
             $table->string('ecode')->nullable();
-            $table->foreignId('user_id')->constrained();
+            $table->unsignedBigInteger('author_id')->constrained();
             $table->timestamps();
         });
     }

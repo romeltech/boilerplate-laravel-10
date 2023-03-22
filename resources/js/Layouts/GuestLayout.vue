@@ -1,7 +1,8 @@
 <script setup>
 import WhiteLogo from "@/Components/Logo/WhiteLogo.vue";
-import { Link } from "@inertiajs/vue3";
+import { Link, router } from "@inertiajs/vue3";
 import { onMounted, ref } from "vue";
+import gagUserClient from '@/Pages/Services/userClient';
 
 const appName = ref(import.meta.env.VITE_APP_NAME);
 const baseUrl = window.location.origin;
@@ -48,10 +49,28 @@ const bgUpdate = () => {
     bgCurrent.value = bgCurrent.value + 1;
   }
 };
+
+const validateLogin = () => {
+  let token = localStorage.getItem("gag_user_token");
+  
+  if (token) {
+    gagUserClient.get("/sanctum/csrf-cookie").then((res) => {
+      gagUserClient.get("api/validate-token/" + token).then((response) => {
+        if(response.data && response.data.status == 'active'){
+          router.visit('/d/dashboard', { method: "get" });
+        }
+
+      });
+    });
+  }
+};
 onMounted(() => {
   setInterval(() => {
     bgUpdate();
   }, 10000);
+
+  validateLogin();
+
 });
 </script>
 <template>
@@ -62,7 +81,7 @@ onMounted(() => {
       </div>
       <div class="gag-guest-bg-fill"></div>
       <div class="h-100 mt-16" style="z-index: 1; max-width: 400px; width: 100%">
-        <div class="mx-auto px-3 text-center" >
+        <div class="mx-auto px-3 text-center">
           <Link href="/">
           <WhiteLogo width="100%" />
           </Link>

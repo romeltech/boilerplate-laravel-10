@@ -8,15 +8,11 @@ import {
   mdiHomeOutline,
   mdiBellOutline,
   mdiAccountGroup,
-  mdiAccount,
-  mdiCog,
-  mdiPlaylistEdit,
-  mdiDomain,
-  mdiOfficeBuilding,
+  mdiAccount
 } from "@mdi/js";
 
 import { useAuthStore } from "@/Stores/useAuthStore";
-
+import gagUserClient from '@/Pages/Services/userClient';
 // utility functions
 import { printInitials } from "@/Composables/printInitials";
 
@@ -35,38 +31,40 @@ const sideNavigation = ref([
   {
     title: "Dashboard",
     icon: mdiHomeOutline,
-    path: "/admin",
+    path: "/d/dashboard",
   },
   {
-    title: "Users",
+    title: "Designs",
     icon: mdiAccountGroup,
-    path: "/admin/users",
+    path: "/d/emailers",
   },
-  {
-    title: "Logs",
-    icon: mdiPlaylistEdit,
-    path: "/admin/logs",
-  },
-  {
-    title: "Settings",
-    icon: mdiCog,
-    subs: [
-      {
-        title: "Companies",
-        icon: mdiDomain,
-        path: "/admin/companies",
-      },
-      {
-        title: "Departments",
-        icon: mdiOfficeBuilding,
-        path: "/admin/departments",
-      },
-    ],
-  },
+ 
 ]);
 const openPage = (path) => {
   router.visit(path, { method: "get" });
 };
+const validateLogin = () => {
+  let token = localStorage.getItem("gag_user_token");
+  
+  if (token) {
+    gagUserClient.get("/sanctum/csrf-cookie").then((res) => {
+      gagUserClient.get("api/validate-token/" + token).then((response) => {
+        if(response.data && response.data.status == 'active'){
+          
+        }else{
+          logoutPage();
+        }
+
+      });
+    });
+  }
+};
+
+const logoutPage = () => {
+  localStorage.setItem("gag_user_token", '');
+    localStorage.setItem("gag_user_auth", '');
+    router.visit('/login', { method: "get" });
+}
 
 watch(mobile, async (newMobileValue, oldMobileValue) => {
   if (newMobileValue == true) {
@@ -78,13 +76,8 @@ watch(mobile, async (newMobileValue, oldMobileValue) => {
   }
 });
 
-onMounted(() => {
-  // set auth user into pinia
-  if (!authStore.user.hasOwnProperty("id")) {
-    //authStore.setUser(authUserInertia);
-    //authStore.setToken("mel");
-  }
-
+onMounted(() => { 
+  //validateLogin();
   // check orientation
   if (mobile.value == true) {
     drawer.value = false;
@@ -230,19 +223,12 @@ onMounted(() => {
             <v-list-item
               :prepend-icon="mdiAccount"
               title="Account Settings"
-              @click="() => openPage('Account')"
+              @click="() => openPage('account')"
             ></v-list-item>
           </v-list>
           <v-divider></v-divider>
-          <div class="pa-3">
-            <Link
-              :href="route('logout')"
-              method="post"
-              as="v-btn"
-              class="text-decoration-none"
-            >
-              <v-btn width="100%" color="primary"> Logout </v-btn>
-            </Link>
+          <div class="pa-3"> 
+              <v-btn  @click="() => logoutPage()" width="100%" color="primary"> Logout </v-btn> 
           </div>
         </v-card>
       </v-menu>
