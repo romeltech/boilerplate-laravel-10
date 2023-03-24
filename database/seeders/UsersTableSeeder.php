@@ -13,7 +13,6 @@ class UsersTableSeeder extends Seeder
     public function run(): void
     {
         $user = new \App\Models\User([
-            'full_name' => 'admin',
             'username' => 'admin',
             'email'      => 'indemnetest+100@gmail.com',
             'phone_no'  => 5034324324,

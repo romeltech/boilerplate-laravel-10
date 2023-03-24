@@ -30,6 +30,22 @@ export const routes = [
         },
     },
     {
+        path: "/admin/users",
+        component: () => import("../pages/admin/users/Users.vue"),
+        name: "Users",
+        meta: {
+            title: "Users",
+        },
+    },
+    {
+        path: "/admin/users/:id",
+        component: () => import("../pages/admin/users/EditUser.vue"),
+        name: "EditUser",
+        meta: {
+            title: "Edit User",
+        },
+    },
+    {
         path: "/admin/logs",
         component: () => import("../pages/admin/Logs.vue"),
         name: "Logs",
