@@ -23,7 +23,7 @@ export const routes = [
      */
     {
         path: "/admin",
-        component: () => import("../components/admin/Dashboard.vue"),
+        component: () => import("../pages/admin/Dashboard.vue"),
         name: "AdminDashboard",
         meta: {
             title: "Dashboard",
@@ -34,8 +34,8 @@ export const routes = [
      * Normal user routes
      */
     {
-        path: "/dashboard",
-        // component: () => import("../components/admin/Dashboard.vue"),
+        path: "/u/dashboard",
+        component: () => import("../pages/admin/Dashboard.vue"),
         name: "UserDashboard",
         meta: {
             title: "Dashboard",
