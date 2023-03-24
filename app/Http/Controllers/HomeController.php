@@ -37,4 +37,9 @@ class HomeController extends Controller
         // return view('admin');
         return view('layouts.app');
     }
+
+    public function normal()
+    {
+        return view('layouts.app');
+    }
 }

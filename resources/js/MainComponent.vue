@@ -1,5 +1,6 @@
 <script setup>
 import { watch } from "vue";
+import AdminLayout from "@/layouts/AdminLayout.vue";
 import { useAuthStore } from "@/stores/auth";
 const authStore = useAuthStore();
 const prop = defineProps({
@@ -18,5 +19,9 @@ watch(prop, () => {
 </script>
 
 <template>
-  <router-view />
+  <div>
+    <AdminLayout v-if="authStore.user.role == 'admin'">
+      <router-view />
+    </AdminLayout>
+  </div>
 </template>

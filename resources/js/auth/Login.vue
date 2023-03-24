@@ -35,7 +35,6 @@
 import GuestLayout from "../layouts/GuestLayout.vue";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
-
 const router = useRouter();
 const credentials = ref({
   login: "",

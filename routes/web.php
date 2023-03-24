@@ -19,13 +19,20 @@ use App\Http\Controllers\CustomAuthController;
 // Auth::routes();
 Auth::routes([
     'register' => false
-]); 
+]);
 // Route::get('/', function () { return view('home'); });
 Route::get('/', [App\Http\Controllers\HomeController::class, 'home'])->name('root');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'home'])->name('home');
 
-Route::get('/admin', [App\Http\Controllers\HomeController::class, 'admin'])->name('admin');
-Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'normal'])->name('normal');
+Route::middleware('auth')->prefix('admin')->group(function () {
+    Route::get('/', [App\Http\Controllers\HomeController::class, 'admin'])->name('admin');
+    Route::get('/{slug}', [App\Http\Controllers\HomeController::class, 'admin'])->name('admin');
+});
+
+Route::middleware('auth')->prefix('u')->group(function () {
+    Route::get('/', [App\Http\Controllers\HomeController::class, 'normal'])->name('normal');
+    Route::get('/{slug}', [App\Http\Controllers\HomeController::class, 'normal'])->name('normal');
+});
 
 /**
  * Custom authentication

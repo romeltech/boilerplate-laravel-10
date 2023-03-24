@@ -5,15 +5,15 @@
         "build": "vite build"
     },
     "devDependencies": {
-        "@popperjs/core": "^2.11.6",
-        "@vitejs/plugin-vue": "^4.0.0",
+        "@vitejs/plugin-vue": "^4.1.0",
         "axios": "^1.1.2",
-        "laravel-vite-plugin": "^0.7.2",
-        "sass": "^1.56.1",
-        "vite": "^4.0.0",
-        "vue": "^3.2.37"
+        "laravel-vite-plugin": "^0.7.4",
+        "sass": "^1.60.0",
+        "vite": "^4.2.1",
+        "vue": "^3.2.47"
     },
     "dependencies": {
+        "@mdi/js": "^7.2.96",
         "pinia": "^2.0.33",
         "vite-plugin-vuetify": "^1.0.2",
         "vue-router": "^4.1.6",

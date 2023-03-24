@@ -64,17 +64,17 @@
           ></v-list-item>
         </v-list>
         <!-- <v-btn
-          v-if="mobile == false"
-          icon
-          color="transparent"
-          @click="navStore.toggleDrawer"
-          class="mr-1 mb-3"
-        >
-          <v-icon
-            color="white"
-            :icon="navStore.railState == false ? mdiChevronLeft : mdiChevronRight"
-          ></v-icon>
-        </v-btn> -->
+            v-if="mobile == false"
+            icon
+            color="transparent"
+            @click="navStore.toggleDrawer"
+            class="mr-1 mb-3"
+          >
+            <v-icon
+              color="white"
+              :icon="navStore.railState == false ? mdiChevronLeft : mdiChevronRight"
+            ></v-icon>
+          </v-btn> -->
       </div>
     </v-navigation-drawer>
     <v-app-bar density="compact" color="white" elevation="0">
@@ -137,7 +137,7 @@
       </v-menu>
     </v-app-bar>
     <v-main>
-      <slot />
+      <router-view />
     </v-main>
   </div>
 </template>
@@ -161,7 +161,6 @@ import { useAuthStore } from "@/stores/auth";
 import { printInitials } from "@/composables/printInitials";
 import { useRouter } from "vue-router";
 const router = useRouter();
-const authStore = useAuthStore();
 const { mobile } = useDisplay();
 const appName = ref(import.meta.env.VITE_APP_NAME);
 const logo = ref(window.location.origin + "/assets/images/fav.png");
@@ -169,6 +168,15 @@ const menu = ref(false);
 const rail = ref(true);
 const drawer = ref(true);
 const temporary = ref(false);
+const authStore = useAuthStore();
+
+const prop = defineProps({
+  auth: {
+    type: Object,
+    default: null,
+  },
+});
+
 const sideNavigation = ref([
   {
     title: "Dashboard",
@@ -211,6 +219,15 @@ const logout = () => {
   console.log("/logout");
 };
 
+// set auth in pinia js
+authStore.setUser(prop.auth);
+
+// watch for changes
+watch(prop, () => {
+  authStore.setUser(prop.auth);
+});
+
+// check orientation
 watch(mobile, async (newMobileValue, oldMobileValue) => {
   if (newMobileValue == true) {
     drawer.value = false;
@@ -220,9 +237,7 @@ watch(mobile, async (newMobileValue, oldMobileValue) => {
     temporary.value = false;
   }
 });
-
 onMounted(() => {
-  // check orientation
   if (mobile.value == true) {
     drawer.value = false;
     temporary.value = true;

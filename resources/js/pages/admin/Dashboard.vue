@@ -1,34 +1,31 @@
 <template>
-  <AdminLayout>
-    <v-container>
-      <!-- <PageHeader title="Dashboard" /> -->
-      <v-row class="mb-3">
-        <div class="v-col-12 v-col-md-4 pb-0" v-for="item in cards" :key="item.id">
-          <v-card
-            color="secondary"
-            height="80"
-            width="100%"
-            class="d-flex align-center justify-center rounded-lg"
-            style="cursor: pointer"
-            @click="() => openPage(item.path)"
-          >
-            <div class="text-h6 text-capitalize">{{ item.title }}</div>
-          </v-card>
-        </div>
-      </v-row>
-      <v-row>
-        <div class="v-col-12">
-          <!-- <SimpleTable /> -->
-        </div>
-      </v-row>
-    </v-container>
-  </AdminLayout>
+  <v-container>
+    <PageHeader title="Dashboard" />
+    <v-row class="mb-3">
+      <div class="v-col-12 v-col-md-4 pb-0" v-for="item in cards" :key="item.id">
+        <v-card
+          color="secondary"
+          height="80"
+          width="100%"
+          class="d-flex align-center justify-center rounded-lg"
+          style="cursor: pointer"
+          @click="() => openPage(item.path)"
+        >
+          <div class="text-h6 text-capitalize">{{ item.title }}</div>
+        </v-card>
+      </div>
+    </v-row>
+    <v-row>
+      <div class="v-col-12">
+        <!-- content -->
+      </div>
+    </v-row>
+  </v-container>
 </template>
 
 <script setup>
-// import PageHeader from "@/Components/Common/PageHeader.vue";
 import { ref } from "vue";
-import AdminLayout from "@/layouts/AdminLayout.vue";
+import PageHeader from "@/components/PageHeader.vue";
 
 const cards = ref([
   {

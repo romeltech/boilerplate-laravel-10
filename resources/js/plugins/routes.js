@@ -29,12 +29,36 @@ export const routes = [
             title: "Dashboard",
         },
     },
+    {
+        path: "/admin/logs",
+        component: () => import("../pages/admin/Logs.vue"),
+        name: "Logs",
+        meta: {
+            title: "Logs",
+        },
+    },
+    {
+        path: "/admin/departments",
+        component: () => import("../pages/admin/Departments.vue"),
+        name: "Departments",
+        meta: {
+            title: "Departments",
+        },
+    },
+    {
+        path: "/admin/companies",
+        component: () => import("../pages/admin/Companies.vue"),
+        name: "Companies",
+        meta: {
+            title: "Companies",
+        },
+    },
 
     /**
      * Normal user routes
      */
     {
-        path: "/u/dashboard",
+        path: "/u",
         component: () => import("../pages/admin/Dashboard.vue"),
         name: "UserDashboard",
         meta: {
