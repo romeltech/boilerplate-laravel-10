@@ -30,7 +30,7 @@ class UserApiController extends Controller
         }
 
         // Generate Token
-        $token = $user->createToken('gaguserstoken')->plainTextToken;
+        $token = $user->createToken('meluserstoken')->plainTextToken;
 
         // Response
         $response = [
