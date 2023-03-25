@@ -1,4 +1,4 @@
-// import Dashboard from "../components/admin//Dashboard.vue";
+// import Dashboard from "../pages/admin/Dashboard.vue";
 // import Users from "../admin//Users.vue";
 // import Large from "../admin//Large.vue";
 export const routes = [
@@ -24,6 +24,7 @@ export const routes = [
     {
         path: "/admin",
         component: () => import("../pages/admin/Dashboard.vue"),
+        // component: Dashboard,
         name: "AdminDashboard",
         meta: {
             title: "Dashboard",

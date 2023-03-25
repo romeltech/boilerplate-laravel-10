@@ -29,7 +29,7 @@ const router = createRouter({
 router.afterEach((to, from) => {
     document.title =
         import.meta.env.VITE_APP_NAME + " - " + to.meta.title ||
-        import.meta.env.VITE_APP_NAME;
+        import.meta.env.VITE_APP_NAME; 
 });
 app.use(router);
 

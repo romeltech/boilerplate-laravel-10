@@ -14,10 +14,10 @@ export const useAuthStore = defineStore("auth", {
         authToken: (state) => state.token,
     },
     actions: {
-        setUser(user) {
+        async setUser(user) {
             this.user = user;
         },
-        setToken(token) {
+        async setToken(token) {
             this.token = token;
         },
     },
