@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CustomAuthController;
+use App\Http\Controllers\PublicPageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,11 @@ Auth::routes([
 // Route::get('/', function () { return view('home'); });
 Route::get('/', [HomeController::class, 'home'])->name('root');
 Route::get('/home', [HomeController::class, 'home'])->name('home');
+
+/**
+ * Sanctum login
+ */
+Route::get('/access', [PublicPageController::class, 'access'])->name('sanctum.login');
 
 /**
  * Admin routes

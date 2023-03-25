@@ -9,12 +9,28 @@ export const routes = [
      * Auth with sanctum
      * https://techvblogs.com/blog/spa-authentication-laravel-9-sanctum-vue3-vite
      */
+
+    /**
+     * Auth Login
+     */
     {
         path: "/login",
         component: () => import("../auth/Login.vue"),
         name: "Login",
         meta: {
             title: "Login",
+        },
+    },
+
+    /**
+     * Sanctum login
+     */
+    {
+        path: "/access",
+        component: () => import("../auth/SanctumLogin.vue"),
+        name: "Access",
+        meta: {
+            title: "Sanctum Login",
         },
     },
 

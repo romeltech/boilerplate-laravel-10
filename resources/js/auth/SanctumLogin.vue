@@ -47,6 +47,8 @@ import { useRouter } from "vue-router";
 import { ref } from "vue";
 import { useAuthStore } from "@/stores/auth";
 
+import { samctumApi } from "@/services/sacntumApi";
+
 const authStore = useAuthStore();
 const router = useRouter();
 const credentials = ref({
@@ -60,17 +62,25 @@ const login = async () => {
         username: credentials.value.login,
         password: credentials.value.password,
     };
-    await axios
-        .post("/login", data)
+    await samctumApi
+        .get("/sanctum/csrf-cookie")
         .then((res) => {
-            console.log("res login", res);
-            authStore.setUser(res.data.user).then(() => {
-                loadingLogin.value = false;
-                router.push({ path: "/admin" });
-            });
+            console.log("res", res);
+            samctumApi
+                .post("api/sanctumlogin", data)
+                .then((loginres) => {
+                    console.log("loginres", loginres);
+                    authStore.setCredentials(loginres.data).then(() => {
+                        loadingLogin.value = false;
+                        router.push({ path: "/admin" });
+                    });
+                })
+                .catch((loginerr) => {
+                    console.log("loginerr", loginerr);
+                });
         })
         .catch((err) => {
-            loadingLogin.value = false;
+            console.log("err", err);
         });
 };
 </script>
