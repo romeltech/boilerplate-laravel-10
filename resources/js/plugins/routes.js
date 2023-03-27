@@ -88,6 +88,26 @@ export const routes = [
     },
 
     /**
+     * Studio
+     */
+    {
+        path: "/admin/studio",
+        component: () => import("../studio/Studio.vue"),
+        name: "Studio",
+        meta: {
+            title: "Studio",
+        },
+    },
+    {
+        path: "/admin/uploader",
+        component: () => import("../studio/Uploader.vue"),
+        name: "Uploader",
+        meta: {
+            title: "Uploader",
+        },
+    },
+
+    /**
      * Normal user routes
      */
     {

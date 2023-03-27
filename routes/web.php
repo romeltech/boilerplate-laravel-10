@@ -64,6 +64,15 @@ Route::middleware('auth')->prefix('account')->group(function () {
 });
 
 /**
+ * Studio
+ */
+Route::middleware('auth')->prefix('studio')->group(function () {
+    Route::post('/upload', [UserController::class, 'upload'])->name('studio.upload');
+    Route::post('/upload-multiple', [UserController::class, 'uploadMultiple'])->name('studio.upload.multiple');
+});
+
+
+/**
  * Custom authentication
  */
 Route::post('login', [CustomAuthController::class, 'login'])->name('custom.login');

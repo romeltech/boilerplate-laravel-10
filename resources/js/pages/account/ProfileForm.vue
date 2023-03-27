@@ -65,11 +65,9 @@ import { Form, Field } from "vee-validate";
 import nationalities from "@/json/nationalities.json";
 import { useRoute } from "vue-router";
 const route = useRoute();
-
 const emit = defineEmits(["saved"]);
-
-const nationalityList = ref(nationalities);
 const props = defineProps(["profile"]);
+const nationalityList = ref(nationalities);
 
 watch(
   () => props.profile,
