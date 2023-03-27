@@ -21,7 +21,8 @@ use App\Http\Controllers\PublicPageController;
 
 // Auth::routes();
 Auth::routes([
-    'register' => false
+    'register' => false,
+    'login' => false
 ]);
 // Route::get('/', function () { return view('home'); });
 Route::get('/', [HomeController::class, 'home'])->name('root');
@@ -30,7 +31,8 @@ Route::get('/home', [HomeController::class, 'home'])->name('home');
 /**
  * Sanctum login
  */
-Route::get('/access', [PublicPageController::class, 'access'])->name('sanctum.login');
+// Route::get('/access', [PublicPageController::class, 'access'])->name('sanctum.login');
+Route::get('/login', [PublicPageController::class, 'access'])->name('login');
 
 /**
  * Admin routes
