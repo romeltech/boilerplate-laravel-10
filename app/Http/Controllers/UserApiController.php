@@ -47,7 +47,15 @@ class UserApiController extends Controller
         return response()->json([
             "user" => auth('sanctum')->user(),
             "hasToken" => $hasToken
-        ], 200);
+        ], $hasToken == true ? 200 : 401 );
+    }
+
+    public function checkSanctumUserByToken(Request $request)
+    {
+        $user = auth('sanctum')->user();
+        return response()->json([
+            "user" => $user,
+        ], $user ? 200 : 401 );
     }
 
 
