@@ -1,6 +1,6 @@
 <script setup>
 import WhiteLogo from "@/Components/logo/WhiteLogo.vue";
-import { onMounted, ref } from "vue";
+import { onMounted, onBeforeUnmount, ref } from "vue";
 
 const appName = ref(import.meta.env.VITE_APP_NAME);
 const baseUrl = window.location.origin;
@@ -39,39 +39,32 @@ const bgItems = ref([
     src: baseUrl + "/assets/images/login-slider/slider-8.jpg",
   },
 ]);
-
+const interval = ref(null);
 const bgUpdate = () => {
-  if (bgCurrent.value == 8) {
-    bgCurrent.value = 1;
-  } else {
-    bgCurrent.value = bgCurrent.value + 1;
-  }
+  interval.value = setInterval(() => {
+    if (bgCurrent.value == 8) {
+      bgCurrent.value = 1;
+    } else {
+      bgCurrent.value = bgCurrent.value + 1;
+    }
+    console.log("interval");
+  }, 10000);
 };
 onMounted(() => {
-  setInterval(() => {
-    console.log("slider interval");
-    bgUpdate();
-  }, 10000);
+  bgUpdate();
+});
+onBeforeUnmount(() => {
+  clearInterval(interval.value);
 });
 </script>
 <template>
-  <div
-    class="h-screen d-flex flex-column justify-start align-center"
-    style="background-color: #000000"
-  >
+  <div class="h-screen d-flex flex-column justify-start align-center" style="background-color: #000000">
     <div v-for="slide in bgItems">
-      <div
-        v-show="slide.id == bgCurrent"
-        class="gag-guest-bg"
-        :style="`background-image: url('${slide.src}')`"
-      ></div>
+      <div v-show="slide.id == bgCurrent" class="gag-guest-bg" :style="`background-image: url('${slide.src}')`"></div>
     </div>
     <div class="gag-guest-bg-fill"></div>
 
-    <div
-      class="mx-auto px-3 text-center"
-      style="z-index: 1; max-width: 400px; width: 100%; margin-top: 100px"
-    >
+    <div class="mx-auto px-3 text-center" style="z-index: 1; max-width: 400px; width: 100%; margin-top: 100px">
       <WhiteLogo width="100%" />
       <div class="text-subtitle-1 text-white">{{ appName }}</div>
     </div>
@@ -93,6 +86,7 @@ onMounted(() => {
   -webkit-animation: fadeIn 10s ease-in-out;
   animation: fadeIn 10s ease-in-out;
 }
+
 .gag-guest-bg-fill::before {
   content: "";
   background-color: rgba(0, 0, 0, 0.4);
@@ -102,37 +96,45 @@ onMounted(() => {
   top: 0;
   left: 0;
 }
+
 @-webkit-keyframes fadeIn {
   0% {
     display: none;
     opacity: 0.2;
   }
+
   5% {
     display: block;
     opacity: 1;
   }
+
   95% {
     display: block;
     opacity: 1;
   }
+
   100% {
     display: block;
     opacity: 0.2;
   }
 }
+
 @keyframes fadeIn {
   0% {
     display: none;
     opacity: 0.2;
   }
+
   5% {
     display: block;
     opacity: 1;
   }
+
   95% {
     display: block;
     opacity: 1;
   }
+
   100% {
     display: block;
     opacity: 0.2;

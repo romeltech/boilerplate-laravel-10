@@ -31,13 +31,14 @@ Route::get('/home', [HomeController::class, 'home'])->name('home');
 /**
  * Sanctum login
  */
-// Route::get('/access', [PublicPageController::class, 'access'])->name('sanctum.login');
-Route::get('/login', [PublicPageController::class, 'access'])->name('login');
+Route::get('/access', [PublicPageController::class, 'access'])->name('sanctum.login');
+Route::get('/check', [PublicPageController::class, 'access'])->name('sanctum.check');
+// Route::get('/login', [PublicPageController::class, 'access'])->name('login');
 
 /**
  * Admin routes
  */
-Route::middleware('auth')->prefix('admin')->group(function () {
+Route::prefix('admin')->group(function () {
     Route::get('/', [HomeController::class, 'admin'])->name('admin');
     Route::get('/{slug}', [HomeController::class, 'admin'])->name('admin.slug');
 
@@ -51,7 +52,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 /**
  * Normal routes
  */
-Route::middleware('auth')->prefix('u')->group(function () {
+Route::prefix('u')->group(function () {
     Route::get('/', [HomeController::class, 'normal'])->name('normal');
     Route::get('/{slug}', [HomeController::class, 'normal'])->name('normal.slug');
 });
@@ -59,7 +60,7 @@ Route::middleware('auth')->prefix('u')->group(function () {
 /**
  * Accout routes
  */
-Route::middleware('auth')->prefix('account')->group(function () {
+Route::prefix('account')->group(function () {
     Route::post('/save', [UserController::class, 'saveUser'])->name('account.save.account');
     Route::post('/profile/save', [UserController::class, 'saveProfile'])->name('account.save.profile');
     Route::post('/change-password', [UserController::class, 'changePassword'])->name('account.change.password');
@@ -68,7 +69,7 @@ Route::middleware('auth')->prefix('account')->group(function () {
 /**
  * Studio
  */
-Route::middleware('auth')->prefix('studio')->group(function () {
+Route::prefix('studio')->group(function () {
     Route::post('/upload', [UserController::class, 'upload'])->name('studio.upload');
     Route::post('/upload-multiple', [UserController::class, 'uploadMultiple'])->name('studio.upload.multiple');
 });
