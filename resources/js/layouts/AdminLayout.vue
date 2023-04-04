@@ -103,7 +103,7 @@
             v-bind="props"
             style="cursor: pointer"
           >
-            <div>{{ printInitials(authStore.user.username) }}</div>
+            <div>{{ printInitials(authStore.user.profile.full_name) }}</div>
           </v-avatar>
         </template>
         <v-card min-width="300" class="rounded-lg mt-1">
