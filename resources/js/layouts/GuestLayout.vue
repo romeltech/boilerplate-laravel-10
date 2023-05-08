@@ -64,7 +64,6 @@ const bgUpdate = () => {
 };
 onMounted(() => {
   interval.value = setInterval(() => {
-    console.log("slider interval");
     bgUpdate();
   }, 10000);
 });

@@ -131,7 +131,9 @@
           </v-list>
           <v-divider></v-divider>
           <div class="pa-3">
-            <v-btn @click="logout" width="100%" color="primary"> Logout </v-btn>
+            <v-btn :loading="loadingLogout" @click="logout" width="100%" color="primary">
+              Logout
+            </v-btn>
           </div>
         </v-card>
       </v-menu>
@@ -161,6 +163,7 @@ import { useAuthStore } from "@/stores/auth";
 import { printInitials } from "@/composables/printInitials";
 import { useRouter } from "vue-router";
 import { authApi } from "@/services/sacntumApi";
+import ScreenLoader from "@/components/ScreenLoader.vue";
 
 const appName = ref(import.meta.env.VITE_APP_NAME);
 const logo = ref(import.meta.env.VITE_APP_URL + "/assets/images/fav.png");
@@ -231,7 +234,9 @@ onMounted(() => {
 });
 
 // logout
+const loadingLogout = ref(false);
 const logout = async () => {
+  loadingLogout.value = true;
   let data = {
     username: authStore.user.username,
   };
@@ -239,13 +244,16 @@ const logout = async () => {
     authApi
       .post("/api/sanctumlogout", data)
       .then(() => {
-        localStorage.removeItem("auth");
         authStore.logout().then(() => {
-          window.location.href = "/login";
+          localStorage.removeItem("authClient");
+          loadingLogout.value = false;
+          router.push({ path: "/login" });
+          //   window.location.href = "/login";
         });
       })
       .catch((err) => {
         console.log("logout error", err);
+        loadingLogout.value = false;
       });
   });
 };

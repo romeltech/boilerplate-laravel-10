@@ -44,20 +44,20 @@ export const routes = [
             title: "Dashboard",
         },
     },
-    // {
-    //     path: "/admin/dashboard",
-    //     component: () => import("../pages/admin/Dashboard.vue"),
-    //     name: "Dashboard",
-    //     meta: {
-    //         requiresAuth: true,
-    //         title: "Dashboard",
-    //         // meta: {
-    //         //     middleware: [
-    //         //         isAuthenticated
-    //         //     ]
-    //         // }
-    //     },
-    // },
+    {
+        path: "/admin/dashboard",
+        component: () => import("../pages/admin/Dashboard.vue"),
+        name: "Dashboard",
+        meta: {
+            requiresAuth: true,
+            title: "Dashboard",
+            // meta: {
+            //     middleware: [
+            //         isAuthenticated
+            //     ]
+            // }
+        },
+    },
     {
         path: "/admin/users",
         component: () => import("../pages/admin/users/Users.vue"),
@@ -67,42 +67,42 @@ export const routes = [
             title: "Users",
         },
     },
-    // {
-    //     path: "/admin/users/:id",
-    //     component: () => import("../pages/admin/users/EditUser.vue"),
-    //     name: "EditUser",
-    //     meta: {
-    //         requiresAuth: true,
-    //         title: "Edit User",
-    //     },
-    // },
-    // {
-    //     path: "/admin/logs",
-    //     component: () => import("../pages/admin/Logs.vue"),
-    //     name: "Logs",
-    //     meta: {
-    //         requiresAuth: true,
-    //         title: "Logs",
-    //     },
-    // },
-    // {
-    //     path: "/admin/departments",
-    //     component: () => import("../pages/admin/Departments.vue"),
-    //     name: "Departments",
-    //     meta: {
-    //         requiresAuth: true,
-    //         title: "Departments",
-    //     },
-    // },
-    // {
-    //     path: "/admin/companies",
-    //     component: () => import("../pages/admin/Companies.vue"),
-    //     name: "Companies",
-    //     meta: {
-    //         requiresAuth: true,
-    //         title: "Companies",
-    //     },
-    // },
+    {
+        path: "/admin/users/:id",
+        component: () => import("../pages/admin/users/EditUser.vue"),
+        name: "EditUser",
+        meta: {
+            requiresAuth: true,
+            title: "Edit User",
+        },
+    },
+    {
+        path: "/admin/logs",
+        component: () => import("../pages/admin/Logs.vue"),
+        name: "Logs",
+        meta: {
+            requiresAuth: true,
+            title: "Logs",
+        },
+    },
+    {
+        path: "/admin/departments",
+        component: () => import("../pages/admin/Departments.vue"),
+        name: "Departments",
+        meta: {
+            requiresAuth: true,
+            title: "Departments",
+        },
+    },
+    {
+        path: "/admin/companies",
+        component: () => import("../pages/admin/Companies.vue"),
+        name: "Companies",
+        meta: {
+            requiresAuth: true,
+            title: "Companies",
+        },
+    },
 
     /**
      * Normal user routes
