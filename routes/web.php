@@ -58,6 +58,7 @@ Route::prefix('u')->group(function () {
  * Accout routes
  */
 Route::prefix('account')->group(function () {
+    Route::get('/', [HomeController::class, 'normal'])->name('account');
     Route::post('/save', [UserController::class, 'saveUser'])->name('account.save.account');
     Route::post('/profile/save', [UserController::class, 'saveProfile'])->name('account.save.profile');
     Route::post('/change-password', [UserController::class, 'changePassword'])->name('account.change.password');

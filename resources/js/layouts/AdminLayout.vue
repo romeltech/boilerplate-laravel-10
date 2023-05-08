@@ -56,7 +56,7 @@
           </div>
         </v-list>
         <v-divider></v-divider>
-        <v-list nav>
+        <v-list nav class="mt-auto">
           <v-list-item
             :prepend-icon="rail == false ? mdiChevronLeft : mdiChevronRight"
             title="Collapse"
@@ -86,7 +86,7 @@
             size="small"
           ></v-app-bar-nav-icon>
           <div class="ml-1 text-body-1 text-primary">
-            {{ appName + " - Dashboard" }}
+            {{ appName }}
           </div>
         </div>
       </template>
@@ -126,7 +126,7 @@
             <v-list-item
               :prepend-icon="mdiAccount"
               title="Account Settings"
-              @click="() => openPage('Account')"
+              @click="() => openPage('/account')"
             ></v-list-item>
           </v-list>
           <v-divider></v-divider>
@@ -163,7 +163,6 @@ import { useAuthStore } from "@/stores/auth";
 import { printInitials } from "@/composables/printInitials";
 import { useRouter } from "vue-router";
 import { authApi } from "@/services/sacntumApi";
-import ScreenLoader from "@/components/ScreenLoader.vue";
 
 const appName = ref(import.meta.env.VITE_APP_NAME);
 const logo = ref(import.meta.env.VITE_APP_URL + "/assets/images/fav.png");
@@ -204,8 +203,12 @@ const sideNavigation = ref([
     ],
   },
 ]);
-const openPage = (path) => {
-  router.push(path).catch((err) => {});
+const openPage = (openPath) => {
+  router
+    .push({
+      path: openPath,
+    })
+    .catch((err) => {});
 };
 
 // app orientation

@@ -1,6 +1,57 @@
+<template>
+  <v-container>
+    <PageHeader title="Edit User" />
+    <v-row class="mb-3" :disabled="loadingPage">
+      <div class="v-col-12 v-col-md-8">
+        <div class="d-flex flex-wrap">
+          <v-btn
+            :color="`${currentForm == 'account' ? 'primary' : 'white'} `"
+            size="large"
+            class="mr-3"
+            :loading="user.loading"
+            @click="() => openForm('account')"
+            >Account</v-btn
+          >
+          <v-btn
+            :color="`${currentForm == 'profile' ? 'primary' : 'white'} `"
+            size="large"
+            class="mr-3"
+            :loading="user.loading"
+            @click="() => openForm('profile')"
+            >profile</v-btn
+          >
+          <v-btn
+            :color="`${currentForm == 'change_password' ? 'primary' : 'white'} `"
+            size="large"
+            class="mr-3"
+            :loading="user.loading"
+            @click="() => openForm('change_password')"
+            >Change Password</v-btn
+          >
+        </div>
+      </div>
+
+      <div class="v-col-12 v-col-md-8">
+        <AccountForm
+          v-show="currentForm == 'account'"
+          :user="user.data"
+          @saved="savedResponse"
+        />
+        <ProfileForm
+          v-show="currentForm == 'profile'"
+          :profile="user.data.profile"
+          @saved="savedResponse"
+        />
+        <ChangePassword v-show="currentForm == 'change_password'" :user-id="1" />
+      </div>
+    </v-row>
+    <Snackbar :options="sbOptions" />
+  </v-container>
+</template>
+
 <script setup>
-import PageHeader from "@/components/pageHeader.vue";
 import { onMounted, ref } from "vue";
+import PageHeader from "@/components/pageHeader.vue";
 import AccountForm from "@/pages/account/AccountForm.vue";
 import ProfileForm from "@/pages/account/ProfileForm.vue";
 import Snackbar from "@/components/SnackBar.vue";
@@ -52,47 +103,3 @@ const sbOptions = ref({
   text: null,
 });
 </script>
-
-<template>
-  <v-container>
-    <PageHeader title="Edit User" />
-    <v-row class="mb-3" :disabled="loadingPage">
-      <div class="v-col-12 v-col-md-8">
-        <div class="d-flex flex-wrap">
-          <v-btn
-            :color="`${currentForm == 'account' ? 'primary' : 'white'} `"
-            size="large"
-            class="mr-3"
-            :loading="user.loading"
-            @click="() => openForm('account')"
-            >Account</v-btn
-          >
-          <v-btn
-            :color="`${currentForm == 'profile' ? 'primary' : 'white'} `"
-            size="large"
-            class="mr-3"
-            :loading="user.loading"
-            @click="() => openForm('profile')"
-            >profile</v-btn
-          >
-
-          <ChangePassword :user-id="1" />
-        </div>
-      </div>
-
-      <div class="v-col-12 v-col-md-8">
-        <AccountForm
-          v-if="currentForm == 'account'"
-          :user="user.data"
-          @saved="savedResponse"
-        />
-        <ProfileForm
-          v-if="currentForm == 'profile'"
-          :profile="user.data.profile"
-          @saved="savedResponse"
-        />
-      </div>
-    </v-row>
-    <Snackbar :options="sbOptions" />
-  </v-container>
-</template>

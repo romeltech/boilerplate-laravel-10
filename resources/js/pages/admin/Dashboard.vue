@@ -26,7 +26,7 @@
 <script setup>
 import { ref } from "vue";
 import PageHeader from "@/components/PageHeader.vue";
-
+import { useRouter } from "vue-router";
 const cards = ref([
   {
     id: 1,
@@ -44,7 +44,12 @@ const cards = ref([
     path: "/admin/departments",
   },
 ]);
-const openPage = (path) => {
-    console.log("path", path);
+const router = useRouter();
+const openPage = (openPath) => {
+  router
+    .push({
+      path: openPath,
+    })
+    .catch((err) => {});
 };
 </script>

@@ -73,7 +73,6 @@ const login = async () => {
   await authApi
     .post("/api/sanctumlogin", data)
     .then((res) => {
-      console.log("res login", res);
       authStore.setCredentials(res.data).then(() => {
         loadingLogin.value = false;
         router.push({ path: "/admin" });

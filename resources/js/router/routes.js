@@ -107,28 +107,13 @@ export const routes = [
     /**
      * Normal user routes
      */
-    // {
-    //     path: "/u",
-    //     component: () => import("../pages/admin/Dashboard.vue"),
-    //     name: "UserDashboard",
-    //     meta: {
-    //         title: "Dashboard",
-    //     },
-    // },
-    // {
-    //     path: "/admin/users",
-    //     component: () => import("../admin/Users/Users.vue"),
-    //     name: "Users",
-    // },
-    // {
-    //     path: "/admin/test",
-    //     component: () => import("../admin/Test.vue"),
-    //     name: "Test",
-    // },
-    // {
-    //     path: "/admin/large",
-    //     component: () => import("../admin/Large.vue"),
-    //     // component: Large, // use this instead if offline mode is required
-    //     name: "Large",
-    // },
+    {
+        path: "/account",
+        component: () => import("../pages/account/Account.vue"),
+        name: "Account",
+        meta: {
+            requiresAuth: true,
+            title: "Account",
+        },
+    },
 ];

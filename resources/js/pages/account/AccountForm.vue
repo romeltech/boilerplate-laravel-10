@@ -80,18 +80,19 @@ import { ref, watch, computed } from "vue";
 import * as yup from "yup";
 import { Form, Field } from "vee-validate";
 import { mdiCircleMedium } from "@mdi/js";
-const emit = defineEmits(["saved"]);
+
 const props = defineProps(["user"]);
+const user = ref({
+  loading: false,
+  data: props.user,
+});
 watch(
   () => props.user,
   (newVal) => {
     user.value.data = newVal;
   }
 );
-const user = ref({
-  loading: false,
-  data: props.user,
-});
+const emit = defineEmits(["saved"]);
 
 /**
  * Status

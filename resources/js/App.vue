@@ -9,6 +9,8 @@ const authStore = useAuthStore();
 const authUser = computed(() => {
   return authStore.user;
 });
+
+console.log(authUser.value);
 </script>
 
 <template>
