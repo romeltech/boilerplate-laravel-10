@@ -86,7 +86,7 @@
             size="small"
           ></v-app-bar-nav-icon>
           <div class="ml-1 text-body-1 text-primary">
-            {{ appName + " - Admin Panel" }}
+            {{ appName + " - Dashboard" }}
           </div>
         </div>
       </template>
