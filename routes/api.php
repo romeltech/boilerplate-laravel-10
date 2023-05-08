@@ -20,4 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/sanctumlogin', [UserApiController::class, 'login']);
+Route::post('/sanctumlogout', [UserApiController::class, 'logout']);
 Route::get('/checkuser', [UserApiController::class, 'checkSanctumUser']);
