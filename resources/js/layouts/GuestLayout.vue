@@ -1,59 +1,3 @@
-<script setup>
-import WhiteLogo from "@/Components/logo/WhiteLogo.vue";
-import { onMounted, ref } from "vue";
-
-const appName = ref(import.meta.env.VITE_APP_NAME);
-const baseUrl = window.location.origin;
-const bgCurrent = ref(1);
-const bgItems = ref([
-  {
-    id: 1,
-    src: baseUrl + "/assets/images/login-slider/slider-1.jpg",
-  },
-  {
-    id: 2,
-    src: baseUrl + "/assets/images/login-slider/slider-2.jpg",
-  },
-  {
-    id: 3,
-    src: baseUrl + "/assets/images/login-slider/slider-3.jpg",
-  },
-  {
-    id: 4,
-    src: baseUrl + "/assets/images/login-slider/slider-4.jpg",
-  },
-  {
-    id: 5,
-    src: baseUrl + "/assets/images/login-slider/slider-5.jpg",
-  },
-  {
-    id: 6,
-    src: baseUrl + "/assets/images/login-slider/slider-6.jpg",
-  },
-  {
-    id: 7,
-    src: baseUrl + "/assets/images/login-slider/slider-7.jpg",
-  },
-  {
-    id: 8,
-    src: baseUrl + "/assets/images/login-slider/slider-8.jpg",
-  },
-]);
-
-const bgUpdate = () => {
-  if (bgCurrent.value == 8) {
-    bgCurrent.value = 1;
-  } else {
-    bgCurrent.value = bgCurrent.value + 1;
-  }
-};
-onMounted(() => {
-  setInterval(() => {
-    console.log("slider interval");
-    bgUpdate();
-  }, 10000);
-});
-</script>
 <template>
   <div
     class="h-screen d-flex flex-column justify-start align-center"
@@ -67,17 +11,67 @@ onMounted(() => {
       ></div>
     </div>
     <div class="gag-guest-bg-fill"></div>
-
-    <div
-      class="mx-auto px-3 text-center"
-      style="z-index: 1; max-width: 400px; width: 100%; margin-top: 100px"
-    >
-      <WhiteLogo width="100%" />
-      <div class="text-subtitle-1 text-white">{{ appName }}</div>
-    </div>
     <slot />
   </div>
 </template>
+
+<script setup>
+import { onMounted, onUnmounted, ref } from "vue";
+const baseUrl = ref(import.meta.env.VITE_APP_URL);
+const interval = ref(null);
+const bgCurrent = ref(1);
+const bgItems = ref([
+  {
+    id: 1,
+    src: baseUrl.value + "/assets/images/login-slider/slider-1.jpg",
+  },
+  {
+    id: 2,
+    src: baseUrl.value + "/assets/images/login-slider/slider-2.jpg",
+  },
+  {
+    id: 3,
+    src: baseUrl.value + "/assets/images/login-slider/slider-3.jpg",
+  },
+  {
+    id: 4,
+    src: baseUrl.value + "/assets/images/login-slider/slider-4.jpg",
+  },
+  {
+    id: 5,
+    src: baseUrl.value + "/assets/images/login-slider/slider-5.jpg",
+  },
+  {
+    id: 6,
+    src: baseUrl.value + "/assets/images/login-slider/slider-6.jpg",
+  },
+  {
+    id: 7,
+    src: baseUrl.value + "/assets/images/login-slider/slider-7.jpg",
+  },
+  {
+    id: 8,
+    src: baseUrl.value + "/assets/images/login-slider/slider-8.jpg",
+  },
+]);
+
+const bgUpdate = () => {
+  if (bgCurrent.value == 8) {
+    bgCurrent.value = 1;
+  } else {
+    bgCurrent.value = bgCurrent.value + 1;
+  }
+};
+onMounted(() => {
+  interval.value = setInterval(() => {
+    console.log("slider interval");
+    bgUpdate();
+  }, 10000);
+});
+
+onUnmounted(() => clearInterval(interval.value));
+</script>
+
 <style scoped>
 .gag-guest-bg {
   background-position: center;

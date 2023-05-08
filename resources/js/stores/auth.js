@@ -4,19 +4,30 @@ import { defineStore } from "pinia";
 // but it's best to use the name of the store and surround it with `use`
 // and `Store` (e.g. `useUserStore`, `useCartStore`, `useProductStore`)
 // the first argument is a unique id of the store across your application
-export const useAuthStore = defineStore("auth", {
+export const useAuthStore = defineStore("authClient", {
     state: () => ({
-        user: {},
-        token: "",
+        user: null,
+        token: null,
+        is_logged_in: false,
     }),
     getters: {
         authUser: (state) => state.user,
         authToken: (state) => state.token,
+        authIsLoggedIn: (state) => state.is_logged_in,
     },
     actions: {
-        async setCredentials(data) {
-            this.user = data.user;
-            this.token = data.token;
+        async setCredentials(res) {
+            this.user = res.user;
+            this.token = res.token;
+            if (res.user && res.token) {
+                this.is_logged_in = true;
+            }
+        },
+        async logout() {
+            this.user = null;
+            this.token = null;
+            this.is_logged_in = false;
+            return true;
         },
         async setUser(user) {
             this.user = user;
@@ -25,4 +36,5 @@ export const useAuthStore = defineStore("auth", {
             this.token = token;
         },
     },
+    persist: true,
 });

@@ -44,8 +44,7 @@ const cards = ref([
     path: "/admin/departments",
   },
 ]);
-
 const openPage = (path) => {
-  router.push(path);
+    console.log("path", path);
 };
 </script>

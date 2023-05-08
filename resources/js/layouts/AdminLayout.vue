@@ -103,7 +103,7 @@
             v-bind="props"
             style="cursor: pointer"
           >
-            <div>{{ printInitials(authStore.user.profile.full_name) }}</div>
+            <div>{{ printInitials(authStore.user.username) }}</div>
           </v-avatar>
         </template>
         <v-card min-width="300" class="rounded-lg mt-1">
@@ -160,15 +160,14 @@ import {
 import { useAuthStore } from "@/stores/auth";
 import { printInitials } from "@/composables/printInitials";
 import { useRouter } from "vue-router";
-const router = useRouter();
-const authStore = useAuthStore();
-const { mobile } = useDisplay();
+import { authApi } from "@/services/sacntumApi";
+
 const appName = ref(import.meta.env.VITE_APP_NAME);
-const logo = ref(window.location.origin + "/assets/images/fav.png");
-const menu = ref(false);
-const rail = ref(true);
-const drawer = ref(true);
-const temporary = ref(false);
+const logo = ref(import.meta.env.VITE_APP_URL + "/assets/images/fav.png");
+
+// navigation
+const authStore = useAuthStore();
+const router = useRouter();
 const sideNavigation = ref([
   {
     title: "Dashboard",
@@ -203,14 +202,15 @@ const sideNavigation = ref([
   },
 ]);
 const openPage = (path) => {
-  router.push(path).catch((err) => {
-    console.log(err);
-  });
-};
-const logout = () => {
-  console.log("/logout");
+  router.push(path).catch((err) => {});
 };
 
+// app orientation
+const { mobile } = useDisplay();
+const menu = ref(false);
+const rail = ref(true);
+const drawer = ref(true);
+const temporary = ref(false);
 watch(mobile, async (newMobileValue, oldMobileValue) => {
   if (newMobileValue == true) {
     drawer.value = false;
@@ -220,9 +220,7 @@ watch(mobile, async (newMobileValue, oldMobileValue) => {
     temporary.value = false;
   }
 });
-
 onMounted(() => {
-  // check orientation
   if (mobile.value == true) {
     drawer.value = false;
     temporary.value = true;
@@ -231,4 +229,24 @@ onMounted(() => {
     temporary.value = false;
   }
 });
+
+// logout
+const logout = async () => {
+  let data = {
+    username: authStore.user.username,
+  };
+  await authApi.get("/sanctum/csrf-cookie").then(() => {
+    authApi
+      .post("/api/sanctumlogout", data)
+      .then(() => {
+        localStorage.removeItem("auth");
+        authStore.logout().then(() => {
+          window.location.href = "/login";
+        });
+      })
+      .catch((err) => {
+        console.log("logout error", err);
+      });
+  });
+};
 </script>

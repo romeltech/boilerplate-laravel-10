@@ -14,35 +14,48 @@ const app = createApp({});
  * to use in your application's views. An example is included for you.
  */
 
+/**
+ * Pinia JS
+ */
+import { createPinia } from "pinia";
+import piniaPluginPersistedState from "pinia-plugin-persistedstate";
+const pinia = createPinia();
+pinia.use(piniaPluginPersistedState);
+app.use(pinia);
 
+/**
+ * User Store
+ */
+import { useAuthStore } from "@/stores/auth";
+const authStore = useAuthStore();
 
 /**
  * Vue Router
  */
 import { createRouter, createWebHistory } from "vue-router";
-import { routes } from "./plugins/routes";
+import { routes } from "./router/routes";
 const router = createRouter({
     // history: createWebHistory(process.env.BASE_URL),
-    history: createWebHistory(import.meta.env.APP_URL),
+    // history: createWebHistory(import.meta.env.VITE_APP_URL),
+    // history: createWebHistory(import.meta.env.APP_URL),
+    history: createWebHistory(),
     routes,
+});
+router.beforeEach((to, from, next) => {
+    console.log("beforeEach to", to.meta.requiresAuth);
+    console.log("authStore.is_logged_in", authStore.is_logged_in);
+    if (to.meta.requiresAuth && !authStore.is_logged_in) {
+        next("/login");
+    } else {
+        next();
+    }
 });
 router.afterEach((to, from) => {
     document.title =
         import.meta.env.VITE_APP_NAME + " - " + to.meta.title ||
-        import.meta.env.VITE_APP_NAME; 
+        import.meta.env.VITE_APP_NAME;
 });
 app.use(router);
-
-
-
-/**
- * Pinia JS
- */
-import { createPinia } from "pinia";
-const pinia = createPinia();
-app.use(pinia);
-
-
 
 /**
  * Vuetify
@@ -50,13 +63,11 @@ app.use(pinia);
 import vuetify from "./plugins/vuetify";
 app.use(vuetify);
 
-
-
 /**
- * Main Component
+ * App Component
  */
-import MainComponent from "./MainComponent.vue";
-app.component("MainComponent", MainComponent);
+import App from "./App.vue";
+app.component("App", App);
 
 /**
  * The following block of code may be used to automatically register your
