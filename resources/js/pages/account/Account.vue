@@ -38,7 +38,7 @@
         />
         <ProfileForm
           v-show="currentForm == 'profile'"
-          :profile="user.data"
+          :user="user.data"
           @saved="savedResponse"
         />
         <ChangePassword v-show="currentForm == 'change_password'" :user-id="1" />

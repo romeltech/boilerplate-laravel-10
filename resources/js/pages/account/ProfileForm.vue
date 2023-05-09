@@ -60,27 +60,18 @@
 </template>
 <script setup>
 import { ref, watch, onMounted } from "vue";
-import * as yup from "yup";
 import { Form, Field } from "vee-validate";
+import * as yup from "yup";
 import nationalities from "@/json/nationalities.json";
 import { useRoute } from "vue-router";
 const route = useRoute();
+const props = defineProps(["user"]);
 
+console.log("props", props?.user?.id);
+
+// profile
 const emit = defineEmits(["saved"]);
-
 const nationalityList = ref(nationalities);
-const props = defineProps(["profile"]);
-
-watch(
-  () => props.profile,
-  (newVal) => {
-    profileData.value.data = { ...profileData.value.data, ...newVal };
-  }
-);
-onMounted(() => {
-  profileData.value.data = { ...profileData.value.data, ...props.profile };
-});
-
 const profileData = ref({
   loading: false,
   data: {
@@ -90,13 +81,25 @@ const profileData = ref({
     nationality: null,
   },
 });
+const getProfile = async () => {
+  await axios
+    .get("/account/profile/", props.user.id)
+    .then((response) => {
+      profileData.value.loading = false;
+      emit("saved", response.data.message);
+    })
+    .catch((err) => {
+      profileData.value.loading = false;
+      console.log(err.response.data);
+    });
+};
 
+// save profile
 let validation = yup.object({
   full_name: yup.string(),
   dob: yup.string(),
-  nationality: yup.string(),
+  nationality: yup.string().notRequired(),
 });
-
 const saveProfile = async () => {
   profileData.value.loading = true;
   await axios
@@ -110,4 +113,13 @@ const saveProfile = async () => {
       console.log(err.response.data);
     });
 };
+watch(
+  () => props.user,
+  (newVal) => {
+    profileData.value.data = { ...profileData.value.data, ...newVal };
+  }
+);
+onMounted(() => {
+  profileData.value.data = { ...profileData.value.data, ...props.user };
+});
 </script>

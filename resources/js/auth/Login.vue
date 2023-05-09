@@ -65,22 +65,39 @@ const credentials = ref({
 const loadingLogin = ref(false);
 const login = async () => {
   loadingLogin.value = true;
+  authLogin()
+    .then((res) => {
+      saveClientKey(res.data);
+    })
+    .catch((err) => {
+      loadingLogin.value = false;
+      console.log("error while trying to login to server", err);
+    });
+};
+
+// auth login to sanctum
+const authLogin = async () => {
   let data = {
     username: credentials.value.login,
     password: credentials.value.password,
   };
-  //   await authApi.get("/sanctum/csrf-cookie").then(() => {
-  await authApi
-    .post("/api/sanctumlogin", data)
-    .then((res) => {
-      authStore.setCredentials(res.data).then(() => {
-        loadingLogin.value = false;
-        router.push({ path: "/admin" });
-      });
-    })
-    .catch((err) => {
+  const response = await authApi.post("/api/sanctumlogin", data);
+  return response;
+};
+
+// save client key
+const saveClientKey = async (data) => {
+  let ckData = {
+    key: data.token,
+    user_id: data.user.id,
+  };
+  const response = await axios.post("/client/key", ckData);
+  if (response) {
+    authStore.setCredentials(data).then(() => {
       loadingLogin.value = false;
+      router.push({ path: "/admin" });
     });
-  //   });
+  }
+  return response;
 };
 </script>

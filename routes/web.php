@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ClientKeyController;
 use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\PublicPageController;
 
@@ -26,6 +27,12 @@ Auth::routes([
 
 // Route::get('/', [PageController::class, 'home'])->name('root');
 Route::get('/', function () { return redirect()->route('admin'); });
+
+/**
+ * Save Client Access
+ */
+Route::post('/client/key', [ClientKeyController::class, 'saveKey'])->name('client.key.save');
+Route::post('/client/remove', [ClientKeyController::class, 'removeKey'])->name('client.access.remove');
 
 /**
  * Sanctum login

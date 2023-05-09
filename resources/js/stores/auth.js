@@ -27,7 +27,6 @@ export const useAuthStore = defineStore("authClient", {
             this.user = null;
             this.token = null;
             this.is_logged_in = false;
-            return true;
         },
         async setUser(user) {
             this.user = user;

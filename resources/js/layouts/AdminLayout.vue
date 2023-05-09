@@ -240,24 +240,37 @@ onMounted(() => {
 const loadingLogout = ref(false);
 const logout = async () => {
   loadingLogout.value = true;
+  authlogout()
+    .then(() => {
+      removeClientKey();
+    })
+    .catch((err) => {
+      loadingLogout.value = false;
+      console.log("error while trying to logout to server", err);
+    });
+};
+
+// auth logout to sanctum
+const authlogout = async () => {
   let data = {
     username: authStore.user.username,
   };
-  await authApi.get("/sanctum/csrf-cookie").then(() => {
-    authApi
-      .post("/api/sanctumlogout", data)
-      .then(() => {
-        authStore.logout().then(() => {
-          localStorage.removeItem("authClient");
-          loadingLogout.value = false;
-          router.push({ path: "/login" });
-          //   window.location.href = "/login";
-        });
-      })
-      .catch((err) => {
-        console.log("logout error", err);
-        loadingLogout.value = false;
-      });
-  });
+  const response = await authApi.post("/api/sanctumlogout", data);
+  return response;
+};
+
+// remove client key
+const removeClientKey = async () => {
+  let data = {
+    key: authStore.token,
+  };
+  const response = await axios.post("/client/remove", data);
+  if (response) {
+    authStore.logout().then(() => {
+      localStorage.removeItem("authClient");
+      loadingLogout.value = false;
+      router.push({ path: "/login" });
+    });
+  }
 };
 </script>
