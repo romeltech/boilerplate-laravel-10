@@ -91,7 +91,7 @@ const saveClientKey = async (data) => {
     key: data.token,
     user_id: data.user.id,
   };
-  const response = await axios.post("/client/key", ckData);
+  const response = await axios.post("/client/savekey", ckData);
   if (response) {
     authStore.setCredentials(data).then(() => {
       loadingLogin.value = false;

@@ -31,8 +31,8 @@ Route::get('/', function () { return redirect()->route('admin'); });
 /**
  * Save Client Access
  */
-Route::post('/client/key', [ClientKeyController::class, 'saveKey'])->name('client.key.save');
-Route::post('/client/remove', [ClientKeyController::class, 'removeKey'])->name('client.access.remove');
+Route::post('/client/savekey', [ClientKeyController::class, 'saveKey'])->name('client.key.save');
+Route::post('/client/removekey', [ClientKeyController::class, 'removeKey'])->name('client.access.remove');
 
 /**
  * Sanctum login

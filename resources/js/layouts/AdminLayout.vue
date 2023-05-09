@@ -204,6 +204,7 @@ const sideNavigation = ref([
   },
 ]);
 const openPage = (openPath) => {
+  menu.value = false;
   router
     .push({
       path: openPath,
@@ -264,7 +265,7 @@ const removeClientKey = async () => {
   let data = {
     key: authStore.token,
   };
-  const response = await axios.post("/client/remove", data);
+  const response = await axios.post("/client/removekey", data);
   if (response) {
     authStore.logout().then(() => {
       localStorage.removeItem("authClient");
