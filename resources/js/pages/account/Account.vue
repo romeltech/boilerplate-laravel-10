@@ -5,20 +5,20 @@
       <div class="v-col-12 v-col-md-8">
         <div class="d-flex flex-wrap">
           <v-btn
-            :color="`${currentForm == 'account' ? 'primary' : 'white'} `"
-            size="large"
-            class="mr-3"
-            :loading="user.loading"
-            @click="() => openForm('account')"
-            >Account</v-btn
-          >
-          <v-btn
             :color="`${currentForm == 'profile' ? 'primary' : 'white'} `"
             size="large"
             class="mr-3"
             :loading="user.loading"
             @click="() => openForm('profile')"
             >profile</v-btn
+          >
+          <v-btn
+            :color="`${currentForm == 'account' ? 'primary' : 'white'} `"
+            size="large"
+            class="mr-3"
+            :loading="user.loading"
+            @click="() => openForm('account')"
+            >Account</v-btn
           >
           <v-btn
             :color="`${currentForm == 'change_password' ? 'primary' : 'white'} `"
@@ -71,7 +71,7 @@ const user = ref({
 });
 
 // tabs
-const currentForm = ref("account");
+const currentForm = ref("profile");
 const openForm = async (comp) => {
   currentForm.value = comp;
 };

@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('full_name')->nullable();
             $table->date('dob')->nullable();
             $table->string('nationality')->nullable();
-            $table->foreignId('user_id')->constrained();
+            // $table->foreignId('user_id')->constrained();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
         });
     }

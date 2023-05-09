@@ -64,10 +64,11 @@ import { Form, Field } from "vee-validate";
 import * as yup from "yup";
 import nationalities from "@/json/nationalities.json";
 import { useRoute } from "vue-router";
+import { clientApi } from "@/services/clientApi";
+import { VAutocomplete } from 'vuetify/components/VAutocomplete'
+
 const route = useRoute();
 const props = defineProps(["user"]);
-
-console.log("props", props?.user?.id);
 
 // profile
 const emit = defineEmits(["saved"]);
@@ -82,17 +83,17 @@ const profileData = ref({
   },
 });
 const getProfile = async () => {
-  await axios
-    .get("/account/profile/", props.user.id)
-    .then((response) => {
-      profileData.value.loading = false;
-      emit("saved", response.data.message);
+  await clientApi
+    .get("/api/account/profile/" + props.user.id)
+    .then((res) => {
+      profileData.value.data = Object.assign({}, res.data);
     })
     .catch((err) => {
       profileData.value.loading = false;
-      console.log(err.response.data);
+      console.log("getProfile", err);
     });
 };
+getProfile();
 
 // save profile
 let validation = yup.object({
@@ -102,8 +103,14 @@ let validation = yup.object({
 });
 const saveProfile = async () => {
   profileData.value.loading = true;
-  await axios
-    .post("/account/profile/save", profileData.value.data)
+  profileData.value.data = {
+    ...profileData.value.data,
+    ...{
+      id: props.user.id,
+    },
+  };
+  await clientApi
+    .post("/api/account/profile/save", profileData.value.data)
     .then((response) => {
       profileData.value.loading = false;
       emit("saved", response.data.message);

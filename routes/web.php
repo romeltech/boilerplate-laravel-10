@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ClientKeyController;
 use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\PublicPageController;
@@ -66,9 +67,6 @@ Route::prefix('u')->group(function () {
  */
 Route::prefix('account')->group(function () {
     Route::get('/', [PageController::class, 'home'])->name('account');
-    Route::post('/save', [UserController::class, 'saveUser'])->name('account.save.account');
-    Route::post('/profile/save', [UserController::class, 'saveProfile'])->name('account.save.profile');
-    Route::post('/change-password', [UserController::class, 'changePassword'])->name('account.change.password');
 });
 
 /**
