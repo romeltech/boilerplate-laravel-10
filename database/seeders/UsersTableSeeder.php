@@ -12,7 +12,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run(): void
     {
-        $user = new \App\Models\User([
+        $admin = new \App\Models\User([
             'username' => 'admin',
             'email'      => 'indemnetest+100@gmail.com',
             'phone_no'  => 5034324324,
@@ -20,6 +20,16 @@ class UsersTableSeeder extends Seeder
             'status'     => 'active', // active, disabled, trashed
             'role'       => 'admin'
         ]);
-        $user->save();
+        $admin->save();
+
+        $normal = new \App\Models\User([
+            'username' => 'normal',
+            'email'      => 'indemnetest+101@gmail.com',
+            'phone_no'  => 5033333333,
+            'password'   => bcrypt('admin@112211'),
+            'status'     => 'active', // active, disabled, trashed
+            'role'       => 'normal'
+        ]);
+        $normal->save();
     }
 }
