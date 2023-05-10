@@ -47,7 +47,14 @@ router.beforeEach((to, from, next) => {
     if (to.meta.requiresAuth && !authStore.is_logged_in) {
         next("/login");
     } else {
-        next();
+        if (to.meta.role && to.meta.role == authStore.user.role) {
+            next();
+        } else if (to.meta.role && to.meta.role !== authStore.user.role) {
+            next("/unauthorized");
+        } else {
+            next();
+        }
+        // next();
     }
 });
 router.afterEach((to, from) => {

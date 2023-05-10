@@ -29,6 +29,13 @@ Auth::routes([
 // Route::get('/', [PageController::class, 'home'])->name('root');
 Route::get('/', function () { return redirect()->route('admin'); });
 
+
+/**
+ * Error pages
+ */
+Route::get('/unauthorized', [PageController::class, 'home'])->name('unauthorized');
+
+
 /**
  * Save Client Access
  */

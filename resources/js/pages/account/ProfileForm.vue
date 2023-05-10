@@ -69,6 +69,7 @@ import { VAutocomplete } from "vuetify/components/VAutocomplete";
 
 const route = useRoute();
 const props = defineProps(["user"]);
+console.log();
 
 // profile
 const emit = defineEmits(["saved"]);
@@ -83,6 +84,17 @@ const profileData = ref({
     nationality: null,
   },
 });
+profileData.value.data = Object.assign({}, props.user);
+watch(
+  () => props.user,
+  (newVal) => {
+    console.log("props.user", props.user);
+    console.log("newVal", newVal);
+    profileData.value.data = Object.assign({}, newVal);
+    // profileData.value.data = { ...profileData.value.data, ...newVal };
+  }
+);
+console.log("profileData.value.data", profileData.value.data);
 const getProfile = async () => {
   await clientApi
     .get("/api/account/profile/" + props.user.id)
@@ -121,13 +133,4 @@ const saveProfile = async () => {
       console.log(err.response.data);
     });
 };
-watch(
-  () => props.user,
-  (newVal) => {
-    profileData.value.data = { ...profileData.value.data, ...newVal };
-  }
-);
-onMounted(() => {
-  profileData.value.data = { ...profileData.value.data, ...props.user };
-});
 </script>

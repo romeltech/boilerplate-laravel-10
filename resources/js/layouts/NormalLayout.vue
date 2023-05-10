@@ -152,7 +152,6 @@ import {
   mdiChevronRight,
   mdiHomeOutline,
   mdiBellOutline,
-  mdiAccountGroup,
   mdiAccount,
   mdiCog,
   mdiPlaylistEdit,
@@ -175,11 +174,6 @@ const sideNavigation = ref([
     title: "Dashboard",
     icon: mdiHomeOutline,
     path: "/admin",
-  },
-  {
-    title: "Users",
-    icon: mdiAccountGroup,
-    path: "/admin/users",
   },
   {
     title: "Logs",
