@@ -44,9 +44,17 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     // console.log("to.meta.requiresAuth", to.meta.requiresAuth);
     // console.log("authStore.is_logged_in", authStore.is_logged_in);
+
     if (to.meta.requiresAuth && !authStore.is_logged_in) {
+        // is not logged in
         next("/login");
     } else {
+        // check if in login page
+        if (to.name === "Login") {
+            next("/");
+        }
+
+        // is logged in
         if (to.meta.role && to.meta.role == authStore.user.role) {
             next();
         } else if (to.meta.role && to.meta.role !== authStore.user.role) {
@@ -54,7 +62,6 @@ router.beforeEach((to, from, next) => {
         } else {
             next();
         }
-        // next();
     }
 });
 router.afterEach((to, from) => {
