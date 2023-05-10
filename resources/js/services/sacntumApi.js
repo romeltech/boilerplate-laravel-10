@@ -8,13 +8,6 @@ const authApi = axios.create({
     // headers: { Accept: "application/json" },
 });
 
-// local api calls with credentials
-const localApi = axios.create({
-    baseURL: apiUrl,
-    withCredentials: true,
-    headers: { Accept: "application/json" },
-});
-
 // local api calls with bearer token
 // const bearerToken = '_pinia_';
 // const bearerToken = process.env.VITE_SANCTUM_USER_TOKEN;
@@ -26,4 +19,4 @@ const localApi = axios.create({
 //     "WWW-Authenticate": `BASIC ${process.env.VITE_SANCTUM_USER_TOKEN}`,
 //   },
 // });
-export { authApi, localApi };
+export { authApi };

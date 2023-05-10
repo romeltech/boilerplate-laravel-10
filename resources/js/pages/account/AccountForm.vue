@@ -84,7 +84,7 @@ import { mdiCircleMedium } from "@mdi/js";
 const props = defineProps(["user"]);
 const user = ref({
   loading: false,
-  data: props.user,
+  data: Object.assign({}, props.user),
 });
 watch(
   () => props.user,

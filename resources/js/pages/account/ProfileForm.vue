@@ -65,14 +65,15 @@ import * as yup from "yup";
 import nationalities from "@/json/nationalities.json";
 import { useRoute } from "vue-router";
 import { clientApi } from "@/services/clientApi";
-import { VAutocomplete } from 'vuetify/components/VAutocomplete'
+import { VAutocomplete } from "vuetify/components/VAutocomplete";
 
 const route = useRoute();
 const props = defineProps(["user"]);
 
 // profile
 const emit = defineEmits(["saved"]);
-const nationalityList = ref(nationalities);
+const nationalityList = ref([]);
+nationalityList.value = nationalities;
 const profileData = ref({
   loading: false,
   data: {
