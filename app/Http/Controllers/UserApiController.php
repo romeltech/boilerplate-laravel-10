@@ -20,7 +20,7 @@ class UserApiController extends Controller
         $user = User::where([
             'username' => $fields['username'],
             'status' => 'active'
-        ])->first();
+        ])->with('teams', 'managed_by')->first();
 
         // Check password
         if(!$user || !Hash::check($fields['password'], $user->password)){
@@ -32,9 +32,12 @@ class UserApiController extends Controller
         // Generate Token
         $token = $user->createToken('meluserstoken')->plainTextToken;
 
+        $users = User::with('teams')->get();
+
         // Response
         $response = [
             'user' => $user,
+            'usersss' => $users,
             'token' => $token
         ];
 
@@ -63,7 +66,12 @@ class UserApiController extends Controller
             'username' => $fields['username'],
             'status' => 'active'
         ])->first();
-        $token = $user->tokens()->delete();
+
+        if($user){
+            $token = $user->tokens();
+            $token->delete();
+        }
+
         return response()->json([
             "user" => $user,
               // "token" => auth()->user()->tokens()

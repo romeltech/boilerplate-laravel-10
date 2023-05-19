@@ -46,4 +46,17 @@ class User extends Authenticatable
     {
         return $this->hasOne(Profile::class);
     }
+
+    public function managed_by()
+    {
+        return $this->belongsTo(User::class, 'manager_ecode');
+    }
+
+    public function teams()
+    {
+        // return $this->hasMany(User::class, 'manager_ecode');
+        return $this->hasMany(User::class)->where('manager_ecode', '10002')->first();
+        //   return $this->hasMany(User::class)->where('manager_ecode','LIKE','%manager_ecode%')->first();
+        // return $this->where('manager_ecode', '10002')->get();
+    }
 }
