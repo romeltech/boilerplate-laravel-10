@@ -18,11 +18,24 @@ class UsersTableSeeder extends Seeder
             'phone_no'  => 5034324324,
             'password'   => bcrypt('gag@112211'),
             'status'     => 'active', // active, disabled, trashed
-            'role'       => 'admin',
+            'role'       => 'app_admin',
             'ecode'       => '10001',
             'is_regular' => true,
         ]);
         $admin->save();
+
+        $employee = new \App\Models\User([
+            'username' => 'normal',
+            'email'      => 'testaccount+101@gmail.com',
+            'phone_no'  => 5033333331,
+            'password'   => bcrypt('gag@112211'),
+            'status'     => 'active', // active, disabled, trashed
+            'role'       => 'normal',
+            'ecode'       => '10002',
+            'is_regular' => true,
+            'superior_ecode' => '10003',
+        ]);
+        $employee->save();
 
         $manager = new \App\Models\User([
             'username' => 'manager',
@@ -30,24 +43,11 @@ class UsersTableSeeder extends Seeder
             'phone_no'  => 5033333332,
             'password'   => bcrypt('gag@112211'),
             'status'     => 'active', // active, disabled, trashed
-            'role'       => 'employee',
-            'ecode'       => '10002',
+            'role'       => 'normal',
+            'ecode'       => '10003',
             'is_regular' => true,
         ]);
         $manager->save();
-
-        $employee = new \App\Models\User([
-            'username' => 'employee',
-            'email'      => 'testaccount+101@gmail.com',
-            'phone_no'  => 5033333331,
-            'password'   => bcrypt('gag@112211'),
-            'status'     => 'active', // active, disabled, trashed
-            'role'       => 'employee',
-            'ecode'       => '10003',
-            'is_regular' => true,
-            'manager_ecode' => '10002',
-        ]);
-        $employee->save();
 
         $probation = new \App\Models\User([
             'username' => 'probation',
@@ -55,23 +55,35 @@ class UsersTableSeeder extends Seeder
             'phone_no'  => 5033333311,
             'password'   => bcrypt('gag@112211'),
             'status'     => 'active', // active, disabled, trashed
-            'role'       => 'employee',
+            'role'       => 'normal',
             'ecode'       => '10004',
             'is_regular' => false,
-            'manager_ecode' => '10002',
+            'superior_ecode' => '10003',
         ]);
         $probation->save();
 
         $hr = new \App\Models\User([
-            'username' => 'hr',
+            'username' => 'hr_admin',
             'email'      => 'testaccount+103@gmail.com',
             'phone_no'  => 5033333333,
             'password'   => bcrypt('gag@112211'),
             'status'     => 'active', // active, disabled, trashed
-            'role'       => 'employee',
+            'role'       => 'hr_admin',
             'ecode'       => '10005',
             'is_regular' => true,
         ]);
         $hr->save();
+
+        $hrbp = new \App\Models\User([
+            'username' => 'hrbp',
+            'email'      => 'testaccount+104@gmail.com',
+            'phone_no'  => 5034324325,
+            'password'   => bcrypt('gag@112211'),
+            'status'     => 'active', // active, disabled, trashed
+            'role'       => 'hrbp',
+            'ecode'       => '10006',
+            'is_regular' => true,
+        ]);
+        $hrbp->save();
     }
 }

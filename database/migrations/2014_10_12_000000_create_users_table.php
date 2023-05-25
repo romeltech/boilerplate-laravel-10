@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('ecode')->unique();
             $table->string('username')->unique();
             $table->string('phone_no')->unique();
             $table->string('email')->unique();
@@ -21,7 +20,8 @@ return new class extends Migration
             $table->string('password');
             $table->string('role')->default('active'); // admin, normal
             $table->string('status')->default('active'); // active, inactive, trashed
-            $table->string('manager_ecode')->nullable();
+            $table->string('ecode')->unique();
+            $table->string('superior_ecode')->nullable();
             $table->boolean('is_regular')->default(true);
             $table->rememberToken();
             $table->timestamps();

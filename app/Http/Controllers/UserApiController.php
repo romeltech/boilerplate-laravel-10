@@ -20,7 +20,7 @@ class UserApiController extends Controller
         $user = User::where([
             'username' => $fields['username'],
             'status' => 'active'
-        ])->with('teams', 'managed_by')->first();
+        ])->with('teams')->first();
 
         // Check password
         if(!$user || !Hash::check($fields['password'], $user->password)){
