@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class UserApiController extends Controller
 {
@@ -98,5 +99,60 @@ class UserApiController extends Controller
             "user" => $user,
             "token" => $hasToken
         ], 200);
+    }
+
+    public function checkUser(Request $request)
+    {
+        $bearer = $request->bearerToken() ? $request->bearerToken() : null;
+        $user = $request->user() ? $request->user() : null;
+        $token = null;
+
+        if(auth('sanctum')->check()){
+            // check
+            $checkToken = PersonalAccessToken::findToken($bearer);
+            if($checkToken){
+                $token = $bearer;
+            }
+        }else{
+            return response()->json([
+                'user' => $user,
+                'bearer' => $bearer,
+                'token' => $token
+            ], 401);
+        }
+
+        return response()->json([
+            'user' => $user,
+            'bearer' => $bearer,
+            'token' => $token,
+            'check' => auth('sanctum')->check()
+        ]);
+    }
+
+    public function refreshToken(Request $request)
+    {
+        $bearer = $request->bearerToken() ? $request->bearerToken() : null;
+        $user = $request->user() ? $request->user() : null;
+        $token = null;
+
+        if(auth('sanctum')->check()){
+            // delete tokens
+            $deleteToken = $user->tokens()->delete();
+            // generate a new token
+            $token = $user->createToken('meluserstoken')->plainTextToken;
+        }else{
+            return response()->json([
+                'user' => $user,
+                'bearer' => $bearer,
+                'token' => $token
+            ], 401);
+        }
+
+        return response()->json([
+            'user' => $user,
+            'bearer' => $bearer,
+            'token' => $token,
+            'check' => auth('sanctum')->check()
+        ]);
     }
 }
