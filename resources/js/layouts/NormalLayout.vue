@@ -56,7 +56,7 @@
           </div>
         </v-list>
         <v-divider></v-divider>
-        <v-list nav>
+        <v-list nav class="mt-auto">
           <v-list-item
             :prepend-icon="rail == false ? mdiChevronLeft : mdiChevronRight"
             title="Collapse"
@@ -64,17 +64,17 @@
           ></v-list-item>
         </v-list>
         <!-- <v-btn
-            v-if="mobile == false"
-            icon
-            color="transparent"
-            @click="navStore.toggleDrawer"
-            class="mr-1 mb-3"
-          >
-            <v-icon
-              color="white"
-              :icon="navStore.railState == false ? mdiChevronLeft : mdiChevronRight"
-            ></v-icon>
-          </v-btn> -->
+          v-if="mobile == false"
+          icon
+          color="transparent"
+          @click="navStore.toggleDrawer"
+          class="mr-1 mb-3"
+        >
+          <v-icon
+            color="white"
+            :icon="navStore.railState == false ? mdiChevronLeft : mdiChevronRight"
+          ></v-icon>
+        </v-btn> -->
       </div>
     </v-navigation-drawer>
     <v-app-bar density="compact" color="white" elevation="0">
@@ -86,7 +86,7 @@
             size="small"
           ></v-app-bar-nav-icon>
           <div class="ml-1 text-body-1 text-primary">
-            {{ appName + " - Admin Panel" }}
+            {{ appName }}
           </div>
         </div>
       </template>
@@ -126,18 +126,20 @@
             <v-list-item
               :prepend-icon="mdiAccount"
               title="Account Settings"
-              @click="() => openPage('Account')"
+              @click="() => openPage('/account')"
             ></v-list-item>
           </v-list>
           <v-divider></v-divider>
           <div class="pa-3">
-            <v-btn @click="logout" width="100%" color="primary"> Logout </v-btn>
+            <v-btn :loading="loadingLogout" @click="logout" width="100%" color="primary">
+              Logout
+            </v-btn>
           </div>
         </v-card>
       </v-menu>
     </v-app-bar>
     <v-main>
-      <router-view />
+      <slot />
     </v-main>
   </div>
 </template>
@@ -150,7 +152,6 @@ import {
   mdiChevronRight,
   mdiHomeOutline,
   mdiBellOutline,
-  mdiAccountGroup,
   mdiAccount,
   mdiCog,
   mdiPlaylistEdit,
@@ -160,33 +161,19 @@ import {
 import { useAuthStore } from "@/stores/auth";
 import { printInitials } from "@/composables/printInitials";
 import { useRouter } from "vue-router";
-const router = useRouter();
-const { mobile } = useDisplay();
+import { authApi } from "@/services/sacntumApi";
+
 const appName = ref(import.meta.env.VITE_APP_NAME);
-const logo = ref(window.location.origin + "/assets/images/fav.png");
-const menu = ref(false);
-const rail = ref(true);
-const drawer = ref(true);
-const temporary = ref(false);
+const logo = ref(import.meta.env.VITE_APP_URL + "/assets/images/fav.png");
+
+// navigation
 const authStore = useAuthStore();
-
-const prop = defineProps({
-  auth: {
-    type: Object,
-    default: null,
-  },
-});
-
+const router = useRouter();
 const sideNavigation = ref([
   {
     title: "Dashboard",
     icon: mdiHomeOutline,
     path: "/admin",
-  },
-  {
-    title: "Users",
-    icon: mdiAccountGroup,
-    path: "/admin/users",
   },
   {
     title: "Logs",
@@ -210,24 +197,21 @@ const sideNavigation = ref([
     ],
   },
 ]);
-const openPage = (path) => {
-  router.push(path).catch((err) => {
-    console.log(err);
-  });
+const openPage = (openPath) => {
+  menu.value = false;
+  router
+    .push({
+      path: openPath,
+    })
+    .catch((err) => {});
 };
-const logout = () => {
-  console.log("/logout");
-};
 
-// set auth in pinia js
-authStore.setUser(prop.auth);
-
-// watch for changes
-watch(prop, () => {
-  authStore.setUser(prop.auth);
-});
-
-// check orientation
+// app orientation
+const { mobile } = useDisplay();
+const menu = ref(false);
+const rail = ref(true);
+const drawer = ref(true);
+const temporary = ref(false);
 watch(mobile, async (newMobileValue, oldMobileValue) => {
   if (newMobileValue == true) {
     drawer.value = false;
@@ -246,4 +230,42 @@ onMounted(() => {
     temporary.value = false;
   }
 });
+
+// logout
+const loadingLogout = ref(false);
+const logout = async () => {
+  loadingLogout.value = true;
+  authlogout()
+    .then(() => {
+      removeClientKey();
+    })
+    .catch((err) => {
+      loadingLogout.value = false;
+      console.log("error while trying to logout to server", err);
+    });
+};
+
+// auth logout to sanctum
+const authlogout = async () => {
+  let data = {
+    username: authStore.user.username,
+  };
+  const response = await authApi.post("/api/sanctumlogout", data);
+  return response;
+};
+
+// remove client key
+const removeClientKey = async () => {
+  let data = {
+    key: authStore.token,
+  };
+  const response = await axios.post("/client/removekey", data);
+  if (response) {
+    authStore.logout().then(() => {
+      localStorage.removeItem("authClient");
+      loadingLogout.value = false;
+      router.push({ path: "/login" });
+    });
+  }
+};
 </script>

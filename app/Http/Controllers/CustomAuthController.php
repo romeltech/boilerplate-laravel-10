@@ -24,11 +24,28 @@ class CustomAuthController extends Controller
             $user = Auth::user();
             // $isLoggedIn = Auth::loginUsingId($user->id);
             if($user->role === 'admin'){
-                return redirect('admin');
+                // return redirect()->route('admin');
+                // return redirect('/admin');
+                // return redirect('admin');
+                return response()->json([
+                    'user' => $user,
+                    'login_status' => true,
+                    'message' => 'Login successful'
+                ], 200);
             }elseif($user->role === 'normal'){
-                return redirect('dashboard');
+                // return redirect('/u');
+                return response()->json([
+                    'user' => $user,
+                    'login_status' => true,
+                    'message' => 'Login successful'
+                ], 200);
             }else{
-                return redirect('dashboard');
+                // return redirect('/u');
+                return response()->json([
+                    'user' => $user,
+                    'login_status' => true,
+                    'message' => 'Login successful'
+                ], 200);
             }
         }else{
             return response()->json([

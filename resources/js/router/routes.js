@@ -1,4 +1,4 @@
-// import Dashboard from "../components/admin//Dashboard.vue";
+// import Dashboard from "../pages/admin/Dashboard.vue";
 // import Users from "../admin//Users.vue";
 // import Large from "../admin//Large.vue";
 export const routes = [
@@ -9,11 +9,24 @@ export const routes = [
      * Auth with sanctum
      * https://techvblogs.com/blog/spa-authentication-laravel-9-sanctum-vue3-vite
      */
+
+    // {
+    //     path: "/",
+    //     component: () => import("../App.vue"),
+    //     name: "App",
+    //     meta: {
+    //         title: "App",
+    //     },
+    // },
+    /**
+     * Auth Login
+     */
     {
         path: "/login",
         component: () => import("../auth/Login.vue"),
         name: "Login",
         meta: {
+            requiresAuth: false,
             title: "Login",
         },
     },
@@ -24,9 +37,27 @@ export const routes = [
     {
         path: "/admin",
         component: () => import("../pages/admin/Dashboard.vue"),
-        name: "AdminDashboard",
+        // component: Dashboard,
+        name: "AdminRoot",
         meta: {
+            requiresAuth: true,
+            role: "admin",
             title: "Dashboard",
+        },
+    },
+    {
+        path: "/admin/dashboard",
+        component: () => import("../pages/admin/Dashboard.vue"),
+        name: "Dashboard",
+        meta: {
+            requiresAuth: true,
+            role: "admin",
+            title: "Dashboard",
+            // meta: {
+            //     middleware: [
+            //         isAuthenticated
+            //     ]
+            // }
         },
     },
     {
@@ -34,6 +65,8 @@ export const routes = [
         component: () => import("../pages/admin/users/Users.vue"),
         name: "Users",
         meta: {
+            requiresAuth: true,
+            role: "admin",
             title: "Users",
         },
     },
@@ -42,6 +75,8 @@ export const routes = [
         component: () => import("../pages/admin/users/EditUser.vue"),
         name: "EditUser",
         meta: {
+            requiresAuth: true,
+            role: "admin",
             title: "Edit User",
         },
     },
@@ -50,6 +85,8 @@ export const routes = [
         component: () => import("../pages/admin/Logs.vue"),
         name: "Logs",
         meta: {
+            requiresAuth: true,
+            role: "admin",
             title: "Logs",
         },
     },
@@ -58,6 +95,8 @@ export const routes = [
         component: () => import("../pages/admin/Departments.vue"),
         name: "Departments",
         meta: {
+            requiresAuth: true,
+            role: "admin",
             title: "Departments",
         },
     },
@@ -66,6 +105,8 @@ export const routes = [
         component: () => import("../pages/admin/Companies.vue"),
         name: "Companies",
         meta: {
+            requiresAuth: true,
+            role: "admin",
             title: "Companies",
         },
     },
@@ -74,27 +115,25 @@ export const routes = [
      * Normal user routes
      */
     {
-        path: "/u",
-        component: () => import("../pages/admin/Dashboard.vue"),
-        name: "UserDashboard",
+        path: "/account",
+        component: () => import("../pages/account/Account.vue"),
+        name: "Account",
         meta: {
-            title: "Dashboard",
+            requiresAuth: true,
+            title: "Account",
         },
     },
-    // {
-    //     path: "/admin/users",
-    //     component: () => import("../admin/Users/Users.vue"),
-    //     name: "Users",
-    // },
-    // {
-    //     path: "/admin/test",
-    //     component: () => import("../admin/Test.vue"),
-    //     name: "Test",
-    // },
-    // {
-    //     path: "/admin/large",
-    //     component: () => import("../admin/Large.vue"),
-    //     // component: Large, // use this instead if offline mode is required
-    //     name: "Large",
-    // },
+
+    /**
+     * Normal user routes
+     */
+    {
+        path: "/unauthorized",
+        component: () => import("../pages/Unauthorized.vue"),
+        name: "Unauthorized",
+        meta: {
+            requiresAuth: true,
+            title: "Unauthorized",
+        },
+    },
 ];

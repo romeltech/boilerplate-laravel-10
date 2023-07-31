@@ -1,9 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ClientKeyController;
 use App\Http\Controllers\CustomAuthController;
+use App\Http\Controllers\PublicPageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,19 +25,37 @@ use App\Http\Controllers\CustomAuthController;
 Auth::routes([
     'register' => false
 ]);
-// Route::get('/', function () { return view('home'); });
-Route::get('/', [HomeController::class, 'home'])->name('root');
-Route::get('/home', [HomeController::class, 'home'])->name('home');
+
+// Route::get('/', [PageController::class, 'home'])->name('root');
+Route::get('/', function () { return redirect()->route('admin'); });
+
+
+/**
+ * Error pages
+ */
+Route::get('/unauthorized', [PageController::class, 'home'])->name('unauthorized');
+
+
+/**
+ * Save Client Access
+ */
+Route::post('/client/savekey', [ClientKeyController::class, 'saveKey'])->name('client.key.save');
+Route::post('/client/removekey', [ClientKeyController::class, 'removeKey'])->name('client.access.remove');
+
+/**
+ * Sanctum login
+ */
+Route::get('/access', [PublicPageController::class, 'access'])->name('sanctum.login');
 
 /**
  * Admin routes
  */
-Route::middleware('auth')->prefix('admin')->group(function () {
-    Route::get('/', [HomeController::class, 'admin'])->name('admin');
-    Route::get('/{slug}', [HomeController::class, 'admin'])->name('admin.slug');
+Route::prefix('admin')->group(function () {
+    Route::get('/', [PageController::class, 'home'])->name('admin');
+    Route::get('/{slug}', [PageController::class, 'home'])->name('admin.slug');
 
     // users
-    Route::get('/users/{id}', [HomeController::class, 'admin'])->name('admin.get.users');
+    Route::get('/users/{id}', [PageController::class, 'home'])->name('admin.get.users');
     // users axios
     Route::get('/user/all', [UserController::class, 'getUsers'])->name('admin.get.all.users');
     Route::get('/user/single/{id}', [UserController::class, 'getSingleUser'])->name('admin.get.single.user');
@@ -43,18 +64,16 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 /**
  * Normal routes
  */
-Route::middleware('auth')->prefix('u')->group(function () {
-    Route::get('/', [HomeController::class, 'normal'])->name('normal');
-    Route::get('/{slug}', [HomeController::class, 'normal'])->name('normal.slug');
+Route::prefix('u')->group(function () {
+    Route::get('/', [PageController::class, 'home'])->name('normal');
+    Route::get('/{slug}', [PageController::class, 'home'])->name('normal.slug');
 });
 
 /**
  * Accout routes
  */
-Route::middleware('auth')->prefix('account')->group(function () {
-    Route::post('/save', [UserController::class, 'saveUser'])->name('account.save.account');
-    Route::post('/profile/save', [UserController::class, 'saveProfile'])->name('account.save.profile');
-    Route::post('/change-password', [UserController::class, 'changePassword'])->name('account.change.password');
+Route::prefix('account')->group(function () {
+    Route::get('/', [PageController::class, 'home'])->name('account');
 });
 
 /**

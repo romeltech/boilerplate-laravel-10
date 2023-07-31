@@ -60,27 +60,21 @@
 </template>
 <script setup>
 import { ref, watch, onMounted } from "vue";
-import * as yup from "yup";
 import { Form, Field } from "vee-validate";
+import * as yup from "yup";
 import nationalities from "@/json/nationalities.json";
 import { useRoute } from "vue-router";
+import { clientApi } from "@/services/clientApi";
+import { VAutocomplete } from "vuetify/components/VAutocomplete";
+
 const route = useRoute();
+const props = defineProps(["user"]);
+console.log();
 
+// profile
 const emit = defineEmits(["saved"]);
-
-const nationalityList = ref(nationalities);
-const props = defineProps(["profile"]);
-
-watch(
-  () => props.profile,
-  (newVal) => {
-    profileData.value.data = { ...profileData.value.data, ...newVal };
-  }
-);
-onMounted(() => {
-  profileData.value.data = { ...profileData.value.data, ...props.profile };
-});
-
+const nationalityList = ref([]);
+nationalityList.value = nationalities;
 const profileData = ref({
   loading: false,
   data: {
@@ -90,17 +84,46 @@ const profileData = ref({
     nationality: null,
   },
 });
+profileData.value.data = Object.assign({}, props.user);
+watch(
+  () => props.user,
+  (newVal) => {
+    console.log("props.user", props.user);
+    console.log("newVal", newVal);
+    profileData.value.data = Object.assign({}, newVal);
+    // profileData.value.data = { ...profileData.value.data, ...newVal };
+  }
+);
+console.log("profileData.value.data", profileData.value.data);
+const getProfile = async () => {
+  await clientApi
+    .get("/api/account/profile/" + props.user.id)
+    .then((res) => {
+      profileData.value.data = Object.assign({}, res.data);
+    })
+    .catch((err) => {
+      profileData.value.loading = false;
+      console.log("getProfile", err);
+    });
+};
+getProfile();
 
+// save profile
 let validation = yup.object({
   full_name: yup.string(),
   dob: yup.string(),
-  nationality: yup.string(),
+  nationality: yup.string().notRequired(),
 });
-
 const saveProfile = async () => {
   profileData.value.loading = true;
-  await axios
-    .post("/account/profile/save", profileData.value.data)
+  profileData.value.data = {
+    ...profileData.value.data,
+    ...{
+      id: props.user.id,
+    },
+  };
+  await clientApi
+    .post("/api/account/profile/save", profileData.value.data)
     .then((response) => {
       profileData.value.loading = false;
       emit("saved", response.data.message);
