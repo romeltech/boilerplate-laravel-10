@@ -21,7 +21,7 @@
 <body>
     <div id="app">
         <v-app style="background-color: #fafafa">
-            <main-component :auth="{{ json_encode(auth()->user()) }}"></main-component>
+            <main-component :auth="{{ json_encode(auth()->user() ? auth()->user() : null ) }}"></main-component>
             {{-- @auth @endauth --}}
         </v-app>
     </div>
