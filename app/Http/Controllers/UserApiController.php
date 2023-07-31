@@ -30,15 +30,13 @@ class UserApiController extends Controller
         }
 
         // Generate Token
-        $token = $user->createToken('gaguserstoken')->plainTextToken;
+        $token = $user->createToken('meluserstoken')->plainTextToken;
 
         // Response
-        $response = [
+        return response( [
             'user' => $user,
             'token' => $token
-        ];
-
-        return response($response, 201);
+        ], 201);
     }
 
     public function checkSanctumUser(Request $request)

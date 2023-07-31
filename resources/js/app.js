@@ -18,9 +18,9 @@ const app = createApp({});
  * Pinia JS
  */
 import { createPinia } from "pinia";
-import piniaPluginPersistedState from "pinia-plugin-persistedstate";
+// import piniaPluginPersistedState from "pinia-plugin-persistedstate";
 const pinia = createPinia();
-pinia.use(piniaPluginPersistedState);
+// pinia.use(piniaPluginPersistedState);
 app.use(pinia);
 
 /**
@@ -42,24 +42,35 @@ const router = createRouter({
     routes,
 });
 router.beforeEach((to, from, next) => {
-    // console.log("to.meta.requiresAuth", to.meta.requiresAuth);
-    // console.log("authStore.is_logged_in", authStore.is_logged_in);
+    let hasTheSameRoles = false;
+    if (to.meta.role) {
+        let checkRoles = to.meta.role.filter((r) => {
+            if (
+                authStore.authRole.length > 0 &&
+                authStore.authRole.includes(r) == true
+            ) {
+                return r;
+            }
+        });
+        hasTheSameRoles = checkRoles.length > 0 ? true : false;
+    }
 
     if (to.meta.requiresAuth && !authStore.is_logged_in) {
         // is not logged in
         next("/login");
     } else {
-        // check if in login page
-        if (to.name === "Login") {
-            next("/");
-        }
-
         // is logged in
-        if (to.meta.role && to.meta.role == authStore.user.role) {
+        if (to.meta.role && hasTheSameRoles) {
             next();
-        } else if (to.meta.role && to.meta.role !== authStore.user.role) {
+        } else if (to.meta.role && !hasTheSameRoles) {
             next("/unauthorized");
         } else {
+            // check if in login page
+            // if (to.name === "Login") {
+            //     next("/");
+            // } else {
+            //     next();
+            // }
             next();
         }
     }

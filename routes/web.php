@@ -26,9 +26,7 @@ Auth::routes([
     'register' => false
 ]);
 
-// Route::get('/', [PageController::class, 'home'])->name('root');
-Route::get('/', function () { return redirect()->route('admin'); });
-
+Route::get('/', [PageController::class, 'home'])->name('home');
 
 /**
  * Error pages
