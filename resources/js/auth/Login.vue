@@ -73,11 +73,9 @@ const login = async () => {
   await authApi
     .get("/sanctum/csrf-cookie")
     .then((res) => {
-      console.log("res", res);
       authApi
         .post("/api/sanctumlogin", data)
         .then((loginres) => {
-          console.log("loginres", loginres);
           authStore.setCredentials(loginres.data).then(() => {
             loadingLogin.value = false;
             router.push({ path: "/admin" });

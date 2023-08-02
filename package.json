@@ -15,6 +15,7 @@
     "dependencies": {
         "@mdi/js": "^7.2.96",
         "@vueuse/core": "^10.3.0",
+        "crypto-js": "^4.1.1",
         "pinia": "^2.1.6",
         "vee-validate": "^4.11.0",
         "vite-plugin-vuetify": "^1.0.2",

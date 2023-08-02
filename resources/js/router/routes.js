@@ -16,7 +16,7 @@ export const routes = [
         name: "App",
         meta: {
             requiresAuth: true,
-            role: ["app_admin", "normal",],
+            role: ["admin", "normal"],
             title: "App",
         },
     },
@@ -40,11 +40,10 @@ export const routes = [
     {
         path: "/admin",
         component: () => import("../pages/admin/Dashboard.vue"),
-        // component: Dashboard,
         name: "AdminRoot",
         meta: {
             requiresAuth: true,
-            role: "admin",
+            role: ["admin", "normal"],
             title: "Dashboard",
         },
     },
@@ -54,7 +53,7 @@ export const routes = [
         name: "Dashboard",
         meta: {
             requiresAuth: true,
-            role: "admin",
+            role: ["admin", "normal"],
             title: "Dashboard",
             // meta: {
             //     middleware: [
@@ -69,7 +68,7 @@ export const routes = [
         name: "Users",
         meta: {
             requiresAuth: true,
-            role: "admin",
+            role: ["admin", "normal"],
             title: "Users",
         },
     },
@@ -79,7 +78,7 @@ export const routes = [
         name: "EditUser",
         meta: {
             requiresAuth: true,
-            role: "admin",
+            role: ["admin", "normal"],
             title: "Edit User",
         },
     },
@@ -89,7 +88,7 @@ export const routes = [
         name: "Logs",
         meta: {
             requiresAuth: true,
-            role: "admin",
+            role: ["admin", "normal"],
             title: "Logs",
         },
     },
@@ -99,7 +98,7 @@ export const routes = [
         name: "Departments",
         meta: {
             requiresAuth: true,
-            role: "admin",
+            role: ["admin", "normal"],
             title: "Departments",
         },
     },
@@ -109,7 +108,7 @@ export const routes = [
         name: "Companies",
         meta: {
             requiresAuth: true,
-            role: "admin",
+            role: ["admin", "normal"],
             title: "Companies",
         },
     },
