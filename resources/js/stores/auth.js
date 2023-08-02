@@ -8,11 +8,9 @@ import CryptoJS from "crypto-js";
 export const useAuthStore = defineStore("authUser", {
     state: () => ({
         userData: useLocalStorage("authUser", {}),
-        role: [], // app_admin, normal
-        is_logged_in: false,
     }),
     getters: {
-        authUser: (state) => {
+        user: (state) => {
             let userData = null;
             if (state.userData && state.userData.u) {
                 let bytes = CryptoJS.AES.decrypt(state.userData.u, "mel182");
@@ -26,60 +24,56 @@ export const useAuthStore = defineStore("authUser", {
         authToken: (state) => {
             let tokenData = null;
             if (state.userData && state.userData.t) {
-                let bytes = CryptoJS.AES.decrypt(
-                    state.userData.t,
-                    "mel182"
-                );
+                let bytes = CryptoJS.AES.decrypt(state.userData.t, "mel182");
                 let decryptedData = JSON.parse(
                     bytes.toString(CryptoJS.enc.Utf8)
                 );
                 tokenData = decryptedData;
-
             }
             return tokenData;
         },
-        authRole: (state) => state.role,
-        authIsLoggedIn: (state) => state.is_logged_in,
+        authRole: (state) => state.userData.r,
+        authIsLoggedIn: (state) => state.userData.is_logged_in,
     },
     actions: {
+        encryptData(data) {
+            // encrypt data
+            let cipherText = CryptoJS.AES.encrypt(
+                JSON.stringify(data),
+                "mel182"
+            ).toString();
+            return cipherText;
+        },
         async setCredentials(res) {
-            console.log("setCredentials", res);
-
-            // encrypt user data
-            let cipherUser = CryptoJS.AES.encrypt(
-                JSON.stringify(res.user),
-                "mel182"
-            ).toString();
-
-            // encrypt token data
-            let cipherToken = CryptoJS.AES.encrypt(
-                JSON.stringify(res.token),
-                "mel182"
-            ).toString();
-
             // save to localstorage
             useStorage(
                 "authUser",
-                { u: cipherUser, t: cipherToken },
+                {
+                    u: this.encryptData(res.user),
+                    t: this.encryptData(res.token),
+                    r: [res.user.role],
+                    is_logged_in: true,
+                },
                 localStorage,
                 {
                     mergeDefaults: true,
                 }
             );
-
-            if (res.user && res.token) {
-                this.is_logged_in = true;
-            }
         },
         async logout() {
-            this.userData = null;
-            this.is_logged_in = false;
-        },
-        async setUser(user) {
-            this.user = user;
-        },
-        async setToken(token) {
-            this.token = token;
+            useStorage(
+                "authUser",
+                {
+                    u: null,
+                    t: null,
+                    r: [],
+                    is_logged_in: false,
+                },
+                localStorage,
+                {
+                    mergeDefaults: true,
+                }
+            );
         },
     },
 });
