@@ -164,6 +164,8 @@ import { printInitials } from "@/composables/printInitials";
 import { useRouter } from "vue-router";
 import { authApi } from "@/services/sacntumApi";
 
+console.log("admin layout");
+
 const appName = ref(import.meta.env.VITE_APP_NAME);
 const logo = ref(import.meta.env.VITE_APP_URL + "/assets/images/fav.png");
 
@@ -256,8 +258,14 @@ const authlogout = async () => {
   let data = {
     username: authStore.user.username,
   };
-  const response = await authApi.post("/api/sanctumlogout", data);
-  return response;
+  await authApi
+    .post("/api/sanctumlogout", data)
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      console.log("authlogout", err);
+    });
 };
 
 // remove client key
@@ -265,13 +273,20 @@ const removeClientKey = async () => {
   let data = {
     key: authStore.token,
   };
-  const response = await axios.post("/client/removekey", data);
-  if (response) {
-    authStore.logout().then(() => {
-      localStorage.removeItem("authClient");
-      loadingLogout.value = false;
-      router.push({ path: "/login" });
-    });
-  }
+
+  authStore.logout().then(() => {
+    // localStorage.removeItem("authUser");
+    loadingLogout.value = false;
+    router.push({ path: "/login" });
+  });
+
+  //   const response = await axios.post("/client/removekey", data);
+  //   if (response) {
+  //     authStore.logout().then(() => {
+  //       localStorage.removeItem("authClient");
+  //       loadingLogout.value = false;
+  //       router.push({ path: "/login" });
+  //     });
+  //   }
 };
 </script>

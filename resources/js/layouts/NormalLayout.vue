@@ -235,37 +235,20 @@ onMounted(() => {
 const loadingLogout = ref(false);
 const logout = async () => {
   loadingLogout.value = true;
-  authlogout()
-    .then(() => {
-      removeClientKey();
-    })
-    .catch((err) => {
-      loadingLogout.value = false;
-      console.log("error while trying to logout to server", err);
-    });
-};
-
-// auth logout to sanctum
-const authlogout = async () => {
   let data = {
     username: authStore.user.username,
   };
-  const response = await authApi.post("/api/sanctumlogout", data);
-  return response;
-};
-
-// remove client key
-const removeClientKey = async () => {
-  let data = {
-    key: authStore.token,
-  };
-  const response = await axios.post("/client/removekey", data);
-  if (response) {
-    authStore.logout().then(() => {
-      localStorage.removeItem("authClient");
-      loadingLogout.value = false;
-      router.push({ path: "/login" });
+  await authApi
+    .post("/api/sanctumlogout", data)
+    .then(() => {
+      authStore.logout().then(() => {
+        // localStorage.removeItem('authUser');
+        loadingLogout.value = false;
+        router.push({ path: "/login" });
+      });
+    })
+    .catch((err) => {
+      console.log("api/sanctumlogout error: ", err);
     });
-  }
 };
 </script>

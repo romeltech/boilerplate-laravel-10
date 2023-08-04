@@ -44,7 +44,7 @@ class UserApiController extends Controller
         $hasToken = auth('sanctum')->check();
         return response()->json([
             "user" => auth('sanctum')->user(),
-            "hasToken" => $hasToken
+            "token" => $hasToken
         ], 200);
     }
 
@@ -63,8 +63,7 @@ class UserApiController extends Controller
         ])->first();
         $token = $user->tokens()->delete();
         return response()->json([
-            "user" => $user,
-              // "token" => auth()->user()->tokens()
+            "message" => "Logged out successfully",
         ], 200);
     }
 

@@ -5,54 +5,59 @@ import CryptoJS from "crypto-js";
 // but it's best to use the name of the store and surround it with `use`
 // and `Store` (e.g. `useUserStore`, `useCartStore`, `useProductStore`)
 // the first argument is a unique id of the store across your application
+
+const dk = "mel182";
+
+// decrypt data
+const decryptData = (data) => {
+    return data
+        ? JSON.parse(CryptoJS.AES.decrypt(data, dk).toString(CryptoJS.enc.Utf8))
+        : null;
+};
+
+// encrypt data
+const encryptData = (data) => {
+    return CryptoJS.AES.encrypt(JSON.stringify(data), dk).toString();
+};
+
 export const useAuthStore = defineStore("authUser", {
     state: () => ({
-        userData: useLocalStorage("authUser", {}),
+        auth: useLocalStorage("authUser", {}),
     }),
     getters: {
         user: (state) => {
-            let userData = null;
-            if (state.userData && state.userData.u) {
-                let bytes = CryptoJS.AES.decrypt(state.userData.u, "mel182");
-                let decryptedData = JSON.parse(
-                    bytes.toString(CryptoJS.enc.Utf8)
-                );
-                userData = decryptedData;
-            }
-            return userData;
+            return state.auth && state.auth.data
+                ? decryptData(state.auth.data).u
+                : null;
         },
         authToken: (state) => {
-            let tokenData = null;
-            if (state.userData && state.userData.t) {
-                let bytes = CryptoJS.AES.decrypt(state.userData.t, "mel182");
-                let decryptedData = JSON.parse(
-                    bytes.toString(CryptoJS.enc.Utf8)
-                );
-                tokenData = decryptedData;
-            }
-            return tokenData;
+            return state.auth && state.auth.data
+                ? decryptData(state.auth.data).t
+                : null;
         },
-        authRole: (state) => state.userData.r,
-        authIsLoggedIn: (state) => state.userData.is_logged_in,
+        authRole: (state) => {
+            return state.auth && state.auth.data
+                ? decryptData(state.auth.data).r
+                : null;
+        },
+        authIsLoggedIn: (state) => {
+            return state.auth && state.auth.data
+                ? decryptData(state.auth.data).is_logged_in
+                : null;
+        },
     },
     actions: {
-        encryptData(data) {
-            // encrypt data
-            let cipherText = CryptoJS.AES.encrypt(
-                JSON.stringify(data),
-                "mel182"
-            ).toString();
-            return cipherText;
-        },
         async setCredentials(res) {
             // save to localstorage
             useStorage(
                 "authUser",
                 {
-                    u: this.encryptData(res.user),
-                    t: this.encryptData(res.token),
-                    r: [res.user.role],
-                    is_logged_in: true,
+                    data: encryptData({
+                        u: res.user,
+                        t: res.token,
+                        r: [res.user.role],
+                        is_logged_in: true,
+                    }),
                 },
                 localStorage,
                 {
@@ -61,19 +66,8 @@ export const useAuthStore = defineStore("authUser", {
             );
         },
         async logout() {
-            useStorage(
-                "authUser",
-                {
-                    u: null,
-                    t: null,
-                    r: [],
-                    is_logged_in: false,
-                },
-                localStorage,
-                {
-                    mergeDefaults: true,
-                }
-            );
+            // this.auth = null;
+            this.auth = {};
         },
     },
 });

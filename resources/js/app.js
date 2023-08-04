@@ -44,8 +44,10 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     let hasTheSameRoles = false;
     if (to.meta.role) {
-        let checkRoles = to.meta.role.filter((r) => {
+        let checkRoles = [];
+        checkRoles = to.meta.role.filter((r) => {
             if (
+                authStore.authRole &&
                 authStore.authRole.length > 0 &&
                 authStore.authRole.includes(r) == true
             ) {
@@ -55,7 +57,7 @@ router.beforeEach((to, from, next) => {
         hasTheSameRoles = checkRoles.length > 0 ? true : false;
     }
 
-    if (to.meta.requiresAuth && !authStore.is_logged_in) {
+    if (to.meta.requiresAuth && !authStore.authIsLoggedIn) {
         // is not logged in
         next("/login");
     } else {

@@ -8,15 +8,16 @@ const authApi = axios.create({
     // headers: { Accept: "application/json" },
 });
 
-// local api calls with bearer token
-// const bearerToken = '_pinia_';
-// const bearerToken = process.env.VITE_SANCTUM_USER_TOKEN;
-// const authApiWithBearer = axios.create({
-//   baseURL: apiUrl,
-//   headers: {
-//     Accept: "application/json",
-//     "Content-Type": "application/json",
-//     "WWW-Authenticate": `BASIC ${process.env.VITE_SANCTUM_USER_TOKEN}`,
-//   },
-// });
-export { authApi };
+// sanctum api calls with bearer token
+const axiosWithBearer = (bearer) => {
+    return axios.create({
+        baseURL: apiUrl,
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${bearer}`,
+        },
+    });
+};
+
+export { authApi, axiosWithBearer };

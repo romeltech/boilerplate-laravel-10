@@ -50,7 +50,7 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 import { authApi } from "@/services/sacntumApi";
-import GuestLayout from "../layouts/GuestLayout.vue";
+import GuestLayout from "@/layouts/GuestLayout.vue";
 import WhiteLogo from "@/Components/logo/WhiteLogo.vue";
 
 const appName = ref(import.meta.env.VITE_APP_NAME);

@@ -20,7 +20,8 @@ use App\Http\Controllers\UserApiController;
 //     return $request->user();
 // });
 Route::post('/sanctumlogin', [UserApiController::class, 'login']);
-// Route::get('/checkuser', [UserApiController::class, 'checkSanctumUser']);
+Route::post('/sanctumlogout', [UserApiController::class, 'logout']);
+Route::middleware('auth:sanctum')->get('/checkuser', [UserApiController::class, 'checkSanctumUser']);
 
 /**
  * Accout routes
