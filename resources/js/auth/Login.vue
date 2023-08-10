@@ -49,7 +49,7 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
-import { authApi } from "@/services/sacntumApi";
+import { authApi } from "@/services/sanctumApi";
 import GuestLayout from "@/layouts/GuestLayout.vue";
 import WhiteLogo from "@/Components/logo/WhiteLogo.vue";
 

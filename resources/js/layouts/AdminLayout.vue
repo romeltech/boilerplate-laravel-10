@@ -162,7 +162,7 @@ import {
 import { useAuthStore } from "@/stores/auth";
 import { printInitials } from "@/composables/printInitials";
 import { useRouter } from "vue-router";
-import { authApi } from "@/services/sacntumApi";
+import { authApi } from "@/services/sanctumApi";
 
 console.log("admin layout");
 

@@ -29,7 +29,7 @@
 <script setup>
 import { defineAsyncComponent } from "vue";
 import { useAuthStore } from "@/stores/auth";
-import { axiosWithBearer } from "@/services/sacntumApi";
+import { axiosWithBearer } from "@/services/sanctumApi";
 import { useRouter } from "vue-router";
 // import { useSettingStore } from "@/stores/settings";
 const Public = defineAsyncComponent(() => import("./portals/Public.vue"));
@@ -67,9 +67,11 @@ const refreshAuth = async () => {
 };
 
 // console.log("App", authStore.auth, authStore.auth.is_logged_in);
-// if (authStore.auth && authStore.auth.is_logged_in && authStore.auth.is_logged_in == false) {
-//   console.log("authStore.auth", authStore.auth);
-//   console.log("authStore.auth.is_logged_id", authStore.auth.is_logged_id);
-// }
-refreshAuth();
+if (
+  authStore &&
+  authStore.authIsLoggedIn &&
+  authStore.authIsLoggedIn == false
+) {
+  refreshAuth();
+}
 </script>

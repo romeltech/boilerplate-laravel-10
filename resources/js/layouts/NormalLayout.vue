@@ -161,7 +161,7 @@ import {
 import { useAuthStore } from "@/stores/auth";
 import { printInitials } from "@/composables/printInitials";
 import { useRouter } from "vue-router";
-import { authApi } from "@/services/sacntumApi";
+import { authApi } from "@/services/sanctumApi";
 
 const appName = ref(import.meta.env.VITE_APP_NAME);
 const logo = ref(import.meta.env.VITE_APP_URL + "/assets/images/fav.png");

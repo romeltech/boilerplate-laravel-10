@@ -47,7 +47,7 @@ import { useRouter } from "vue-router";
 import { ref } from "vue";
 import { useAuthStore } from "@/stores/auth";
 
-import { samctumApi } from "@/services/sacntumApi";
+import { samctumApi } from "@/services/sanctumApi";
 
 const authStore = useAuthStore();
 const router = useRouter();

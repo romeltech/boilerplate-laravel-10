@@ -39,7 +39,7 @@ class UserApiController extends Controller
         ], 201);
     }
 
-    public function checkSanctumUser(Request $request)
+    public function sanctumCheckUser(Request $request)
     {
         $hasToken = auth('sanctum')->check();
         return response()->json([

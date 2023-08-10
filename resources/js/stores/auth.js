@@ -30,7 +30,7 @@ export const useAuthStore = defineStore("authUser", {
                 ? decryptData(state.auth.data).u
                 : null;
         },
-        authToken: (state) => {
+        token: (state) => {
             return state.auth && state.auth.data
                 ? decryptData(state.auth.data).t
                 : null;
