@@ -1,77 +1,48 @@
 <template>
   <div>
-    <Normal v-if="authStore.authIsLoggedIn == true" />
-    <Public v-else />
-    <!-- <div
-      v-if="settingStore.pageLoading.status"
-      style="
-        position: fixed;
-        top: 0;
-        left: auto;
-        right: auto;
-        bottom: auto;
-        width: 100%;
-        height: 100vh;
-        z-index: 100000;
-      "
-    >
-      <v-card class="w-100 h-screen d-flex flex-column align-center justify-center">
-        <v-progress-circular
-          class="mb-3"
-          indeterminate
-          color="secondary"
-        ></v-progress-circular>
-        <div class="text-body-1">{{ settingStore.pageLoading.msg }}</div>
-      </v-card>
-    </div> -->
+    <div v-if="authStore.authIsLoggedIn == true">
+      <LoggedInLayout>
+        <router-view></router-view>
+      </LoggedInLayout>
+    </div>
+    <div v-else>
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 <script setup>
-import { defineAsyncComponent } from "vue";
 import { useAuthStore } from "@/stores/auth";
-import { axiosWithBearer } from "@/services/sanctumApi";
+import { axiosToken } from "@/services/axiosToken";
 import { useRouter } from "vue-router";
-// import { useSettingStore } from "@/stores/settings";
-const Public = defineAsyncComponent(() => import("./portals/Public.vue"));
-const Normal = defineAsyncComponent(() => import("./portals/Normal.vue"));
-
+import LoggedInLayout from "@/layouts/LoggedInLayout.vue";
 const router = useRouter();
 const authStore = useAuthStore();
-// const settingStore = useSettingStore();
-
 // get user when refreshed
 const refreshAuth = async () => {
-  //   settingStore.setPageLoading(true);
-  await axiosWithBearer(authStore.token)
+  console.log("refreshAuth");
+  await axiosToken(authStore.token)
     .get("/api/checkuser")
     .then((res) => {
-      console.log("api/checkuser", res);
-      // update the user token in pinia
-      //   authStore.saveClientKey(res.data).then((keyResponse) => {
-      //     settingStore.setPageLoading(false);
-      //     settingStore.setIsFromLogin(false);
-      //     settingStore.setPmsSettings(keyResponse.data.pms_settings);
-      //     settingStore.setAllSettings(keyResponse.data.all_settings);
-      //   });
+      authStore
+        .setCredentials({
+          user: res.data.user,
+          token: authStore.token,
+        })
+        .then(() => {
+          router.push({ path: "/admin" });
+        });
     })
     .catch((err) => {
-      console.log("error", err.response.status);
+      console.log("refreshAuth error: ", err.response.status);
       // if error 401 unauthorize
       if (err.response.status == 401) {
         // logout user and redirect to login
         localStorage.removeItem("authUser");
         router.push({ path: "/login" });
       }
-      //   settingStore.setPageLoading(false);
     });
 };
-
-// console.log("App", authStore.auth, authStore.auth.is_logged_in);
-if (
-  authStore &&
-  authStore.authIsLoggedIn &&
-  authStore.authIsLoggedIn == false
-) {
+if (authStore && authStore.authIsLoggedIn && authStore.authIsLoggedIn == false) {
   refreshAuth();
 }
 </script>

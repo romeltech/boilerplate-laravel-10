@@ -161,7 +161,8 @@ import {
 import { useAuthStore } from "@/stores/auth";
 import { printInitials } from "@/composables/printInitials";
 import { useRouter } from "vue-router";
-import { authApi } from "@/services/sanctumApi";
+import axios from "axios";
+
 
 const appName = ref(import.meta.env.VITE_APP_NAME);
 const logo = ref(import.meta.env.VITE_APP_URL + "/assets/images/fav.png");
@@ -238,7 +239,7 @@ const logout = async () => {
   let data = {
     username: authStore.user.username,
   };
-  await authApi
+  await axios
     .post("/api/sanctumlogout", data)
     .then(() => {
       authStore.logout().then(() => {

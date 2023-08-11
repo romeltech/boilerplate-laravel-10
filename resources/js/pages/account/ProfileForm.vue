@@ -59,17 +59,17 @@
   </v-card>
 </template>
 <script setup>
-import { ref, watch, onMounted } from "vue";
+import { ref, watch } from "vue";
 import { Form, Field } from "vee-validate";
 import * as yup from "yup";
-import nationalities from "@/json/nationalities.json";
 import { useRoute } from "vue-router";
-import { clientApi } from "@/services/clientApi";
-import { VAutocomplete } from "vuetify/components/VAutocomplete";
+import { axiosToken } from "@/services/axiosToken";
+import nationalities from "@/json/nationalities.json";
+import { useAuthStore } from "@/stores/auth";
 
+const authStore = useAuthStore();
 const route = useRoute();
 const props = defineProps(["user"]);
-console.log();
 
 // profile
 const emit = defineEmits(["saved"]);
@@ -96,7 +96,7 @@ watch(
 );
 console.log("profileData.value.data", profileData.value.data);
 const getProfile = async () => {
-  await clientApi
+  await axiosToken(authStore.token)
     .get("/api/account/profile/" + props.user.id)
     .then((res) => {
       profileData.value.data = Object.assign({}, res.data);
@@ -122,7 +122,7 @@ const saveProfile = async () => {
       id: props.user.id,
     },
   };
-  await clientApi
+  await axiosToken
     .post("/api/account/profile/save", profileData.value.data)
     .then((response) => {
       profileData.value.loading = false;

@@ -48,13 +48,14 @@ export const useAuthStore = defineStore("authUser", {
     },
     actions: {
         async setCredentials(res) {
+            console.log("setCredentials");
             // save to localstorage
             useStorage(
                 "authUser",
                 {
                     data: encryptData({
                         u: res.user,
-                        t: res.token,
+                        t: res.token ? res.token : null,
                         r: [res.user.role],
                         is_logged_in: true,
                     }),

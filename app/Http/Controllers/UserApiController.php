@@ -43,8 +43,7 @@ class UserApiController extends Controller
     {
         $hasToken = auth('sanctum')->check();
         return response()->json([
-            "user" => auth('sanctum')->user(),
-            "token" => $hasToken
+            "user" => $hasToken ? auth('sanctum')->user() : null,
         ], 200);
     }
 

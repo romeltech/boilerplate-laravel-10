@@ -12,12 +12,12 @@ export const routes = [
 
     {
         path: "/",
-        component: () => import("../App.vue"),
-        name: "App",
+        component: () => import("../pages/admin/Dashboard.vue"),
+        name: "Home",
         meta: {
             requiresAuth: true,
             role: ["admin", "normal"],
-            title: "App",
+            name: "Home",
         },
     },
 
@@ -26,7 +26,7 @@ export const routes = [
      */
     {
         path: "/login",
-        component: () => import("../auth/Login.vue"),
+        component: () => import("../auth/SanctumLogin.vue"),
         name: "Login",
         meta: {
             requiresAuth: false,
