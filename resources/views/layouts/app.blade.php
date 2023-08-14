@@ -20,7 +20,7 @@
 
 <body>
     <div id="app">
-        <v-app style="background-color: #fafafa">
+        <v-app class="background">
             <App />
         </v-app>
     </div>

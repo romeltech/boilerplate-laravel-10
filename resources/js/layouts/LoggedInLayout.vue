@@ -6,7 +6,7 @@
       :temporary="temporary"
       :permanent="!temporary"
       class="pt-4"
-      color="primary"
+      color="black"
     >
       <div class="d-flex flex-column h-100">
         <v-list-item
@@ -85,25 +85,33 @@
             @click="drawer = !drawer"
             size="small"
           ></v-app-bar-nav-icon>
-          <div class="ml-1 text-body-1 text-primary">
+          <div class="ml-1 text-body-1 text-pirmary">
             {{ appName }}
           </div>
         </div>
       </template>
       <v-spacer></v-spacer>
-      <v-btn size="36" class="mx-2" icon variant="flat">
-        <v-icon color="grey-darken-1" :icon="mdiBellOutline"></v-icon>
+      <v-btn
+        size="36"
+        class="mr-2"
+        color="grey-darken-1"
+        @click="() => toggleTheme(true)"
+        :icon="`${
+          theme.global.name.value == 'light' ? mdiWeatherNight : mdiWhiteBalanceSunny
+        }`"
+      >
       </v-btn>
+      <v-btn size="36" class="mr-2" color="grey-darken-1" :icon="mdiBellOutline"> </v-btn>
       <v-menu v-model="menu" :close-on-content-click="false" location="bottom">
         <template v-slot:activator="{ props }">
           <v-avatar
-            color="grey-lighten-3"
+            color="grey-lighten-4"
             :size="36"
-            class="d-flex align-center justify-center mr-3"
+            class="mr-3"
             v-bind="props"
             style="cursor: pointer"
           >
-            <div>{{ printInitials(authStore.user.username) }}</div>
+            {{ printInitials(authStore.user.username) }}
           </v-avatar>
         </template>
         <v-card min-width="300" class="rounded-lg mt-1">
@@ -157,15 +165,29 @@ import {
   mdiPlaylistEdit,
   mdiDomain,
   mdiOfficeBuilding,
+  mdiWhiteBalanceSunny,
+  mdiWeatherNight,
 } from "@mdi/js";
 import { useAuthStore } from "@/stores/auth";
 import { printInitials } from "@/composables/printInitials";
 import { useRouter } from "vue-router";
 import axios from "axios";
-
-
+import { useTheme } from "vuetify";
+const theme = useTheme();
 const appName = ref(import.meta.env.VITE_APP_NAME);
 const logo = ref(import.meta.env.VITE_APP_URL + "/assets/images/fav.png");
+
+// dark mode
+const toggleTheme = (is_clicked = false) => {
+  const gagDarkTheme = localStorage.getItem("gag_dark_theme");
+  if (is_clicked == true) {
+    theme.global.name.value = theme.global.current.value.dark ? "light" : "dark"; // toggle
+  } else {
+    theme.global.name.value = gagDarkTheme ? gagDarkTheme : "light"; // on load
+  }
+  localStorage.setItem("gag_dark_theme", theme.global.name.value);
+};
+toggleTheme();
 
 // navigation
 const authStore = useAuthStore();

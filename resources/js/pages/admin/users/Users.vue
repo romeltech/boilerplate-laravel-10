@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <PageHeader title="Users" />
+    <AppPageHeader title="Users" />
     <v-row class="mb-3">
       <div class="v-col-12">
         <v-card :loading="users.loading">
@@ -55,7 +55,7 @@
 </template>
 
 <script setup>
-import PageHeader from "@/components/pageHeader.vue";
+import AppPageHeader from "@/components/ApppageHeader.vue";
 import { onMounted, ref } from "vue";
 import { mdiPencil, mdiTrashCan } from "@mdi/js";
 import { useRouter } from "vue-router";

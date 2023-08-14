@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <PageHeader title="Dashboard" />
+    <AppPageHeader title="Dashboard" />
     <v-row class="mb-3">
       <div class="v-col-12 v-col-md-4 pb-0" v-for="item in cards" :key="item.id">
         <v-card
@@ -25,7 +25,7 @@
 
 <script setup>
 import { ref } from "vue";
-import PageHeader from "@/components/PageHeader.vue";
+import AppPageHeader from "@/components/AppPageHeader.vue";
 import { useRouter } from "vue-router";
 const cards = ref([
   {

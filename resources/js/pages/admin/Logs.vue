@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <PageHeader title="Logs" />
+    <AppPageHeader title="Logs" />
     <v-row>
       <div class="v-col-12">
         <!-- content -->
@@ -10,5 +10,5 @@
 </template>
 
 <script setup>
-import PageHeader from "@/components/PageHeader.vue";
+import AppPageHeader from "@/components/AppPageHeader.vue";
 </script>

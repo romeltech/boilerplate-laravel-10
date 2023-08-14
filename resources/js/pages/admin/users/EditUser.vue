@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <PageHeader title="Edit User" />
+    <AppPageHeader title="Edit User" />
     <v-row class="mb-3" :disabled="loadingPage">
       <div class="v-col-12 v-col-md-8">
         <div class="d-flex flex-wrap">
@@ -45,16 +45,16 @@
         <ChangePassword v-show="currentForm == 'change_password'" :user-id="1" />
       </div>
     </v-row>
-    <Snackbar :options="sbOptions" />
+    <AppSnackbar :options="sbOptions" />
   </v-container>
 </template>
 
 <script setup>
 import { onMounted, ref } from "vue";
-import PageHeader from "@/components/pageHeader.vue";
+import AppPageHeader from "@/components/ApppageHeader.vue";
 import AccountForm from "@/pages/account/AccountForm.vue";
 import ProfileForm from "@/pages/account/ProfileForm.vue";
-import Snackbar from "@/components/SnackBar.vue";
+import AppSnackbar from "@/components/AppSnackBar.vue";
 import ChangePassword from "@/pages/account/ChangePassword.vue";
 import { useRoute } from "vue-router";
 const route = useRoute();

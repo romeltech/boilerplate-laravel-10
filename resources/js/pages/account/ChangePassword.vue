@@ -50,11 +50,6 @@ import { ref } from "vue";
 import { Form, Field } from "vee-validate";
 import * as yup from "yup";
 const props = defineProps(["userId"]);
-const snackbar = ref({
-  status: false,
-  type: "",
-  text: "",
-});
 const password = ref({
   status: false,
   loading: false,
@@ -85,19 +80,9 @@ const changePassword = async () => {
           password_confirmation: "",
         },
       };
-      snackbar.value = {
-        status: true,
-        type: "success",
-        text: response.data.message,
-      };
     })
     .catch((err) => {
       password.value.loading = false;
-      snackbar.value = {
-        status: true,
-        type: "error",
-        text: "Error while updating password",
-      };
       console.log(err.response.data);
     });
 };

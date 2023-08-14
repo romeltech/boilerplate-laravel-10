@@ -11,16 +11,34 @@ const vuetify = createVuetify({
     components,
     directives,
     theme: {
-        defaultTheme: "mel",
+        defaultTheme: "light",
         themes: {
-            mel: {
-                dark: false,
+            light: {
+                // dark: false,
                 colors: {
                     primary: "#000000",
                     secondary: "#C6A92D",
-                    bg: "#f8fafc",
+                    background: "#fafafa",
+                    white: "#FFFFFF",
                     // textgrey: "#818181",
-                    // white: "#FFFFFF",
+                    // screenBg: "#f8fafc",
+                    // Vuetify Action Colors
+                    // secondary: '#f5f5f5',
+                    // accent: '#82B1FF',
+                    // error: '#FF5252',
+                    // info: '#2196F3',
+                    // success: "#4CAF50",
+                    // warning: '#FFC107',
+                },
+            },
+            dark: {
+                // dark: false,
+                colors: {
+                    primary: "#FFFFFF",
+                    secondary: "#C6A92D",
+                    background: "#3c3c3c",
+                    white: "#000000",
+                    // textgrey: "#818181",
                     // screenBg: "#f8fafc",
                     // Vuetify Action Colors
                     // secondary: '#f5f5f5',
