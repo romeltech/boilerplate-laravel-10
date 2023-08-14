@@ -105,7 +105,9 @@
       <v-menu v-model="menu" :close-on-content-click="false" location="bottom">
         <template v-slot:activator="{ props }">
           <v-avatar
-            color="grey-lighten-4"
+            :color="`${
+              theme.global.name.value == 'light' ? 'grey-lighten-4' : 'grey-darken-4'
+            }`"
             :size="36"
             class="mr-3"
             v-bind="props"

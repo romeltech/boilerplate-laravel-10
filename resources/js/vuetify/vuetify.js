@@ -20,8 +20,6 @@ const vuetify = createVuetify({
                     secondary: "#C6A92D",
                     background: "#fafafa",
                     white: "#FFFFFF",
-                    // textgrey: "#818181",
-                    // screenBg: "#f8fafc",
                     // Vuetify Action Colors
                     // secondary: '#f5f5f5',
                     // accent: '#82B1FF',
@@ -38,8 +36,6 @@ const vuetify = createVuetify({
                     secondary: "#C6A92D",
                     background: "#3c3c3c",
                     white: "#000000",
-                    // textgrey: "#818181",
-                    // screenBg: "#f8fafc",
                     // Vuetify Action Colors
                     // secondary: '#f5f5f5',
                     // accent: '#82B1FF',
