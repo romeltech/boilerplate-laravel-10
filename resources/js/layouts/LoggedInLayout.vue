@@ -95,7 +95,7 @@
         size="36"
         class="mr-2"
         color="grey-darken-1"
-        @click="() => toggleTheme(true)"
+        @click="toggleTheme"
         :icon="`${
           theme.global.name.value == 'light' ? mdiWeatherNight : mdiWhiteBalanceSunny
         }`"
@@ -177,19 +177,13 @@ const theme = useTheme();
 const appName = ref(import.meta.env.VITE_APP_NAME);
 const logo = ref(import.meta.env.VITE_APP_URL + "/assets/images/fav.png");
 
-// dark mode
-const toggleTheme = (is_clicked = false) => {
-  const gagDarkTheme = localStorage.getItem("gag_dark_theme");
-  if (is_clicked == true) {
-    theme.global.name.value = theme.global.current.value.dark ? "light" : "dark"; // toggle
-  } else {
-    theme.global.name.value = gagDarkTheme ? gagDarkTheme : "light"; // on load
-  }
+// toggle dark mode
+const toggleTheme = () => {
+  theme.global.name.value = theme.global.current.value.dark ? "light" : "dark"; // toggle
   localStorage.setItem("gag_dark_theme", theme.global.name.value);
 };
-toggleTheme();
 
-// navigation
+// navigatio
 const authStore = useAuthStore();
 const router = useRouter();
 const sideNavigation = ref([

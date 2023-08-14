@@ -15,6 +15,8 @@ import { useAuthStore } from "@/stores/auth";
 import { axiosToken } from "@/services/axiosToken";
 import { useRouter } from "vue-router";
 import LoggedInLayout from "@/layouts/LoggedInLayout.vue";
+import { useTheme } from "vuetify";
+const theme = useTheme();
 const router = useRouter();
 const authStore = useAuthStore();
 // get user when refreshed
@@ -44,5 +46,14 @@ const refreshAuth = async () => {
 };
 if (authStore && authStore.authIsLoggedIn && authStore.authIsLoggedIn == false) {
   refreshAuth();
+}
+
+// set dark mode on load
+const gagDarkTheme = localStorage.getItem("gag_dark_theme");
+if (gagDarkTheme) {
+  theme.global.name.value = gagDarkTheme;
+} else {
+  theme.global.name.value = "light";
+  localStorage.setItem("gag_dark_theme", theme.global.name.value);
 }
 </script>
