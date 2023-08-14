@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserApiController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +27,10 @@ Route::middleware('auth:sanctum')->get('/checkuser', [UserApiController::class, 
 /**
  * Accout routes
  */
-Route::middleware('authkey')->prefix('account')->group(function () {
+Route::middleware('auth:sanctum')->prefix('account')->group(function () {
+    // account
+    Route::post('/save', [UserController::class, 'saveUser'])->name('account.save');
+
     // profile
     Route::get('/profile/{id}', [ProfileController::class, 'getProfileById'])->name('profile.get.by.id');
     Route::post('/profile/save', [ProfileController::class, 'saveProfile'])->name('profile.save');

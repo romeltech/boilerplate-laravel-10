@@ -42,21 +42,24 @@ class UserController extends Controller
 
     public function saveUser(Request $request)
     {
-        $user = User::updateOrCreate(
-            [
-                'id' => $request['id']
-            ],
-            [
-                'id' => $request['id'],
-                'status' => $request['status'],
-                'role' => $request['role'],
-                'username' => $request['username'],
-                'email' => $request['email'],
-                'phone_no' => $request['phone_no'],
-            ]
+        $user = new User;
+        $check = $user->find($request['id']);
+        $userArray = array(
+            'status' => $request['status'],
+            'role' => $request['role'],
+            'username' => $request['username'],
+            'email' => $request['email'],
+            'phone_no' => $request['phone_no']
         );
+        if($check){
+            $user = $check;
+            $check->update($userArray);
+        }else{
+            $user->create($userArray);
+        }
         return response()->json([
             'message' => "User updated successfully",
+            'user' => $user
         ], 200);
     }
 

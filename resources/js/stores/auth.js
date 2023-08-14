@@ -48,7 +48,7 @@ export const useAuthStore = defineStore("authUser", {
     },
     actions: {
         async setCredentials(res) {
-            console.log("setCredentials");
+            console.log("setCredentials", res);
             // save to localstorage
             useStorage(
                 "authUser",

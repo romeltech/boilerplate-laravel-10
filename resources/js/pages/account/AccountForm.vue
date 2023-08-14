@@ -80,7 +80,9 @@ import { ref, watch, computed } from "vue";
 import * as yup from "yup";
 import { Form, Field } from "vee-validate";
 import { mdiCircleMedium } from "@mdi/js";
-
+import { useAuthStore } from "@/stores/auth";
+import { axiosToken } from "@/services/axiosToken";
+const authStore = useAuthStore();
 const props = defineProps(["user"]);
 const user = ref({
   loading: false,
@@ -134,11 +136,22 @@ let validation = yup.object({
 const saveUser = async () => {
   let data = user.value.data;
   user.value.loading = true;
-  await axios
-    .post("/account/save", data)
+  await axiosToken(authStore.token)
+    .post("/api/account/save", data)
     .then((response) => {
-      user.value.loading = false;
-      emit("saved", response.data.message);
+      localStorage.removeItem("authUser");
+      authStore
+        .setCredentials({
+          user: response.data.user,
+          token: authStore.token,
+        })
+        .then(() => {
+          user.value.loading = false;
+          emit("saved", response.data.message);
+        })
+        .catch((err) => {
+          console.log("setCredentials", err);
+        });
     })
     .catch((err) => {
       user.value.loading = false;

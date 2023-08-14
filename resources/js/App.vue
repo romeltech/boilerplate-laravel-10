@@ -21,7 +21,6 @@ const router = useRouter();
 const authStore = useAuthStore();
 // get user when refreshed
 const refreshAuth = async () => {
-  console.log("refreshAuth");
   await axiosToken(authStore.token)
     .get("/api/checkuser")
     .then((res) => {

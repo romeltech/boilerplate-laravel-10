@@ -94,7 +94,6 @@ watch(
     // profileData.value.data = { ...profileData.value.data, ...newVal };
   }
 );
-console.log("profileData.value.data", profileData.value.data);
 const getProfile = async () => {
   await axiosToken(authStore.token)
     .get("/api/account/profile/" + props.user.id)
