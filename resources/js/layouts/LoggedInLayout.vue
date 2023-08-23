@@ -193,19 +193,20 @@ const sideNavigation = ref([
     icon: mdiHomeOutline,
     path: "/admin",
   },
+
   {
-    title: "Logs",
-    icon: mdiPlaylistEdit,
-    path: "/admin/logs",
-  },
-  {
-    title: "Settings",
+    title: "Admin",
     icon: mdiCog,
     subs: [
       {
         title: "Users",
         icon: mdiAccountGroup,
         path: "/admin/users",
+      },
+      {
+        title: "Logs",
+        icon: mdiPlaylistEdit,
+        path: "/admin/logs",
       },
     ],
   },
