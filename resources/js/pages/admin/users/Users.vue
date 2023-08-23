@@ -58,6 +58,7 @@
           variant="elevated"
           active-color="primary"
           density="comfortable"
+          :disabled="users.loading"
         ></v-pagination>
       </div>
     </v-row>
