@@ -43,7 +43,7 @@ const refreshAuth = async () => {
       }
     });
 };
-if (authStore && authStore.authIsLoggedIn && authStore.authIsLoggedIn == false) {
+if (authStore || authStore.authIsLoggedIn || authStore.authIsLoggedIn == false) {
   refreshAuth();
 }
 
