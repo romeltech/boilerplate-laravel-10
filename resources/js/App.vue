@@ -19,8 +19,9 @@ import { useTheme } from "vuetify";
 const theme = useTheme();
 const router = useRouter();
 const authStore = useAuthStore();
-// get user when refreshed
-const refreshAuth = async () => {
+
+// check user
+const checkUser = async () => {
   await axiosToken(authStore.token)
     .get("/api/checkuser")
     .then((res) => {
@@ -34,7 +35,6 @@ const refreshAuth = async () => {
         });
     })
     .catch((err) => {
-      console.log("refreshAuth error: ", err.response.status);
       // if error 401 unauthorize
       if (err.response.status == 401) {
         // logout user and redirect to login
@@ -44,7 +44,7 @@ const refreshAuth = async () => {
     });
 };
 if (authStore || authStore.authIsLoggedIn || authStore.authIsLoggedIn == false) {
-  refreshAuth();
+  checkUser();
 }
 
 // set dark mode on load
