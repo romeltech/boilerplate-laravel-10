@@ -49,6 +49,16 @@
             >No records found</v-sheet
           >
         </v-card>
+        <v-pagination
+          v-if="totalPageCount > 1"
+          v-model="currentPage"
+          class="my-4"
+          :length="totalPageCount"
+          :total-visible="8"
+          variant="elevated"
+          active-color="primary"
+          density="comfortable"
+        ></v-pagination>
       </div>
     </v-row>
   </v-container>
@@ -56,20 +66,30 @@
 
 <script setup>
 import AppPageHeader from "@/components/ApppageHeader.vue";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { mdiPencil, mdiTrashCan } from "@mdi/js";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
+import { axiosToken } from "@/services/axiosToken";
+import { useAuthStore } from "@/stores/auth";
+const authStore = useAuthStore();
 const router = useRouter();
+const route = useRoute();
 const users = ref({
   loading: false,
   data: [],
 });
+const totalPageCount = ref(0);
+const totalResult = ref(0);
+const currentPage = ref(route.params && route.params.page ? route.params.page : 1);
 const getAllUsers = async () => {
   users.value.loading = true;
-  await axios
-    .get("/admin/user/all")
-    .then((response) => {
-      users.value.data = response.data;
+  await axiosToken(authStore.token)
+    .get("/api/user/all?page=" + currentPage.value)
+    .then((res) => {
+      totalPageCount.value = res.data.last_page;
+      currentPage.value = res.data.current_page;
+      totalResult.value = res.data.total;
+      users.value.data = res.data.data;
       users.value.loading = false;
     })
     .catch((err) => {
@@ -77,6 +97,19 @@ const getAllUsers = async () => {
       console.log(err);
     });
 };
+watch(currentPage, (newValue, oldValue) => {
+  if (newValue != oldValue) {
+    router
+      .push({
+        name: "PaginatedUsers",
+        params: {
+          page: currentPage.value,
+        },
+      })
+      .catch((err) => {});
+    getAllUsers(currentPage.value);
+  }
+});
 
 const editUser = (id) => {
   router

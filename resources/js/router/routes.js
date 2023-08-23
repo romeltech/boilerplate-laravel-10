@@ -73,6 +73,17 @@ export const routes = [
         },
     },
     {
+        path: "/admin/users/page/:page",
+        component: () => import("../pages/admin/users/Users.vue"),
+        name: "PaginatedUsers",
+        meta: {
+            requiresAuth: true,
+            role: ["admin", "normal"],
+            title: "Users",
+        },
+    },
+
+    {
         path: "/admin/users/:id",
         component: () => import("../pages/admin/users/EditUser.vue"),
         name: "EditUser",
@@ -90,26 +101,6 @@ export const routes = [
             requiresAuth: true,
             role: ["admin", "normal"],
             title: "Logs",
-        },
-    },
-    {
-        path: "/admin/departments",
-        component: () => import("../pages/admin/Departments.vue"),
-        name: "Departments",
-        meta: {
-            requiresAuth: true,
-            role: ["admin", "normal"],
-            title: "Departments",
-        },
-    },
-    {
-        path: "/admin/companies",
-        component: () => import("../pages/admin/Companies.vue"),
-        name: "Companies",
-        meta: {
-            requiresAuth: true,
-            role: ["admin", "normal"],
-            title: "Companies",
         },
     },
 

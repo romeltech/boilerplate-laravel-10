@@ -53,9 +53,9 @@ Route::prefix('admin')->group(function () {
     Route::get('/{slug}', [PageController::class, 'home'])->name('admin.slug');
 
     // users
-    Route::get('/users/{id}', [PageController::class, 'home'])->name('admin.get.users');
+    Route::get('/users/{id}', [PageController::class, 'home'])->name('admin.single.user');
+    Route::get('/users/page/{page}', [PageController::class, 'home'])->name('admin.paginated.users');
     // users axios
-    Route::get('/user/all', [UserController::class, 'getUsers'])->name('admin.get.all.users');
     Route::get('/user/single/{id}', [UserController::class, 'getSingleUser'])->name('admin.get.single.user');
 });
 

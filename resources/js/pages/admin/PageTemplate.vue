@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <AppPageHeader title="Departments" />
+    <AppPageHeader title="PageTemplate" />
     <v-row>
       <div class="v-col-12">
         <!-- content -->

@@ -25,13 +25,24 @@ Route::post('/sanctumlogout', [UserApiController::class, 'logout']);
 Route::middleware('auth:sanctum')->get('/checkuser', [UserApiController::class, 'sanctumCheckUser']);
 
 /**
- * Accout routes
+ * Loggedin Routes
  */
-Route::middleware('auth:sanctum')->prefix('account')->group(function () {
-    // account
-    Route::post('/save', [UserController::class, 'saveUser'])->name('account.save');
+Route::middleware('auth:sanctum')->group(function () {
+    // Account
+    Route::prefix('account')->group(function () {
+        // save
+        Route::post('/save', [UserController::class, 'saveUser'])->name('account.save');
+        // profile
+        Route::get('/profile/{id}', [ProfileController::class, 'getProfileById'])->name('profile.get.by.id');
+        Route::post('/profile/save', [ProfileController::class, 'saveProfile'])->name('profile.save');
+    });
 
-    // profile
-    Route::get('/profile/{id}', [ProfileController::class, 'getProfileById'])->name('profile.get.by.id');
-    Route::post('/profile/save', [ProfileController::class, 'saveProfile'])->name('profile.save');
+    /**
+     * Users
+     */
+    Route::prefix('user')->group(function () {
+        Route::get('/all', [UserController::class, 'getUsers'])->name('admin.get.all.users');
+    });
 });
+
+
