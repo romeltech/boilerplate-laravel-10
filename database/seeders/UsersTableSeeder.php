@@ -21,5 +21,18 @@ class UsersTableSeeder extends Seeder
             'role'       => 'admin'
         ]);
         $user->save();
+
+        $faker = \Faker\Factory::create();
+        for ($i = 0; $i < 50; $i++) {
+            $dummyUser = new \App\Models\User([
+                'username' => 'user-'.$i,
+                'email'      => 'indemnetest+'.$i.'@gmail.com',
+                'phone_no'  => '5034324324'.$i,
+                'password'   => bcrypt('admin@112211'),
+                'status'     => 'active', // active, disabled, trashed
+                'role'       => 'admin'
+            ]);
+            $dummyUser->save();
+        }
     }
 }

@@ -165,8 +165,7 @@ import {
   mdiAccount,
   mdiCog,
   mdiPlaylistEdit,
-  mdiDomain,
-  mdiOfficeBuilding,
+  mdiAccountGroup,
   mdiWhiteBalanceSunny,
   mdiWeatherNight,
 } from "@mdi/js";
@@ -204,14 +203,9 @@ const sideNavigation = ref([
     icon: mdiCog,
     subs: [
       {
-        title: "Companies",
-        icon: mdiDomain,
-        path: "/admin/companies",
-      },
-      {
-        title: "Departments",
-        icon: mdiOfficeBuilding,
-        path: "/admin/departments",
+        title: "Users",
+        icon: mdiAccountGroup,
+        path: "/admin/users",
       },
     ],
   },
