@@ -17,7 +17,7 @@ export const routes = [
         meta: {
             requiresAuth: true,
             role: ["admin", "normal"],
-            name: "Home",
+            title: "Home",
         },
     },
 
@@ -40,7 +40,7 @@ export const routes = [
     {
         path: "/admin",
         component: () => import("../pages/admin/Dashboard.vue"),
-        name: "AdminRoot",
+        name: "Admin",
         meta: {
             requiresAuth: true,
             role: ["admin", "normal"],

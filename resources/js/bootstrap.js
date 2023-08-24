@@ -7,7 +7,16 @@
 import axios from 'axios';
 window.axios = axios;
 
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+// Default
+// window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+// added for sanctum
+axios.defaults.headers.common = {
+    'X-CSRF-TOKEN': document.getElementsByTagName('meta')['csrf-token'].content,
+    'X-Requested-With': 'XMLHttpRequest',
+    'Content-Type': 'application/jsons'
+};
+axios.defaults.withCredentials = true;
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

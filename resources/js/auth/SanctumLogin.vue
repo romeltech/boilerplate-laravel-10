@@ -75,11 +75,13 @@ const login = async () => {
   await axios
     .get("/sanctum/csrf-cookie")
     .then((res) => {
+      console.log("csrf-cookie", res);
       axios
         .post("/api/sanctumlogin", data)
         .then((loginres) => {
           console.log("loginres", loginres);
           authStore.setCredentials(loginres.data).then(() => {
+            console.log("setCredentials");
             loadingLogin.value = false;
             router.push({ path: "/admin" });
           });

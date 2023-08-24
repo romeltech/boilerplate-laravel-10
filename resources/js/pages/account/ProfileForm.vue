@@ -88,8 +88,6 @@ profileData.value.data = Object.assign({}, props.user);
 watch(
   () => props.user,
   (newVal) => {
-    console.log("props.user", props.user);
-    console.log("newVal", newVal);
     profileData.value.data = Object.assign({}, newVal);
     // profileData.value.data = { ...profileData.value.data, ...newVal };
   }
@@ -121,7 +119,7 @@ const saveProfile = async () => {
       id: props.user.id,
     },
   };
-  await axiosToken
+  await axiosToken(authStore.token)
     .post("/api/account/profile/save", profileData.value.data)
     .then((response) => {
       profileData.value.loading = false;

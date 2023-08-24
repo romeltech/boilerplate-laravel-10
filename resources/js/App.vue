@@ -31,7 +31,7 @@ const checkUser = async () => {
           token: authStore.token,
         })
         .then(() => {
-        //   router.push({ path: "/admin" });
+          //   router.push({ path: "/admin" });
         });
     })
     .catch((err) => {
