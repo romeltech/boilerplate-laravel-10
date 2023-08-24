@@ -81,7 +81,6 @@ const login = async () => {
         .then((loginres) => {
           console.log("loginres", loginres);
           authStore.setCredentials(loginres.data).then(() => {
-            console.log("setCredentials");
             loadingLogin.value = false;
             router.push({ path: "/admin" });
           });

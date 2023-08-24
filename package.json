@@ -17,6 +17,7 @@
         "@pusher/push-notifications-web": "^1.1.0",
         "@vueuse/core": "^10.3.0",
         "crypto-js": "^4.1.1",
+        "firebase": "^10.3.0",
         "pinia": "^2.1.6",
         "vee-validate": "^4.11.1",
         "vite-plugin-vuetify": "^1.0.2",

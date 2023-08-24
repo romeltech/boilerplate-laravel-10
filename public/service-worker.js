@@ -1,6 +1,7 @@
 importScripts("https://js.pusher.com/beams/service-worker.js");
 
 // https://pusher.com/docs/beams/guides/handle-incoming-notifications/web/
+// https://pusher.com/docs/beams/reference/publish-payloads/#web-format
 PusherPushNotifications.onNotificationReceived = ({
     pushEvent,
     payload,

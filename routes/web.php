@@ -78,3 +78,10 @@ Route::prefix('account')->group(function () {
  * Custom authentication
  */
 Route::post('login', [CustomAuthController::class, 'login'])->name('custom.login');
+
+
+/**
+ * FCM Push Notifications
+ */
+Route::post('/fcm-token', [PageController::class, 'updateToken'])->name('fcmToken');
+Route::post('/send-notification',[PageController::class,'notification'])->name('notification');

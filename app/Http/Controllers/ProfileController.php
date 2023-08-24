@@ -27,13 +27,18 @@ class ProfileController extends Controller
 
         $publishResponse = $beamsClient->publishToInterests(
             array("app"),
-            array("web" => array("notification" => array(
-              "title" => "Hello",
-              "body" => "Hello, World!",
-              "deep_link" => "http://localhost:8000/admin/users",
-              "icon" => "https://romel.tech/ri-fav.png"
-            )),
-        ));
+            array("web" =>
+                array(
+                    "notification" => array(
+                        "title" => "Hello",
+                        "body" => "Hello, World!",
+                        "deep_link" => "http://localhost:8000/admin/users",
+                        "icon" => "https://romel.tech/ri-fav.png",
+                        "hide_notification_if_site_has_focus" => true
+                    ),
+                ),
+            )
+        );
 
         return response()->json([
             'message' => 'Profile saved successfully',
