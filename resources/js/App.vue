@@ -55,4 +55,20 @@ if (gagDarkTheme) {
   theme.global.name.value = "light";
   localStorage.setItem("gag_dark_theme", theme.global.name.value);
 }
+
+// pusher beams
+import * as PusherPushNotifications from "@pusher/push-notifications-web";
+const beamsClient = new PusherPushNotifications.Client({
+  instanceId: "a9bdb868-c750-495a-9107-128cccb629d6",
+});
+beamsClient
+  .start()
+  .then((beamsClient) => beamsClient.getDeviceId())
+  .then((deviceId) =>
+    console.log("Successfully registered with Beams. Device ID:", deviceId)
+  )
+  .then(() => beamsClient.addDeviceInterest("hello"))
+  .then(() => beamsClient.getDeviceInterests())
+  .then((interests) => console.log("Current interests:", interests))
+  .catch(console.error);
 </script>

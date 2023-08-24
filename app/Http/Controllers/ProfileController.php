@@ -18,9 +18,28 @@ class ProfileController extends Controller
             'user_id' => $request['id'],
 
         ], $profileArray);
+
+
+        $beamsClient = new \Pusher\PushNotifications\PushNotifications(array(
+            "instanceId" => "a9bdb868-c750-495a-9107-128cccb629d6",
+            "secretKey" => "84FCE6FD458A8EFCAE24BEACEFA65A98B84AF0F66693B778D3FE67D766505661",
+        ));
+
+        $publishResponse = $beamsClient->publishToInterests(
+            array("app"),
+            array("web" => array("notification" => array(
+              "title" => "Hello",
+              "body" => "Hello, World!",
+              "deep_link" => "http://localhost:8000/admin/users",
+              "icon" => "https://romel.tech/ri-fav.png"
+            )),
+        ));
+
         return response()->json([
             'message' => 'Profile saved successfully',
-            'profile' => $profile
+            'profile' => $profile,
+            'beamsClient' => $beamsClient,
+            'publishResponse' => $publishResponse,
         ], 200);
     }
 
