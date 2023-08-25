@@ -75,6 +75,7 @@ if (gagDarkTheme) {
 // FCM
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import { getMessaging, getToken } from "firebase/messaging";
 
 // import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-app.js";
 // import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-analytics.js";
@@ -96,36 +97,66 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-console.log("app", app);
+
 // const analytics = getAnalytics(app);
-// const appMessaging = app.messaging();
+const appMessaging = getMessaging(app);
 
-function initFirebaseMessagingRegistration() {
-  appMessaging
-    .requestPermission()
-    .then(function () {
-      return appMessaging.getToken();
-    })
-    .then(function (token) {
-      axios
-        .post("/fcm-token", {
-          token,
-        })
-        .then(({ data }) => {
-          console.log(data);
-        })
-        .catch(({ response: { data } }) => {
-          console.error(data);
-        });
-    })
-    .catch(function (err) {
-      console.log(`Token Error :: ${err}`);
-    });
-}
-
-initFirebaseMessagingRegistration();
-
-appMessaging.onMessage(function ({ data: { body, title } }) {
-  new Notification(title, { body });
+// Get registration token. Initially this makes a network call, once retrieved
+// subsequent calls to getToken will return from cache.
+getToken(appMessaging, { vapidKey: 'BDAh4xN7lndvg7C5rFvQLK-CTZQnXG7msnkUfdh_uqPLjf0ogqVyenE1i58U26P-FUnoOVAScjDvxtzsEyKN74o' }).then((currentToken) => {
+  if (currentToken) {
+    // Send the token to your server and update the UI if necessary
+    // ...
+    console.log("currentToken", currentToken);
+  } else {
+    // Show permission request UI
+    console.log('No registration token available. Request permission to generate one.');
+    // ...
+  }
+}).catch((err) => {
+  console.log('An error occurred while retrieving token. ', err);
+  // ...
 });
+
+// getToken(messaging, { vapidKey: '<YOUR_PUBLIC_VAPID_KEY_HERE>' }).then((currentToken) => {
+//   if (currentToken) {
+//     // Send the token to your server and update the UI if necessary
+//     // ...
+//   } else {
+//     // Show permission request UI
+//     console.log('No registration token available. Request permission to generate one.');
+//     // ...
+//   }
+// }).catch((err) => {
+//   console.log('An error occurred while retrieving token. ', err);
+//   // ...
+// });
+
+// function initFirebaseMessagingRegistration() {
+//   appMessaging
+//     .requestPermission()
+//     .then(function () {
+//       return appMessaging.getToken();
+//     })
+//     .then(function (token) {
+//       axios
+//         .post("/fcm-token", {
+//           token,
+//         })
+//         .then(({ data }) => {
+//           console.log(data);
+//         })
+//         .catch(({ response: { data } }) => {
+//           console.error(data);
+//         });
+//     })
+//     .catch(function (err) {
+//       console.log(`Token Error :: ${err}`);
+//     });
+// }
+// initFirebaseMessagingRegistration();
+
+// appMessaging.onMessage(function ({ data: { body, title } }) {
+//   new Notification(title, { body });
+// });
 </script>
