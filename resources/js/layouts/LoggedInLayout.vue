@@ -149,6 +149,7 @@
       </v-menu>
     </v-app-bar>
     <v-main>
+      <v-btn @click="sendNotification"> Send Notification </v-btn>
       <slot />
     </v-main>
   </div>
@@ -174,6 +175,8 @@ import { printInitials } from "@/composables/printInitials";
 import { useRouter } from "vue-router";
 import axios from "axios";
 import { useTheme } from "vuetify";
+import { axiosToken } from "@/services/axiosToken";
+
 const theme = useTheme();
 const appName = ref(import.meta.env.VITE_APP_NAME);
 const logo = ref(import.meta.env.VITE_APP_URL + "/assets/images/fav.png");
@@ -265,4 +268,99 @@ const logout = async () => {
       console.log("api/sanctumlogout error: ", err);
     });
 };
+
+// FCM
+const setFirebaseToken = async (fcmToken) => {
+  await axiosToken(authStore.token)
+    .post("/api/set-token", { fcm_token: fcmToken })
+    .then((res) => {
+      console.log("setFirebaseToken", res);
+    })
+    .catch((err) => {
+      console.log(err.response.data);
+    });
+};
+
+const sendNotification = async () => {
+  console.log("sendNotification");
+  await axiosToken(authStore.token)
+    .post("/api/send-notification")
+    .then((res) => {
+      console.log("sendNotification", res);
+    })
+    .catch((err) => {
+      console.log(err.response.data);
+    });
+};
+
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getMessaging, getToken, onMessage } from "firebase/messaging";
+
+// import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-app.js";
+// import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-analytics.js";
+// import { messaging } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-messaging.js";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyBbSEk8U21SAh0z8Od6p9n-T6wCVNlJ2Ak",
+  authDomain: "push-notification-7f303.firebaseapp.com",
+  projectId: "push-notification-7f303",
+  storageBucket: "push-notification-7f303.appspot.com",
+  messagingSenderId: "451607915135",
+  appId: "1:451607915135:web:0e8049b2f05d6535d7ed4a",
+  measurementId: "G-X30478C2Q2",
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+// const analytics = getAnalytics(app);
+const appMessaging = getMessaging(app);
+
+function requestPermission() {
+  console.log("Requesting permission...");
+  Notification.requestPermission().then((permission) => {
+    if (permission === "granted") {
+      console.log("Notification permission granted.");
+    }
+  });
+}
+
+// Get registration token. Initially this makes a network call, once retrieved
+// subsequent calls to getToken will return from cache.
+getToken(appMessaging, {
+  vapidKey:
+    "BDAh4xN7lndvg7C5rFvQLK-CTZQnXG7msnkUfdh_uqPLjf0ogqVyenE1i58U26P-FUnoOVAScjDvxtzsEyKN74o",
+})
+  .then((currentToken) => {
+    if (currentToken) {
+      // Send the token to your server and update the UI if necessary
+      console.log("currentToken", currentToken);
+      setFirebaseToken(currentToken);
+    } else {
+      // Show permission request UI
+      console.log("No registration token available. Request permission to generate one.");
+      requestPermission();
+    }
+  })
+  .catch((err) => {
+    console.log("An error occurred while retrieving token. ", err);
+    // ...
+  });
+
+// appMessaging.onMessage(function ({ data: { body, title } }) {
+//   new Notification(title, { body });
+// });
+onMessage(appMessaging, function ({ notification }) {
+  new Notification(notification.title, {
+    body: notification.body,
+    icon: "https://romel.tech/ri-fav.png",
+    badge: "https://romel.tech/ri-fav.png",
+  });
+  // ...
+});
 </script>

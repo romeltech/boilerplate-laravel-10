@@ -2,9 +2,10 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserApiController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\FirebasePushController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +44,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('user')->group(function () {
         Route::get('/all', [UserController::class, 'getUsers'])->name('admin.get.all.users');
     });
+
+    /**
+     *  Firebase
+     */
+    Route::post('set-token', [FirebasePushController::class, 'setToken'])->name('firebase.token');
 });
 
-
+Route::post('send-notification', [FirebasePushController::class, 'sendNotification'])->name('firebase.send.notification');
