@@ -18,6 +18,23 @@ export const routes = [
         },
     },
 
+    {
+        path: "/grandiose-registration",
+        component: () => import("../pages/public/grandiose/Registration.vue"),
+        name: "GrandioseRegistration",
+        meta: {
+            title: "Grandiose Registration",
+        },
+    },
+    {
+        path: "/grandiose-thank-you",
+        component: () => import("../pages/public/grandiose/ThankYou.vue"),
+        name: "GrandioseThankYou",
+        meta: {
+            title: "Grandiose Thanks You",
+        },
+    },
+
     /**
      * Admin routes
      */

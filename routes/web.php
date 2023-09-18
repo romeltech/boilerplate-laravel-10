@@ -61,3 +61,14 @@ Route::middleware('auth')->prefix('account')->group(function () {
  * Custom authentication
  */
 Route::post('login', [CustomAuthController::class, 'login'])->name('custom.login');
+
+/**
+ * Registration
+ */
+Route::get('/grandiose-registration', function(){
+    return view('layouts.app');
+})->name('registration');
+Route::post('/grandiose-registration', [UserController::class, 'registration'])->name('save.user.registration');
+Route::get('/grandiose-thank-you', function(){
+    return view('layouts.app');
+})->name('grandiose.thank.you');

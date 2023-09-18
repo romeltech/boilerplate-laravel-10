@@ -20,8 +20,13 @@ watch(prop, () => {
 
 <template>
   <div>
-    <AdminLayout v-if="authStore.user.role == 'admin'">
-      <router-view />
-    </AdminLayout>
+    <div v-if="authStore.user && authStore.user.role && authStore.user.role == 'admin'">
+      <AdminLayout>
+        <router-view></router-view>
+      </AdminLayout>
+    </div>
+    <div v-else>
+      <router-view></router-view>
+    </div>
   </div>
 </template>

@@ -1,83 +1,79 @@
-<script setup>
-import WhiteLogo from "@/Components/logo/WhiteLogo.vue";
-import { onMounted, ref } from "vue";
-
-const appName = ref(import.meta.env.VITE_APP_NAME);
-const baseUrl = window.location.origin;
-const bgCurrent = ref(1);
-const bgItems = ref([
-  {
-    id: 1,
-    src: baseUrl + "/assets/images/login-slider/slider-1.jpg",
-  },
-  {
-    id: 2,
-    src: baseUrl + "/assets/images/login-slider/slider-2.jpg",
-  },
-  {
-    id: 3,
-    src: baseUrl + "/assets/images/login-slider/slider-3.jpg",
-  },
-  {
-    id: 4,
-    src: baseUrl + "/assets/images/login-slider/slider-4.jpg",
-  },
-  {
-    id: 5,
-    src: baseUrl + "/assets/images/login-slider/slider-5.jpg",
-  },
-  {
-    id: 6,
-    src: baseUrl + "/assets/images/login-slider/slider-6.jpg",
-  },
-  {
-    id: 7,
-    src: baseUrl + "/assets/images/login-slider/slider-7.jpg",
-  },
-  {
-    id: 8,
-    src: baseUrl + "/assets/images/login-slider/slider-8.jpg",
-  },
-]);
-
-const bgUpdate = () => {
-  if (bgCurrent.value == 8) {
-    bgCurrent.value = 1;
-  } else {
-    bgCurrent.value = bgCurrent.value + 1;
-  }
-};
-onMounted(() => {
-  setInterval(() => {
-    console.log("slider interval");
-    bgUpdate();
-  }, 10000);
-});
-</script>
 <template>
   <div
     class="h-screen d-flex flex-column justify-start align-center"
     style="background-color: #000000"
   >
-    <div v-for="slide in bgItems">
-      <div
-        v-show="slide.id == bgCurrent"
-        class="gag-guest-bg"
-        :style="`background-image: url('${slide.src}')`"
-      ></div>
+    <div>
+      <div class="gag-guest-bg" :style="`background-image: url('${bgUrl}')`"></div>
     </div>
     <div class="gag-guest-bg-fill"></div>
 
     <div
       class="mx-auto px-3 text-center"
-      style="z-index: 1; max-width: 400px; width: 100%; margin-top: 100px"
+      style="z-index: 1; max-width: 320px; width: 100%; margin-top: 50px"
     >
-      <WhiteLogo width="100%" />
+      <v-img :src="`${baseUrl}/assets/images/grandiose-white.png`"></v-img>
       <div class="text-subtitle-1 text-white">{{ appName }}</div>
     </div>
     <slot />
   </div>
 </template>
+<script setup>
+import { onMounted, ref } from "vue";
+const appName = ref(import.meta.env.VITE_APP_NAME);
+const baseUrl = window.location.origin;
+const bgCurrent = ref(1);
+const bgUrl = baseUrl + "/assets/images/login-slider/slider-3.jpg";
+// const bgItems = ref([
+//   {
+//     id: 1,
+//     src: baseUrl + "/assets/images/login-slider/slider-1.jpg",
+//   },
+//   {
+//     id: 2,
+//     src: baseUrl + "/assets/images/login-slider/slider-2.jpg",
+//   },
+//   {
+//     id: 3,
+//     src: baseUrl + "/assets/images/login-slider/slider-3.jpg",
+//   },
+//   {
+//     id: 4,
+//     src: baseUrl + "/assets/images/login-slider/slider-4.jpg",
+//   },
+//   {
+//     id: 5,
+//     src: baseUrl + "/assets/images/login-slider/slider-5.jpg",
+//   },
+//   {
+//     id: 6,
+//     src: baseUrl + "/assets/images/login-slider/slider-6.jpg",
+//   },
+//   {
+//     id: 7,
+//     src: baseUrl + "/assets/images/login-slider/slider-7.jpg",
+//   },
+//   {
+//     id: 8,
+//     src: baseUrl + "/assets/images/login-slider/slider-8.jpg",
+//   },
+// ]);
+
+// const bgUpdate = () => {
+//   if (bgCurrent.value == 8) {
+//     bgCurrent.value = 1;
+//   } else {
+//     bgCurrent.value = bgCurrent.value + 1;
+//   }
+// };
+// onMounted(() => {
+//   setInterval(() => {
+//     console.log("slider interval");
+//     bgUpdate();
+//   }, 10000);
+// });
+</script>
+
 <style scoped>
 .gag-guest-bg {
   background-position: center;

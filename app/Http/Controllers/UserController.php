@@ -71,4 +71,24 @@ class UserController extends Controller
         $users = User::all();
         return response()->json($users, 200);
     }
+
+    /**
+     * Register Users from Wifi SSID
+     */
+    public function registration(Request $request)
+    {
+
+        $user = User::create([
+            'status' => 'active',
+            'role' => 'guest',
+            'email' => $request['email'],
+            'phone_no' => $request['phone'],
+            'first_name' => $request['first_name'],
+            'last_name' => $request['last_name'],
+            'password' => Hash::make($request['gag@112211']),
+        ]);
+        return response()->json([
+            'message' => "Registration successful",
+        ], 200);
+    }
 }
