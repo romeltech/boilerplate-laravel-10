@@ -105,8 +105,8 @@ let validation = yup.object({
     .string()
     .required()
     .matches(phoneRegExp, "Phone number is not valid")
-    .min(10, "Too short")
-    .max(10, "Too long"),
+    .min(9, "Too short")
+    .max(16, "Too long"),
 });
 
 const credentials = ref({
