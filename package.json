@@ -17,12 +17,13 @@
         "@pusher/push-notifications-web": "^1.1.0",
         "@vueuse/core": "^10.3.0",
         "crypto-js": "^4.1.1",
-        "firebase": "^10.3.0",
+        "dropzone": "^6.0.0-beta.2",
         "pinia": "^2.1.6",
         "vee-validate": "^4.11.1",
         "vite-plugin-vuetify": "^1.0.2",
-        "vue-router": "^4.2.4",
-        "vuetify": "^3.3.14",
-        "yup": "^1.2.0"
+        "vue-router": "^4.1.6",
+        "vue3-dropzone": "^2.0.1",
+        "vuetify": "^3.1.11",
+        "yup": "^1.0.2"
     }
 }

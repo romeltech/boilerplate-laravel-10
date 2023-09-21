@@ -4,24 +4,7 @@
     <v-row>
       <div class="v-col-12">
         <!-- content -->
-        <div>
-          <div v-bind="getRootProps()">
-            <input v-bind="getInputProps()" />
-            <p v-if="isDragActive">Drop the files here ...</p>
-            <p v-else>Drag 'n' drop some files here, or click to select files</p>
-          </div>
-          <div></div>
-          <button @click="open">open</button>
-        </div>
-        <div class="preview-container dropzone-previews"></div>
-        <!-- <div v-if="filesArray.length > 0">
-          <div v-for="(file, index) in filesArray" :key="index">
-            {{ file.path }}
-            {{ file.dataURL }}
-            <v-img :src="file.path"></v-img>
-          </div>
-        </div>
-        <div class="dzone-preview"></div> -->
+        <div id="uploader"></div>
       </div>
     </v-row>
   </v-container>
@@ -30,7 +13,26 @@
 <script setup>
 import { ref, watch } from "vue";
 import AppPageHeader from "@/components/AppPageHeader.vue";
-import { useDropzone } from "vue3-dropzone";
+import { Dropzone } from "dropzone";
+
+const dropzone = new Dropzone("#uploader", { url: "/studio/upload" });
+
+// let melDropZone = new Dropzone({
+//   paramName: "file", // The name that will be used to transfer the file
+//   maxFilesize: 2, // MB
+//   accept: function (file, done) {
+//     if (file.name == "justinbieber.jpg") {
+//       done("Naha, you don't.");
+//     } else {
+//       done();
+//     }
+//   },
+// });
+
+// const { getRootProps, getInputProps, isDragActive, ...rest } = useDropzone({ onDrop });
+// const { getRootProps, getInputProps, isDragActive, ...rest } = useDropzone(
+//   dropzoneOptions
+// );
 
 const url = "/studio/upload"; // Your url on the server side
 const filesArray = ref([]);
@@ -56,34 +58,26 @@ const saveFiles = (files) => {
       console.error(err);
     });
 };
-const dzOnDrop = (acceptFiles, rejectReasons) => {
+const dpOnDrop = (acceptFiles, rejectReasons) => {
   filesArray.value = acceptFiles;
-  console.log("onDrop ", filesArray.value[0]);
+  console.log("onDrop ", filesArray.value[0].dataURL);
   //   console.log("acceptFiles", acceptFiles);
   //   console.log("rejectReasons", rejectReasons);
 };
-const thumbnail = (file, dataURL) => {
+const dpThumbnail = (file, dataURL) => {
   console.log("dpThumbnail file", file);
   console.log("dpThumbnail dataURL", dataURL);
 };
-// const dropzoneOptions = {
-//   onDrop: dpOnDrop,
-//   thumbnail: dpThumbnail,
-// };
-
-const { getRootProps, getInputProps, isDragActive, ...rest } = useDropzone({
-  onDrop: dzOnDrop,
-});
-// const { getRootProps, getInputProps, isDragActive, ...rest } = useDropzone(
-//   dropzoneOptions
-// );
+const dropzoneOptions = {
+  onDrop: dpOnDrop,
+  thumbnail: dpThumbnail,
+};
 
 watch(filesArray, () => {
   console.log("watch filesArray", filesArray.value);
 });
 
 watch(isDragActive, () => {
-  console.log("getInputProps", getInputProps);
   console.log("watch isDragActive", isDragActive.value, rest);
 });
 </script>

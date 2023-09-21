@@ -3,7 +3,7 @@
     class="h-screen d-flex flex-column justify-start align-center"
     style="background-color: #000000"
   >
-    <div v-for="slide in bgItems">
+    <div v-for="slide in bgItems" :key="slide.id">
       <div
         v-show="slide.id == bgCurrent"
         class="gag-guest-bg"

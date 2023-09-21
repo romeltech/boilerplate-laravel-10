@@ -69,12 +69,20 @@ import { useAuthStore } from "@/stores/auth";
 
 const authStore = useAuthStore();
 const route = useRoute();
-const props = defineProps(["user"]);
-
-// profile
 const emit = defineEmits(["saved"]);
-const nationalityList = ref([]);
-nationalityList.value = nationalities;
+const props = defineProps(["profile"]);
+const nationalityList = ref(nationalities);
+
+watch(
+  () => props.profile,
+  (newVal) => {
+    profileData.value.data = { ...profileData.value.data, ...newVal };
+  }
+);
+onMounted(() => {
+  profileData.value.data = { ...profileData.value.data, ...props.profile };
+});
+
 const profileData = ref({
   loading: false,
   data: {

@@ -23,11 +23,6 @@ const pinia = createPinia();
 // pinia.use(piniaPluginPersistedState);
 app.use(pinia);
 
-/**
- * User Store
- */
-import { useAuthStore } from "@/stores/auth";
-const authStore = useAuthStore();
 
 /**
  * Vue Router
