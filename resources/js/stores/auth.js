@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
-import { useLocalStorage, useStorage } from "@vueuse/core";
-import CryptoJS from "crypto-js";
+import { useStorage } from '@vueuse/core'
+
 // You can name the return value of `defineStore()` anything you want,
 // but it's best to use the name of the store and surround it with `use`
 // and `Store` (e.g. `useUserStore`, `useCartStore`, `useProductStore`)
@@ -22,7 +22,9 @@ const encryptData = (data) => {
 
 export const useAuthStore = defineStore("authUser", {
     state: () => ({
-        auth: useLocalStorage("authUser", {}),
+        user: {},
+        token: "",
+        storage_token: useStorage('token', []),
     }),
     getters: {
         user: (state) => {
@@ -47,27 +49,20 @@ export const useAuthStore = defineStore("authUser", {
         },
     },
     actions: {
-        async setCredentials(res) {
-            // save to localstorage
-            useStorage(
-                "authUser",
-                {
-                    data: encryptData({
-                        u: res.user,
-                        t: res.token ? res.token : null,
-                        r: [res.user.role],
-                        is_logged_in: true,
-                    }),
-                },
-                localStorage,
-                {
-                    mergeDefaults: true,
-                }
-            );
+        async getUser(data) {
+            this.user = data.user;
+            this.token = data.token;
         },
-        async logout() {
-            // this.auth = null;
-            this.auth = {};
+        async setCredentials(data) {
+            this.user = data.user;
+            this.token = data.token;
+        },
+        async setUser(user) {
+            this.user = user;
+        },
+        async setToken(token) {
+            this.token = token;
+            localStorage.setItem("sanctum_server_token", JSON.stringify(token));
         },
     },
 });

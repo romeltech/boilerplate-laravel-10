@@ -23,7 +23,8 @@ use App\Http\Controllers\PublicPageController;
 
 // Auth::routes();
 Auth::routes([
-    'register' => false
+    'register' => false,
+    'login' => false
 ]);
 
 Route::get('/', [PageController::class, 'home'])->name('home');
@@ -43,7 +44,8 @@ Route::post('/client/removekey', [ClientKeyController::class, 'removeKey'])->nam
 /**
  * Sanctum login
  */
-Route::get('/access', [PublicPageController::class, 'access'])->name('sanctum.login');
+// Route::get('/access', [PublicPageController::class, 'access'])->name('sanctum.login');
+Route::get('/login', [PublicPageController::class, 'access'])->name('login');
 
 /**
  * Admin routes
