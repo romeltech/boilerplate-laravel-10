@@ -149,7 +149,7 @@
       </v-menu>
     </v-app-bar>
     <v-main>
-      <v-btn @click="sendNotification"> Send Notification </v-btn>
+      <!-- <v-btn @click="sendNotification"> Send Notification </v-btn> -->
       <slot />
     </v-main>
   </div>
