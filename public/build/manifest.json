@@ -1,12 +1,12 @@
 {
-  "_AppPageHeader-64e35ec0.js": {
-    "file": "assets/AppPageHeader-64e35ec0.js",
+  "_AppPageHeader-2ba62776.js": {
+    "file": "assets/AppPageHeader-2ba62776.js",
     "imports": [
       "resources/js/app.js"
     ]
   },
-  "_ChangePassword-637915c5.js": {
-    "file": "assets/ChangePassword-637915c5.js",
+  "_ChangePassword-cabf72ce.js": {
+    "file": "assets/ChangePassword-cabf72ce.js",
     "imports": [
       "resources/js/app.js"
     ]
@@ -34,7 +34,7 @@
       "resources/js/pages/account/Account.vue",
       "resources/js/pages/Unauthorized.vue"
     ],
-    "file": "assets/app-640132d6.js",
+    "file": "assets/app-5901e2bb.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   },
@@ -46,7 +46,7 @@
     "css": [
       "assets/SanctumLogin-1d7a5851.css"
     ],
-    "file": "assets/SanctumLogin-275f7783.js",
+    "file": "assets/SanctumLogin-c19bd61a.js",
     "imports": [
       "resources/js/app.js",
       "__plugin-vue_export-helper-c27b6911.js"
@@ -55,7 +55,7 @@
     "src": "resources/js/auth/SanctumLogin.vue"
   },
   "resources/js/pages/Unauthorized.vue": {
-    "file": "assets/Unauthorized-321d3cf2.js",
+    "file": "assets/Unauthorized-82e8dbd4.js",
     "imports": [
       "resources/js/app.js",
       "__plugin-vue_export-helper-c27b6911.js"
@@ -64,48 +64,48 @@
     "src": "resources/js/pages/Unauthorized.vue"
   },
   "resources/js/pages/account/Account.vue": {
-    "file": "assets/Account-9cd62126.js",
+    "file": "assets/Account-7c2d28d0.js",
     "imports": [
       "resources/js/app.js",
-      "_AppPageHeader-64e35ec0.js",
-      "_ChangePassword-637915c5.js"
+      "_AppPageHeader-2ba62776.js",
+      "_ChangePassword-cabf72ce.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/pages/account/Account.vue"
   },
   "resources/js/pages/admin/Dashboard.vue": {
-    "file": "assets/Dashboard-a0a3ce0e.js",
+    "file": "assets/Dashboard-92680b37.js",
     "imports": [
       "resources/js/app.js",
-      "_AppPageHeader-64e35ec0.js"
+      "_AppPageHeader-2ba62776.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/pages/admin/Dashboard.vue"
   },
   "resources/js/pages/admin/Logs.vue": {
-    "file": "assets/Logs-5010d798.js",
+    "file": "assets/Logs-9926b2f8.js",
     "imports": [
       "resources/js/app.js",
-      "_AppPageHeader-64e35ec0.js"
+      "_AppPageHeader-2ba62776.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/pages/admin/Logs.vue"
   },
   "resources/js/pages/admin/users/EditUser.vue": {
-    "file": "assets/EditUser-d92cf281.js",
+    "file": "assets/EditUser-8a3ee49b.js",
     "imports": [
       "resources/js/app.js",
-      "_AppPageHeader-64e35ec0.js",
-      "_ChangePassword-637915c5.js"
+      "_AppPageHeader-2ba62776.js",
+      "_ChangePassword-cabf72ce.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/pages/admin/users/EditUser.vue"
   },
   "resources/js/pages/admin/users/Users.vue": {
-    "file": "assets/Users-3e4028c3.js",
+    "file": "assets/Users-df63168a.js",
     "imports": [
       "resources/js/app.js",
-      "_AppPageHeader-64e35ec0.js"
+      "_AppPageHeader-2ba62776.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/pages/admin/users/Users.vue"
