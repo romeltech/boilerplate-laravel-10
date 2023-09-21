@@ -24,13 +24,33 @@ export const routes = [
     /**
      * Auth Login
      */
+    // {
+    //     path: "/login",
+    //     component: () => import("../auth/Login.vue"),
+    //     name: "Login",
+    //     meta: {
+    //         title: "Login",
+    //     },
+    // },
+
+    /**
+     * Sanctum login
+     */
     {
-        path: "/login",
+        path: "/access",
         component: () => import("../auth/SanctumLogin.vue"),
-        name: "Login",
+        name: "Access",
         meta: {
-            requiresAuth: false,
-            title: "Login",
+            title: "Sanctum Login",
+        },
+    },
+
+    {
+        path: "/check",
+        component: () => import("../auth/CheckAccount.vue"),
+        name: "CheckAccount",
+        meta: {
+            title: "Checking Account",
         },
     },
 

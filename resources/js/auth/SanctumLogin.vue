@@ -1,13 +1,10 @@
 <template>
   <GuestLayout>
-    <div
-      class="mx-auto px-3 text-center"
-      style="z-index: 1; max-width: 400px; width: 100%; margin-top: 100px"
+    <v-card
+      class="mt-8 pa-3 rounded-lg elevation-3"
+      width="90%"
+      max-width="450"
     >
-      <WhiteLogo width="100%" />
-      <div class="text-subtitle-1 text-white">{{ appName }}</div>
-    </div>
-    <v-card class="mt-8 pa-3 rounded-lg elevation-3" width="90%" max-width="450">
       <v-card-title class="px-5 pb-0 primary--text">Login</v-card-title>
       <v-card-text class="py-5">
         <v-form autocomplete="off" ref="form">
@@ -72,16 +69,16 @@ const login = async () => {
     username: credentials.value.login,
     password: credentials.value.password,
   };
-  await axios
+  await samctumApi
     .get("/sanctum/csrf-cookie")
     .then((res) => {
-      console.log("csrf-cookie", res);
-      axios
-        .post("/api/sanctumlogin", data)
+      samctumApi
+        .post("api/sanctumlogin", data)
         .then((loginres) => {
           console.log("loginres", loginres);
           authStore.setCredentials(loginres.data).then(() => {
             loadingLogin.value = false;
+            localStorage.setItem("sanctum_token", loginres.data.token);
             router.push({ path: "/admin" });
           });
         })
@@ -89,8 +86,8 @@ const login = async () => {
           console.log("loginerr", loginerr);
         });
     })
-    .catch((err) => {
-      console.log("err", err);
+    .catch((loginerr) => {
+      console.log("loginerr", loginerr);
     });
 };
 </script>

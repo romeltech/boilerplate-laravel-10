@@ -20,8 +20,10 @@
 
 <body>
     <div id="app">
-        <v-app class="background">
-            <App />
+        <v-app style="background-color: #fafafa">
+            {{-- :auth="{{ json_encode(auth()->user()) }}" --}}
+            <main-component></main-component>
+            {{-- @auth @endauth --}}
         </v-app>
     </div>
 </body>
