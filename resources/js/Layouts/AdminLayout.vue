@@ -149,15 +149,18 @@
 </template>
 
 <script setup>
-import {usePrintInitials} from "@/Composables/printInitials"
+import { usePrintInitials } from "@/Composables/printInitials";
 import { ref, onMounted, watch } from "vue";
 import { Link } from "@inertiajs/vue3";
 import { useDisplay } from "vuetify";
 
-import { mdiChevronLeft } from "@mdi/js";
-import { mdiHomeOutline } from "@mdi/js";
-import { mdiBellOutline } from "@mdi/js";
-import { mdiAccountGroup } from "@mdi/js";
+import {
+  mdiChevronLeft,
+  mdiHomeOutline,
+  mdiBellOutline,
+  mdiAccountGroup,
+  mdiChevronRight,
+} from "@mdi/js";
 // import route from "vendor/tightenco/ziggy/src/js";
 
 import { useAuthStore } from "@/stores/auth";

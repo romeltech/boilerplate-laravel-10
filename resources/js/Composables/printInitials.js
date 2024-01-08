@@ -1,5 +1,4 @@
 function usePrintInitials(fullName) {
-    // print the initials of the full name
     return fullName ? fullName.split(' ').map(word => word[0]).join('') : '?';
     // return fullName
     //     .split(" ")
