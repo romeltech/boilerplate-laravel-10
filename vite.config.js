@@ -17,6 +17,10 @@ export default defineConfig({
                 },
             },
         }),
-        vuetify(),
+        // vuetify(),
+        // vuetify({ autoImport: true }),
+        vuetify({
+            autoImport: { labs: true },
+        }),
     ],
 });

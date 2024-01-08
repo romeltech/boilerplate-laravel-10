@@ -7,16 +7,6 @@ import { createInertiaApp } from "@inertiajs/vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
 
-/**
- * Vue router
- */
-import { createRouter, createWebHistory } from "vue-router";
-import { routes } from "./Plugins/routes";
-const router = createRouter({
-    // history: createWebHistory(process.env.BASE_URL),
-    history: createWebHistory(import.meta.env.APP_URL),
-    routes,
-});
 
 /**
  * Pinia
@@ -50,11 +40,9 @@ createInertiaApp({
         ),
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, props) })
-            // .mixin({ methods: { appRoute: route } })
             .mixin({ methods: { route } })
             .use(plugin)
             .use(pinia)
-            .use(router)
             .use(vuetify)
             // .use(utilsPlugin)
             .use(ZiggyVue, Ziggy)

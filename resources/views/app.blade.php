@@ -25,7 +25,9 @@
 </head>
 
 <body>
-    @inertia
+    <v-app>
+        @inertia
+    </v-app>
 </body>
 
 </html>

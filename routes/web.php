@@ -45,11 +45,11 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->prefix('admin')->group(function () {
 
     // main pages
-    // Route::get('/',function () {
-    //     return Inertia::render('Admin');
-    // })->name('admin');
+    Route::get('/dashboard',function () {
+        return Inertia::render('Admin/Dashboard');
+    })->name('dashboard');
 
-    Route::get('/{slug?}', [PageController::class, 'adminMainPages'])->name('admin.main.pages');
+    // Route::get('/{slug?}', [PageController::class, 'adminMainPages'])->name('admin.main.pages');
 
     // Route::get('/',function () {
     //     return Inertia::render('Admin');

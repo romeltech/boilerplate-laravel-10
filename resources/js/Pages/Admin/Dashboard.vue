@@ -1,11 +1,39 @@
+<template>
+  <AdminLayout>
+    <PageHeader title="Dashboard" />
+    <v-container>
+      <v-row class="mb-3">
+        <div class="v-col-12 v-col-md-4 pb-0" v-for="item in cards" :key="item.id">
+          <v-card
+            v-ripple
+            color="secondary"
+            height="80"
+            width="100%"
+            class="d-flex align-center justify-center rounded-lg"
+            style="cursor: pointer"
+          >
+            <div class="text-h6 text-capitalize">{{ item.title }}</div>
+          </v-card>
+        </div>
+      </v-row>
+      <v-row>
+        <div class="v-col-12">
+          <SimpleTable />
+        </div>
+      </v-row>
+    </v-container>
+  </AdminLayout>
+</template>
+
 <script setup>
+import { ref } from "vue";
+import AdminLayout from "@/Layouts/AdminLayout.vue";
 import PageHeader from "@/Components/Common/PageHeader.vue";
 import SimpleTable from "@/Components/Common/SimpleTable.vue";
-import { ref } from "vue";
 
 import { useAuthStore } from "@/stores/auth";
 const authStore = useAuthStore();
-if (!authStore.user.hasOwnProperty("id")) {
+if (!authStore.user && !authStore.user.hasOwnProperty("id")) {
   authStore.setToken("melmelmel");
   authStore.setUser({
     id: 1,
@@ -32,28 +60,3 @@ const cards = ref([
   },
 ]);
 </script>
-
-<template>
-  <v-container>
-    <PageHeader title="Dashboard" />
-    <v-row class="mb-3">
-      <div class="v-col-12 v-col-md-4 pb-0" v-for="item in cards" :key="item.id">
-        <v-card
-          v-ripple
-          color="secondary"
-          height="80"
-          width="100%"
-          class="d-flex align-center justify-center rounded-lg"
-          style="cursor: pointer"
-        >
-          <div class="text-h6 text-capitalize">{{ item.title }}</div>
-        </v-card>
-      </div>
-    </v-row>
-    <v-row>
-      <div class="v-col-12">
-        <SimpleTable />
-      </div>
-    </v-row>
-  </v-container>
-</template>
