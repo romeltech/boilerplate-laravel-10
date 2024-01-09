@@ -95,13 +95,21 @@
         </div>
       </template>
       <v-spacer></v-spacer>
-      <!-- <v-btn size="36" class="mx-2" icon variant="flat">
-        <v-icon color="grey-darken-1" :icon="mdiBellOutline"></v-icon>
-      </v-btn> -->
+      <v-btn
+        size="36"
+        class="mr-2"
+        color="grey-darken-1"
+        @click="toggleTheme"
+        :icon="`${
+          theme.global.name.value == 'light' ? mdiWeatherNight : mdiWhiteBalanceSunny
+        }`"
+      >
+      </v-btn>
+      <v-btn size="36" class="mr-2" color="grey-darken-1" :icon="mdiBellOutline"> </v-btn>
       <v-menu v-model="menu" :close-on-content-click="false" location="bottom">
         <template v-slot:activator="{ props }">
           <v-avatar
-            color="grey-lighten-3"
+            color="app-background"
             :size="36"
             class="d-flex align-center justify-center mr-3"
             v-bind="props"
@@ -142,7 +150,7 @@
         </v-card>
       </v-menu>
     </v-app-bar>
-    <v-main>
+    <v-main class="bg-app-background">
       <slot />
     </v-main>
   </v-app>
@@ -151,8 +159,8 @@
 <script setup>
 import { usePrintInitials } from "@/Composables/printInitials";
 import { ref, onMounted, watch } from "vue";
-import { Link } from "@inertiajs/vue3";
-import { useDisplay } from "vuetify";
+import { Link, router, usePage } from "@inertiajs/vue3";
+import { useDisplay, useTheme } from "vuetify";
 
 import {
   mdiChevronLeft,
@@ -160,6 +168,9 @@ import {
   mdiBellOutline,
   mdiAccountGroup,
   mdiChevronRight,
+  mdiCog,
+  mdiWeatherNight,
+  mdiWhiteBalanceSunny,
 } from "@mdi/js";
 // import route from "vendor/tightenco/ziggy/src/js";
 
@@ -174,6 +185,15 @@ if (!authStore.user && !authStore.user.hasOwnProperty("id")) {
   });
 }
 
+console.log("usePage", usePage().props.auth.user);
+
+// toggle dark mode
+const theme = useTheme();
+const toggleTheme = () => {
+  theme.global.name.value = theme.global.current.value.dark ? "light" : "dark";
+  localStorage.setItem("app_dark_theme", theme.global.name.value);
+};
+
 const { mobile } = useDisplay();
 const appName = ref(import.meta.env.VITE_APP_NAME);
 const logo = ref(window.location.origin + "/assets/images/fav.png");
@@ -185,39 +205,26 @@ const sideNavigation = ref([
   {
     title: "Dashboard",
     icon: mdiHomeOutline,
-    // path: "/admin/dashboard",
-    // path: "admin.dashboard",
-    path: "Dashboard",
+    path: "/admin/dashboard",
   },
   {
-    title: "Users",
-    icon: mdiAccountGroup,
-    // path: "/admin/users",
-    // path: "admin.users",
-    path: "Users",
-  },
-  {
-    title: "Test",
-    icon: mdiAccountGroup,
-    // path: "/admin/users",
-    // path: "admin.users",
-    path: "Test",
-  },
-  {
-    title: "Large",
-    icon: mdiAccountGroup,
-    // path: "/admin/users",
-    // path: "admin.users",
-    path: "Large",
+    title: "Settings",
+    icon: mdiCog,
+    subs: [
+      {
+        title: "Users",
+        icon: mdiAccountGroup,
+        path: "/admin/users",
+      },
+    ],
   },
 ]);
 const openPage = (path) => {
-  //   this.$router.push({ name: "user", params: { userId: "123" } });
-  //   console.log($inertia);
-  //   this.$inertia.put(route("rooms.update", { room: this.editingRoomUuid }), this.form);
-  //   console.log($page.props);
-  //   route(path);
+  router.get(path);
 };
+
+// logout
+const loadingLogout = ref(false);
 const logout = () => {
   console.log("logout");
 };

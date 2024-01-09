@@ -4,6 +4,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 
 /*
@@ -42,27 +43,30 @@ Route::middleware('auth')->group(function () {
 /**
  * Admin routes
  */
-Route::middleware('auth')->prefix('admin')->group(function () {
+Route::group(['prefix'=>'admin','as'=>'admin.', 'middleware' => 'auth'], function () {
 
-    // main pages
+    // dashboard
     Route::get('/dashboard',function () {
         return Inertia::render('Admin/Dashboard');
     })->name('dashboard');
 
-    // Route::get('/{slug?}', [PageController::class, 'adminMainPages'])->name('admin.main.pages');
+    // users
+    Route::group(['prefix'=>'users','as'=>'users.'], function () {
 
-    // Route::get('/',function () {
-    //     return Inertia::render('Admin');
-    // })->name('admin');
+        Route::get('/',function () {
+            return Inertia::render('Admin/Users/Users');
+        })->name('index');
 
-    // Route::get('/dashboard',function () {
-    //     return Inertia::render('Admin');
-    // })->name('admin.dashboard');
+        Route::get('/paginated', [UserController::class, 'paginatedUsers'])->name('api.paginated');
 
-    // // sub pages
-    // Route::get('/users',function () {
-    //     return Inertia::render('Admin');
-    // })->name('admin.users');
+        Route::get('/edit/{id}',function () {
+            return Inertia::render('Admin/Users/EditUsers');
+        })->name('edit');
+
+        // api
+        Route::get('/single/{id}', [UserController::class, 'userById'])->name('single.user');
+
+    });
 });
 
 require __DIR__.'/auth.php';

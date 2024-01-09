@@ -1,0 +1,21 @@
+/* width */
+.gag-scroll::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+.gag-scroll::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+}
+
+/* Handle */
+.gag-scroll::-webkit-scrollbar-thumb {
+    background: $secondary;
+    border-radius: 2px;
+}
+
+/* Handle on hover */
+.gag-scroll::-webkit-scrollbar-thumb:hover {
+    background: $secondary;
+}

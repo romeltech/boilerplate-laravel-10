@@ -5,11 +5,20 @@ import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
 
 // icon library - https://pictogrammers.com/library/mdi/
-// import { aliases, mdi } from "vuetify/iconsets/mdi-svg";
+import { aliases, mdi } from "vuetify/iconsets/mdi-svg";
 
 const vuetify = createVuetify({
     components,
     directives,
+    defaults: {
+        VTextField: {
+            variant: "outlined",
+            density: "compact",
+        },
+        VCard: {
+            rounded: "lg",
+        }
+    },
     theme: {
         defaultTheme: "light",
         themes: {
@@ -17,62 +26,34 @@ const vuetify = createVuetify({
             //     colors: {
             //         primary: "#000000",
             //         secondary: "#C6A92D",
-            //         // textcolor: "#5a5b5c",
-            //         // textgrey: "#818181",
-            //         // white: "#FFFFFF",
-            //         // screenBg: "#f8fafc",
-            //         // Vuetify Action Colors
-            //         // secondary: '#f5f5f5',
-            //         // accent: '#82B1FF',
-            //         // error: '#FF5252',
-            //         // info: '#2196F3',
-            //         // success: "#4CAF50",
-            //         // warning: '#FFC107',
+            //         "app-bg": "#F7F8FC",
             //     },
             // },
             light: {
                 colors: {
                     primary: "#000000",
                     secondary: "#C6A92D",
-                    // textcolor: "#5a5b5c",
-                    // textgrey: "#818181",
-                    // white: "#FFFFFF",
-                    // screenBg: "#f8fafc",
-                    // Vuetify Action Colors
-                    // secondary: '#f5f5f5',
-                    // accent: '#82B1FF',
-                    // error: '#FF5252',
-                    // info: '#2196F3',
-                    // success: "#4CAF50",
-                    // warning: '#FFC107',
+                    "app-background": "#F7F8FC",
+                    white: "#FFFFFF",
                 },
             },
             dark: {
                 colors: {
-                    primary: "#000000",
+                    primary: "#FFFFFF",
                     secondary: "#C6A92D",
-                    // textcolor: "#5a5b5c",
-                    // textgrey: "#818181",
-                    // white: "#FFFFFF",
-                    // screenBg: "#f8fafc",
-                    // Vuetify Action Colors
-                    // secondary: '#f5f5f5',
-                    // accent: '#82B1FF',
-                    // error: '#FF5252',
-                    // info: '#2196F3',
-                    // success: "#4CAF50",
-                    // warning: '#FFC107',
+                    "app-background": "#2f2f2f",
+                    white: "#000000",
                 },
             },
         },
     },
-    // icons: {
-    //     defaultSet: "mdi",
-    //     aliases,
-    //     sets: {
-    //         mdi,
-    //     },
-    // },
+    icons: {
+        defaultSet: "mdi",
+        aliases,
+        sets: {
+            mdi,
+        },
+    },
 });
 
 export default vuetify;

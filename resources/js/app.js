@@ -7,7 +7,6 @@ import { createInertiaApp } from "@inertiajs/vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
 
-
 /**
  * Pinia
  */
@@ -25,11 +24,10 @@ import vuetify from "./Plugins/vuetify";
 // import utilsPlugin from "./Plugins/utilsPlugin";
 
 const appName =
-    window.document.getElementsByTagName("title")[0]?.innerText || "Laravel";
-
-// https://stackoverflow.com/questions/72864434/default-persistent-layout-in-laravel-inertia-vite
+    window.document.getElementsByTagName("title")[0]?.innerText || "Mel";
 
 // inertia route
+// https://stackoverflow.com/questions/72864434/default-persistent-layout-in-laravel-inertia-vite
 // https://stackoverflow.com/questions/66106482/route-with-multiple-parameter-inertiajs
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,

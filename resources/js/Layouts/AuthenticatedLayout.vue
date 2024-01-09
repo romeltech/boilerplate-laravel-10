@@ -9,9 +9,6 @@ import { mdiBellOutline } from "@mdi/js";
 import { mdiAccountGroup } from "@mdi/js";
 // import route from "vendor/tightenco/ziggy/src/js";
 
-import { useRouter, useRoute } from "vue-router";
-const router = useRouter();
-
 const { mobile } = useDisplay();
 const appName = ref(import.meta.env.VITE_APP_NAME);
 const logo = ref(window.location.origin + "/assets/images/fav.png");
@@ -36,9 +33,6 @@ const sideNavigation = ref([
   },
 ]);
 const openPage = (path) => {
-  router.push({ name: path }).catch((e) => {
-    console.log("error", e);
-  });
   //   this.$router.push({ name: "user", params: { userId: "123" } });
   //   console.log($inertia);
   //   this.$inertia.put(route("rooms.update", { room: this.editingRoomUuid }), this.form);
