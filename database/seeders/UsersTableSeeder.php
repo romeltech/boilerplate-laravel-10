@@ -21,6 +21,9 @@ class UsersTableSeeder extends Seeder
             'role'       => 'admin' // admin, normal, manager,
         ]);
         $user->save();
+        $user->profile()->create([
+            'full_name' => 'Romel Indemne'
+        ]);
 
         $normal = new \App\Models\User([
             'username' => 'normal',

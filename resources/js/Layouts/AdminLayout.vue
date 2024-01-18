@@ -115,7 +115,7 @@
             v-bind="props"
             style="cursor: pointer"
           >
-            <div>{{ usePrintInitials(authStore.user.username) }}</div>
+            <div>{{ usePrintInitials(authStore.user.profile.full_name) }}</div>
           </v-avatar>
         </template>
         <v-card min-width="300" class="rounded-lg mt-1">
@@ -126,7 +126,7 @@
               class="d-flex align-center justify-center mr-3"
               style="cursor: pointer"
             >
-              <div>{{ usePrintInitials(authStore.user.username) }}</div>
+              <div>{{ usePrintInitials(authStore.user.profile.full_name) }}</div>
             </v-avatar>
             <div>
               <div class="text-body-1">{{ authStore.user.username }}</div>
@@ -161,7 +161,6 @@ import { usePrintInitials } from "@/Composables/printInitials";
 import { ref, onMounted, watch } from "vue";
 import { Link, router, usePage } from "@inertiajs/vue3";
 import { useDisplay, useTheme } from "vuetify";
-
 import {
   mdiChevronLeft,
   mdiHomeOutline,
@@ -176,13 +175,9 @@ import {
 
 import { useAuthStore } from "@/stores/auth";
 const authStore = useAuthStore();
-if (!authStore.user && !authStore.user.hasOwnProperty("id")) {
+if (usePage().props.auth.user) {
   authStore.setToken("melmelmel");
-  authStore.setUser({
-    id: 1,
-    username: "melmelmel",
-    email: "melmelmel@gmail.com",
-  });
+  authStore.setUser(usePage().props.auth.user);
 }
 
 console.log("usePage", usePage().props.auth.user);
