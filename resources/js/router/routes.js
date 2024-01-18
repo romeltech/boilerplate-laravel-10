@@ -24,33 +24,13 @@ export const routes = [
     /**
      * Auth Login
      */
-    // {
-    //     path: "/login",
-    //     component: () => import("../auth/Login.vue"),
-    //     name: "Login",
-    //     meta: {
-    //         title: "Login",
-    //     },
-    // },
-
-    /**
-     * Sanctum login
-     */
     {
-        path: "/access",
+        path: "/login",
         component: () => import("../auth/SanctumLogin.vue"),
-        name: "Access",
+        name: "Login",
         meta: {
-            title: "Sanctum Login",
-        },
-    },
-
-    {
-        path: "/check",
-        component: () => import("../auth/CheckAccount.vue"),
-        name: "CheckAccount",
-        meta: {
-            title: "Checking Account",
+            requiresAuth: false,
+            title: "Login",
         },
     },
 
@@ -121,26 +101,6 @@ export const routes = [
             requiresAuth: true,
             role: ["admin", "normal"],
             title: "Logs",
-        },
-    },
-
-    /**
-     * Studio
-     */
-    {
-        path: "/admin/studio",
-        component: () => import("../studio/Studio.vue"),
-        name: "Studio",
-        meta: {
-            title: "Studio",
-        },
-    },
-    {
-        path: "/admin/uploader",
-        component: () => import("../studio/Uploader.vue"),
-        name: "Uploader",
-        meta: {
-            title: "Uploader",
         },
     },
 
