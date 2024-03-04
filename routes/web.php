@@ -31,7 +31,7 @@ Route::get('/', function () {
     return Inertia::render('Auth/Login');
 });
 
-Route::get('/dashboard', [PageController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', [PageController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     // profile
@@ -44,6 +44,11 @@ Route::middleware('auth')->group(function () {
  * Admin routes
  */
 Route::group(['prefix'=>'admin','as'=>'admin.', 'middleware' => 'auth'], function () {
+
+    // dashboard
+    Route::get('/',function () {
+        return Inertia::render('Admin/Dashboard');
+    })->name('dashboard');
 
     // dashboard
     Route::get('/dashboard',function () {
@@ -60,7 +65,7 @@ Route::group(['prefix'=>'admin','as'=>'admin.', 'middleware' => 'auth'], functio
         Route::get('/paginated', [UserController::class, 'paginatedUsers'])->name('api.paginated');
 
         Route::get('/edit/{id}',function () {
-            return Inertia::render('Admin/Users/EditUsers');
+            return Inertia::render('Admin/Users/EditUser');
         })->name('edit');
 
         // api

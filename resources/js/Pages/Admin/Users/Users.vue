@@ -21,13 +21,13 @@
                   <div class="d-flex align-center justify-end">
                     <v-icon
                       size="small"
-                      @click="() => editModel(item.id)"
+                      @click="() => editUser(item.id)"
                       :icon="mdiPencil"
                       class="mx-1"
                     />
                     <v-icon
                       size="small"
-                      @click="() => deleteModel(item.id)"
+                      @click="() => deleteUser(item.id)"
                       :icon="mdiTrashCan"
                       class="mx-1"
                     />
@@ -50,6 +50,7 @@ import { mdiPencil, mdiTrashCan } from "@mdi/js";
 import { Link, router, usePage } from "@inertiajs/vue3";
 defineOptions({ layout: AdminLayout });
 
+// All users
 const users = ref([]);
 const getUsers = async () => {
   await axios.get("/admin/users/paginated").then((res) => {
@@ -57,4 +58,9 @@ const getUsers = async () => {
   });
 };
 getUsers();
+
+// Edit user
+const editUser = (id) => {
+  router.get("/admin/users/edit/" + id);
+};
 </script>

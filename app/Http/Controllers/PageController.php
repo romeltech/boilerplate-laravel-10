@@ -20,9 +20,9 @@ class PageController extends Controller
         if($role === 'admin'){
             return redirect('/admin/dashboard');
         }elseif($role == 'normal'){
-            return redirect('/u/dashboard');
+            return redirect('/admin/dashboard');
         }else{
-            return redirect('/u/dashboard');
+            return redirect('/admin/dashboard');
         }
     }
 

@@ -13,7 +13,6 @@ const vuetify = createVuetify({
     defaults: {
         VTextField: {
             variant: "outlined",
-            density: "compact",
         },
         VCard: {
             rounded: "lg",
